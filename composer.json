@@ -1,0 +1,18 @@
+{
+    "name": "shil/blog-pro",
+    "description": "Creation of a professional blog as part of a training course",
+    "authors": [
+        {
+            "name": "AurelieB",
+            "email": "a@a.a"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "require": {
+        "twig/twig": "^3.0"
+    }
+}
