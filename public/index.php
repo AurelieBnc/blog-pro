@@ -5,7 +5,7 @@ use App\Core\Router as CoreRouter;
 define('ROOT', dirname(__DIR__));
 
 //on importe l'autoloader
-require '../vendor/autoload.php';
+require ROOT.'/vendor/autoload.php';
 // Autoload::register();
 
 //on instancie le router
