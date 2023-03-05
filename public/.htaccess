@@ -1,0 +1,6 @@
+# DirectoryIndex index.php
+
+RewriteEngine On
+
+# On réécrit l'URL on précise les caractères acceptées puis on envoie sur index, $1 correspont à la première régle de réécriture
+RewriteRule ^([a-zA-Z0-9\-\_\/]*)$ index.php?p=$1
