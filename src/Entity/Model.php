@@ -9,27 +9,27 @@ class Model extends Db
     //Table de la base de données
     protected $table;
 
-    // Instance de Db
+    //Instance de Db
     private $db;
 
     public function runQuery(string $sql, array $attributs = null)
     {
-    // On récupére l'instance de Db
+    //On récupére l'instance de Db
     $this->db = Db::getInstance();
 
-        // On vérifie si on a des attributs
+        //On vérifie si on a des attributs
         if ($attributs !== null) {
-            //requête préparée
+            // requête préparée
             $query = $this->db->prepare($sql);
             $query->execute($attributs);
             return $query;
         } else {
-            //requête simple
+            //Requête simple
             return $this->db->query($sql);
         }
     }
 
-    // READ
+    //READ
     public function find(int $id)
     {
         return $this->runQuery('SELECT * FROM '.$this->table.' WHERE id = '.$id)->fetch();
@@ -57,11 +57,11 @@ class Model extends Db
         //On transforme le tableau champts en une chaine de caractéres
         $list_champs= implode(' AND ', $champs);
 
-        //on exédute la requête
+        //On exédute la requête
         return $this->runQuery('SELECT *FROM '.$this->table.' WHERE '. $list_champs, $valeurs)->fetchAll();
     }
 
-   // CREATE
+   //CREATE
     public function create(Model $model)
     {
 
@@ -74,7 +74,7 @@ class Model extends Db
             //INSERT INTO post (titre, content, author ect) VALUES (?, ?, ?)
             if ($valeur != null && $champ != 'db' && $champ !='table')
             {
-                $champs[] = "$champ";
+                $champs[] = $champ;
                 $nbchamps[] = "?";
                 $valeurs[] = $valeur;
             }
@@ -85,7 +85,7 @@ class Model extends Db
         $list_champs= implode(', ', $champs);
         $list_nb_champs = implode(', ', $nbchamps);
 
-        //on exédute la requête
+        //On exédute la requête
         return $this->runQuery('INSERT INTO '.$this->table.' ('. $list_champs.') VALUES('.$list_nb_champs.')', $valeurs);
     }
 
@@ -93,16 +93,47 @@ class Model extends Db
     {
         foreach ($datas as $key => $value)
         {
-            //on récupère le setter correspondant à la clé (key)
+            //On récupère le setter correspondant à la clé (key)
             $setter = 'set'.ucfirst($key);
 
-            //on vérifie si le setter existe
+            //On vérifie si le setter existe
             if (method_exists($this, $setter))
             {
-                //on appelle le setter
+                //On appelle le setter
                 $this->$setter($value);
             }
         }
         return $this;
+    }
+
+    //UPDATE
+    public function update(int $id, Model $model)
+    {
+        $champs = [];
+        $valeurs= [];
+
+        //On boucle pour éclater le tableau
+        foreach ($model as $champ => $valeur){
+            //UPDATE post SET titre = ?, content = ?, author =? .. WHERE id = ?
+            if ($valeur != null && $champ != 'db' && $champ !='table')
+            {
+                $champs[] = "$champ = ?";
+                $valeurs[] = $valeur;
+            }
+
+        }
+        $valeurs[] = $id;
+
+        //On transforme le tableau champts en une chaine de caractéres
+        $list_champs= implode(', ', $champs);
+
+        //On exédute la requête
+        return $this->runQuery('UPDATE '.$this->table.' SET '. $list_champs.' WHERE id = ?', $valeurs);
+    }
+
+    //DELETE
+    public function delete(int $id)
+    {
+        return $this->runQuery('DELETE FROM '.$this->table.' WHERE id=?', [$id]);
     }
 }
