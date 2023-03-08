@@ -41,13 +41,13 @@ class Model extends Db
         return $query->fetchAll();
     }
 
-    public function findBy(array $criteres)
+    public function findBy(array $datas)
     {
         $champs = [];
         $valeurs= [];
 
         //On boucle pour éclater le tableau
-        foreach($criteres as $champ => $valeur){
+        foreach($datas as $champ => $valeur){
             //SELECT * FROM annonces WHERE id = ? AND  test = ?
             //bindValue(1, valeur)
             $champs[] = "$champ = ?";
@@ -62,5 +62,47 @@ class Model extends Db
     }
 
    // CREATE
-   
+    public function create(Model $model)
+    {
+
+        $champs = [];
+        $nbchamps = [];
+        $valeurs= [];
+
+        //On boucle pour éclater le tableau
+        foreach ($model as $champ => $valeur){
+            //INSERT INTO post (titre, content, author ect) VALUES (?, ?, ?)
+            if ($valeur != null && $champ != 'db' && $champ !='table')
+            {
+                $champs[] = "$champ";
+                $nbchamps[] = "?";
+                $valeurs[] = $valeur;
+            }
+
+        }
+
+        //On transforme le tableau champts en une chaine de caractéres
+        $list_champs= implode(', ', $champs);
+        $list_nb_champs = implode(', ', $nbchamps);
+
+        //on exédute la requête
+        return $this->runQuery('INSERT INTO '.$this->table.' ('. $list_champs.') VALUES('.$list_nb_champs.')', $valeurs);
+    }
+
+    public function hydrate(array $datas)
+    {
+        foreach ($datas as $key => $value)
+        {
+            //on récupère le setter correspondant à la clé (key)
+            $setter = 'set'.ucfirst($key);
+
+            //on vérifie si le setter existe
+            if (method_exists($this, $setter))
+            {
+                //on appelle le setter
+                $this->$setter($value);
+            }
+        }
+        return $this;
+    }
 }
