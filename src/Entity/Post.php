@@ -1,7 +1,12 @@
 <?php
 namespace App\Entity;
 
-Class Post
-{
+use App\Entity\Model;
 
+Class Post extends Model
+{
+    public function __construct()
+    {
+        $this->table = 'post';
+    }
 }

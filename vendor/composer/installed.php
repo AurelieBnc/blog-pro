@@ -1,19 +1,19 @@
 <?php return array(
     'root' => array(
-        'name' => '__root__',
+        'name' => 'shil/blog-pro',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'f27bf89f138570e088f53ebaeb53f7a343b92da7',
+        'reference' => 'c2f160acfb1e60f9d3885f6a3c1101b2be905e14',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        '__root__' => array(
+        'shil/blog-pro' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'f27bf89f138570e088f53ebaeb53f7a343b92da7',
+            'reference' => 'c2f160acfb1e60f9d3885f6a3c1101b2be905e14',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
