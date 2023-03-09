@@ -1,4 +1,4 @@
-# Projet de groupe Arcade
+# Projet de Formation OCR - Blog Pro
 
 ## Installation
 
