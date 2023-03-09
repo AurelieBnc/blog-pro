@@ -8,7 +8,9 @@ define('ROOT', dirname(__DIR__));
 
 //on importe l'autoloader
 require ROOT.'/vendor/autoload.php';
-// Autoload::register();
+
+//on charge le fichier d'environnement
+Dotenv\Dotenv::createUnsafeImmutable(__DIR__ . '/../')->load();
 
 //on instancie le router
 $app = new CoreRouter();
@@ -16,20 +18,24 @@ $app = new CoreRouter();
 //On démarre l'application
 $app->start();
 
-$model = new Post;
 
-// méthode d'hydratation pour utilisation avec méthode POST des forms
+//////////////// Test Db connect & methods
+// $model = new Post;
+
+//méthode d'hydratation pour utilisation avec méthode POST des forms
 // $datas = [
-//     'title' => 'titre modifié',
+//     'title' => 'titre hydraté',
 //     'content' => 'contenu du post',
 //     'author' => 'admin',
-//     'slug' => 'slug3',
+//     'slug' => 'slug6',
 //     'id_user' => 1,
 // ];
 
 // $post = $model->hydrate($datas);
+// $model->create($post);
+// var_dump($post);
 
-// $model->delete(3);
+// $model->delete(4);
 
 // $post = $model->findBy(['author'=> 'admin']);
 
@@ -39,20 +45,21 @@ $model = new Post;
 //     ->setContent('Nouveau contenu')
 //     ->setAuthor('auteur')
 //     ->setSlug('new slug')
-//     ->setIdUser('1');
+//     ->setId_User('1');
 
 // $model->create($post);
 // var_dump($post);
-$model = new User;
 
-$user = $model
-    ->setLastname('bouh')
-    ->setFirstname('ploup')
-    ->setPseudonym('piou')
-    ->setEmail('a@a.fr')
-    ->setPassword(password_hash('azerty',PASSWORD_BCRYPT))
-    ->setRole('utilisateur')
-    ->setIs_verified('0');
+// $model = new User;
 
-$model->create($user);
+// $user = $model
+//     ->setLastname('bouh')
+//     ->setFirstname('ploup')
+//     ->setPseudonym('piou')
+//     ->setEmail('a@a.fr')
+//     ->setPassword(password_hash('azerty',PASSWORD_BCRYPT))
+//     ->setRole('utilisateur')
+//     ->setIs_verified('0');
+
+// $model->create($user);
 

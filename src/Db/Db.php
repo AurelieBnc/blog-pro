@@ -11,20 +11,20 @@ class Db extends PDO
     // Instance unique de la classe
     private static $instance;
 
-    // Informations de connexion
-    private const DBHOST = 'localhost';
-    private const DBUSER = 'root';
-    private const DBPASS = '';
-    private const DBNAME = 'blog_pro';
-
     private function __construct()
     {
+        // Informations de connexion
+        $dbHost = $_ENV['DBHOST'];
+        $dbUser = $_ENV['DBUSER'];
+        $dbPass = $_ENV['DBPASS'];
+        $dbName = $_ENV['DBNAME'];
+
         // DSN de connexion
-        $_dsn = 'mysql:dbname='.self::DBNAME.';host='.self::DBHOST;
+        $_dsn = 'mysql:dbname='.$dbName.';host='.$dbHost;
 
         // On appelle le constructeur de la classe PDO
         try{
-            parent::__construct($_dsn, self::DBUSER, self::DBPASS);
+            parent::__construct($_dsn, $dbUser, $dbPass);
 
             $this->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SEET NAMES utf8');
             $this->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -43,6 +43,5 @@ class Db extends PDO
         }
         return self::$instance;
     }
-
 
 }
