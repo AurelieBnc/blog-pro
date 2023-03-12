@@ -22,9 +22,8 @@
                 <p class="mb-0">The universe is almost 14 billion years old, and, wow! Life had no problem starting
                     here on Earth! I think it would be inexcusably egocentric of us to suggest that we're alone in
                     the universe.</p>
-                <a href="../public/images/CV_2022-03-03_Aurélie_BENINCA D.pdf" target="_blank" id="CV-link"
-                    download="CV.pdf">Mon
-                    Cv en PDF</a>
+                <a class="mt-5 d-flex justify-content-end" href="../public/images/CV_2022-03-03_Aurélie_BENINCA D.pdf"
+                    target="_blank" id="CV-link" download="CV.pdf"><i class="fa-solid fa-rocket"></i> Mon Cv en PDF</a>
             </div>
         </div>
     </div>
@@ -41,37 +40,41 @@
             <div class="col-lg-6">
                 <h2 class="text-center text-primary-emphasis mb-5" title="Contactez moi !">Contactez moi !</h2>
 
-                <form name="sentMessage" id="contactForm" novalidate>
+                <form method="post" action="home/contact" name="contactForm" id="contactForm">
 
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="name" required
+                        <input type="text" class="form-control" id="floatingInput" name="lastname"
+                            placeholder="lastname" required autocomplete
                             data-validation-required-message="Merci d'entrer votre nom."
                             title="Veuillez renseigner votre nom">
                         <p class="help-block text-danger"></p>
-                        <label for="floatingInput">Nom</label>
+                        <label for="lastname">Nom</label>
                     </div>
 
                     <div class="form-floating mb-3 controls">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="firstname" required
+                        <input type="text" class="form-control" id="floatingInput" name="firstname"
+                            placeholder="firstname" required autocomplete
                             data-validation-required-message="Please enter your name."
                             title="Veuillez renseigner votre prénom">
-                        <label for="floatingInput">Prénom</label>
+                        <label for="firstname">Prénom</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+                        <input type="email" class="form-control" id="floatingInput" name="email"
+                            placeholder="name@example.com" autocomplete required
                             title="Veuillez renseigner votre email">
-                        <label for="floatingInput">Adresse email</label>
+                        <label for="email">Adresse email</label>
                     </div>
                     {#INVALID INPUT
                     <div class="form-floating mb-3">
                         <input type="email" class="form-control is-invalid" id="floatingInputInvalid"
                             placeholder="name@example.com" value="test@example.com">
                         <label for="floatingInputInvalid">Invalid input</label>
-                    </div> #}
+                    </div>#}
                     <div class="form-group mb-3 controls">
-                        <textarea rows="7" class="form-control" placeholder="Merci de laisser votre message"
-                            id="floatingTextarea2" required data-validation-required-message="Please enter a message."
+                        <textarea type="text" rows="7" class="form-control" name="content" id="floatingTextarea2"
+                            placeholder="Merci de laisser votre message" required
+                            data-validation-required-message="Please enter a message."
                             title="Veuillez entrer un message"></textarea>
                         <p class="help-block text-danger"></p>
                     </div>
