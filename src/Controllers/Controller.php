@@ -1,20 +1,24 @@
 <?php
 namespace App\Controllers;
 
-use Twig\Environnement;
+use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-Abstract Class Controller
+abstract Class Controller
 {
     private $loader;
     protected $twig;
 
     public function __construct()
     {
-        // // on paramètre le dossier contenant nos templates
-        // $this->loader = new FilesystemLoader  (ROOT.'/templates');
+        // on paramètre le dossier contenant nos templates
+        $this->loader = new FilesystemLoader(__DIR__.'/../Templates');
 
-        // // on paramètre l'environnement Twig
-        // $this->twig = new Environnement($this->loader);
+        // on paramètre l'environnement Twig
+        $this->twig = new Environment($this->loader, [
+            'debug' => true,
+            'cache' => false, //'../tmp',
+        ]);
     }
+
 }
