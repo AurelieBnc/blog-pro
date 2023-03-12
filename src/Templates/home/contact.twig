@@ -1,0 +1,27 @@
+{% extends "secondbase.twig" %}
+
+{% block title %} Accueil {% endblock %}
+
+{% block body %}
+<h3 class="my-5 text-center">Reponse form contact</h3>
+
+{% block content %}
+<section class="py-5">
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div id="identity" class="col-lg-6">
+                <h2>coucou {{ lastname }} {{ firstname }}</h2>
+                <p class="lead">Nous avons bien reçu ton message, merci ! Nous te répondrons aussi vite que possible à
+                    l'adresse que tu nous as fournis : {{ email }}.</p>
+                <p class="mb-0">Voici le récapitulatif de ton message : </p>
+                <p>{{ contentFormContact }}</p>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
+
+
+{% endblock body %}

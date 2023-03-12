@@ -1,8 +1,11 @@
 <?php
 namespace App\Core;
 
-use App\Controllers\MainController;
+use App\Controllers\HomeController;
 
+/**
+ * Main router
+ */
 Class Router
 {
     public function start()
@@ -47,7 +50,7 @@ Class Router
 
         }else{
             //any parameter, default controller instance
-            $controller = new MainController;
+            $controller = new HomeController;
             $controller->index();
         }
     }
