@@ -3872,7 +3872,10 @@ textarea.form-control-lg {
 .dropdown-menu-dark .dropdown-header {
   color: #adb5bd;
 }
-
+a.nav-link.active{
+  color: #fff;
+  font-weight: bold;
+}
 .btn-group,
 .btn-group-vertical {
   position: relative;
