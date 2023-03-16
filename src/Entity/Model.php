@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Db\Db;
+use App\Core\Db;
 
 class Model extends Db
 {

@@ -1,0 +1,31 @@
+{% extends "secondbase.twig" %}
+
+{% block title %} Accueil {% endblock %}
+
+{% block body %}
+<h1 class="my-5 text-center">Message bien envoyé !</h1>
+{# todo:active sur post?? #}
+{% block content %}
+<section class="py-5">
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div id="identity" class="col-lg-6">
+                <p class="lead">Coucou {{ lastname }} {{ firstname }}
+                </p>
+                <P>Nous avons bien reçu ton message, merci ! Nous te répondrons dans les plus brefs délais.</P>
+                <div class="card mt-5">
+                    <div class="card-header">Ton message</div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>{{ contentFormContact }}</p>
+                            <footer class="blockquote-footer d-flex justify-content-end">{{ email }}</footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% endblock body %}

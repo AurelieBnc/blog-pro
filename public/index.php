@@ -9,6 +9,10 @@ define('ROOT', dirname(__DIR__));
 //on importe l'autoloader
 require ROOT.'/vendor/autoload.php';
 
+//on charge mon extension de twig
+require ROOT.'/src/Core/MyExtensionTwig.php';
+
+
 //on charge le fichier d'environnement
 Dotenv\Dotenv::createUnsafeImmutable(__DIR__ . '/../')->load();
 
