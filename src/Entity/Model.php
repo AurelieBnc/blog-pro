@@ -16,6 +16,7 @@ class Model extends Db
     {
     //On récupére l'instance de Db
     $this->db = Db::getInstance();
+    $this->db->exec("SET NAMES 'utf8';");
 
         //On vérifie si on a des attributs
         if ($attributs !== null) {

@@ -39,14 +39,13 @@
     <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-lg-6">
-                <h2 class="text-center text-primary-emphasis mb-5" title="Contactez moi !">Contactez moi !</h2>
+                <h2 class="text-center mb-5" title="Contactez moi !">Contactez moi !</h2>
 
                 <form method="post" action="home/contact" name="contactForm" id="contactForm">
 
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInput" name="lastname"
-                            placeholder="lastname" required autocomplete
-                            data-validation-required-message="Merci d'entrer votre nom."
+                            placeholder="lastname" required data-validation-required-message="Merci d'entrer votre nom."
                             title="Veuillez renseigner votre nom">
                         <p class="help-block text-danger"></p>
                         <label for="lastname">Nom</label>
@@ -54,8 +53,7 @@
 
                     <div class="form-floating mb-3 controls">
                         <input type="text" class="form-control" id="floatingInput" name="firstname"
-                            placeholder="firstname" required autocomplete
-                            data-validation-required-message="Please enter your name."
+                            placeholder="firstname" required data-validation-required-message="Please enter your name."
                             title="Veuillez renseigner votre prénom">
                         <label for="firstname">Prénom</label>
                     </div>
@@ -66,12 +64,7 @@
                             title="Veuillez renseigner votre email">
                         <label for="email">Adresse email</label>
                     </div>
-                    {#INVALID INPUT
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control is-invalid" id="floatingInputInvalid"
-                            placeholder="name@example.com" value="test@example.com">
-                        <label for="floatingInputInvalid">Invalid input</label>
-                    </div>#}
+
                     <div class="form-group mb-3 controls">
                         <textarea type="text" rows="7" class="form-control" name="content" id="floatingTextarea2"
                             placeholder="Merci de laisser votre message" required

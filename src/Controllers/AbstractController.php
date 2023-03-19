@@ -22,7 +22,7 @@ abstract Class AbstractController
             'debug' => true,
             'cache' => false, //'../tmp',
             'auto-reload' => true,
-            'strict_variables' => true,
+            // 'strict_variables' => true,
             'charset' => 'utf-8',
         ]);
 

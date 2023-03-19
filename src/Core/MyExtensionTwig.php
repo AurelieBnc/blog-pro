@@ -38,12 +38,12 @@ class MyExtensionTwig extends AbstractExtension
     {
         return[
         new TwigFilter('truncate', [$this, 'truncate'], ['is_safe' => ['html']])
-        ];
+    ];
     }
 
-    public function truncate(string $value, int $nbChar)
+    public function truncate(string $values, int $nbChar)
     {
-        return mb_substr($value, 0, $nbChar,'UTF-8');
+        return mb_substr($values, 0, $nbChar,'UTF-8');
     }
 
 }
