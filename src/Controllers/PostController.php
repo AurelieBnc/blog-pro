@@ -20,9 +20,16 @@ Class PostController extends AbstractController
         $this->twig->display('post/index.twig', ['posts' => $posts]);
     }
 
-    // public function post($id)
-    // {
-    //     $this->twig->display('post/index.twig/'.$id);
-    // }
+    /**
+     * affiche un post en particulier
+     */
+    public function retailPost(int $id)
+    {
+        $post = new Post;
+
+        $post = $post->find($id);
+
+        $this->twig->display('post/retailPost.twig', ['post' => $post]);
+    }
 
 }

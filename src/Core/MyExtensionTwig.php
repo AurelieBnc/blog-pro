@@ -11,7 +11,7 @@ use Twig\TwigFunction;
 class MyExtensionTwig extends AbstractExtension
 {
     /**
-     * Function List
+     * Functions List
      */
     public function getFunctions()
     {
@@ -30,8 +30,9 @@ class MyExtensionTwig extends AbstractExtension
             return ' active ';
         }
     }
+
     /**
-     * Filtre List
+     * Filters List
      */
     public function getFilters()
     {
@@ -39,6 +40,7 @@ class MyExtensionTwig extends AbstractExtension
         new TwigFilter('truncate', [$this, 'truncate'], ['is_safe' => ['html']])
         ];
     }
+
     public function truncate(string $value, int $nbChar)
     {
         return mb_substr($value, 0, $nbChar,'UTF-8');

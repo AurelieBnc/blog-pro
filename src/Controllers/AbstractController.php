@@ -31,6 +31,7 @@ abstract Class AbstractController
         {
             $this->page = $_GET['p'];
         }
+
         $this->twig->addGlobal('current_page', $this->page);
         $this->twig->addExtension(new MyExtensionTwig());
         $this->twig->addExtension(new IntlExtension());

@@ -16,11 +16,13 @@
                 {% for post in posts %}
                 <div>
                     <h2>{{ post.title }} </h2>
-                    <p class="lead mt-1">{{ post.content | truncate(200) ~ ' ...' }}</p>
+                    <p class="lead mt-1">{{ post.lead }}</p>
+                    <p class="mt-1">{{ post.content | truncate(200) ~ ' ...' }}</p>
                     <div class="d-flex justify-content-between">
                         <p class="blockquote-footer mt-2">Le {{ post.created_at | date("d/m/Y",
                             "Europe/Paris") }}</p>
-                        <p><a class="dropdown-item" href="#!"><i class="fas fa-book-open me-2 "></i>Lire la
+                        <p><a class="dropdown-item" href="index.php?p=post/retailPost/{{post.id}}"><i
+                                    class="fas fa-book-open me-2 "></i>Lire la
                                 suite ...</a></p>
                     </div>
                     {# btn de modération - todo ajouter un hover #}

@@ -7,11 +7,11 @@ Class Post extends Model
 {
     protected $id;
     protected $title;
+    protected $lead;
     protected $content;
     protected $author;
     protected $created_at;
     protected $update_date;
-    protected $slug;
     protected $id_user;
 
     public function __construct()
@@ -140,26 +140,6 @@ Class Post extends Model
     }
 
     /**
-     * Get the value of slug
-     */ 
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * Set the value of slug
-     *
-     * @return  self
-     */ 
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
      * Get the value of id_user
      */ 
     public function getId_user()
@@ -175,6 +155,26 @@ Class Post extends Model
     public function setId_user($id_user)
     {
         $this->id_user = $id_user;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of lead
+     */ 
+    public function getLead()
+    {
+        return $this->lead;
+    }
+
+    /**
+     * Set the value of lead
+     *
+     * @return  self
+     */ 
+    public function setLead($lead)
+    {
+        $this->lead = $lead;
 
         return $this;
     }
