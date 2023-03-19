@@ -26,12 +26,12 @@ $app->start();
 //////////////// Test Db connect & methods
 // $model = new Post;
 
-//méthode d'hydratation pour utilisation avec méthode POST des forms
+// //méthode d'hydratation pour utilisation avec méthode POST des forms
 // $datas = [
-//     'title' => 'titre hydraté',
+//     'title' => 'titre post test',
 //     'content' => 'contenu du post',
 //     'author' => 'admin',
-//     'slug' => 'slug6',
+//     'slug' => 'slugTESTpost',
 //     'id_user' => 1,
 // ];
 
