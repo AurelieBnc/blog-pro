@@ -4,6 +4,7 @@ namespace App\Controllers;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use App\Core\MyExtensionTwig;
+use Twig\Extra\Intl\IntlExtension;
 
 abstract Class AbstractController
 {
@@ -20,6 +21,9 @@ abstract Class AbstractController
         $this->twig = new Environment($this->loader, [
             'debug' => true,
             'cache' => false, //'../tmp',
+            'auto-reload' => true,
+            'strict_variables' => true,
+            'charset' => 'utf-8',
         ]);
 
         //Current page name setting
@@ -29,6 +33,7 @@ abstract Class AbstractController
         }
         $this->twig->addGlobal('current_page', $this->page);
         $this->twig->addExtension(new MyExtensionTwig());
+        $this->twig->addExtension(new IntlExtension());
     }
 
 }

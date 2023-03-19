@@ -2,6 +2,7 @@
 namespace App\Core;
 
 use \Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 /**
@@ -29,4 +30,18 @@ class MyExtensionTwig extends AbstractExtension
             return ' active ';
         }
     }
+    /**
+     * Filtre List
+     */
+    public function getFilters()
+    {
+        return[
+        new TwigFilter('truncate', [$this, 'truncate'], ['is_safe' => ['html']])
+        ];
+    }
+    public function truncate(string $value, int $nbChar)
+    {
+        return mb_substr($value, 0, $nbChar,'UTF-8');
+    }
+
 }
