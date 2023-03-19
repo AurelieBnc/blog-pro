@@ -19,7 +19,7 @@
                     <p class="lead mt-1">{{ post.lead }}</p>
                     <p class="mt-1">{{ post.content | truncate(200) ~ ' ...' }}</p>
                     <div class="d-flex justify-content-between">
-                        <p class="blockquote-footer mt-2">Le {{ post.created_at | date("d/m/Y",
+                        <p class="blockquote-footer mt-2">Mise à jour le {{ post.update_date | date("d/m/Y",
                             "Europe/Paris") }}</p>
                         <p><a class="dropdown-item" href="index.php?p=post/retailPost/{{post.id}}"><i
                                     class="fas fa-book-open me-2 "></i>Lire la

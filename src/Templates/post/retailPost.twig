@@ -11,7 +11,9 @@
                 <h2 class="text-center text-capitalize pb-5 mb-5">{{ post.title }}</h2>
                 <p class="lead my-5">{{ post.lead }}</p>
                 <p>{{ post.content }}</p>
-                <p class="blockquote-footer d-flex justify-content-end pt-5">Le {{ post.update_date }}</p>
+                <p class="blockquote-footer d-flex justify-content-end pt-5">Mise à jour le {{ post.update_date |
+                    date("d/m/Y",
+                    "Europe/Paris") }}</p>
             </div>
         </div>
     </div>

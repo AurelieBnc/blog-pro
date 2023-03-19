@@ -9,7 +9,6 @@ Class Post extends Model
     protected $title;
     protected $lead;
     protected $content;
-    protected $author;
     protected $created_at;
     protected $update_date;
     protected $id_user;
@@ -75,26 +74,6 @@ Class Post extends Model
     public function setContent($content)
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of author
-     */ 
-    public function getAuthor()
-    {
-        return $this->author;
-    }
-
-    /**
-     * Set the value of author
-     *
-     * @return  self
-     */ 
-    public function setAuthor($author)
-    {
-        $this->author = $author;
 
         return $this;
     }
