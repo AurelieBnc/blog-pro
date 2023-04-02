@@ -1,0 +1,54 @@
+{% extends "base.twig" %}
+
+{% block title %} Accueil {% endblock %}
+
+{% block content %}
+<header class="py-5 bg-image-full" style="background-image: url('../public/images/background/blackwaves.jpg')">
+    <div class="text-center my-5">
+        <h1 class="text-white  fw-bolder">Flow des posts</h1>
+        <p class="text-white-50 fs-5 mb-0">Suivez toute mon actualité</p>
+    </div>
+</header>
+<section class="py-5">
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                {% for post in posts %}
+                <div>
+                    <h2>{{ post.title }} </h2>
+                    <p class="lead mt-1">{{ post.lead }}</p>
+                    <p class="mt-1">{{ post.content | truncate(200) ~ ' ...' }}</p>
+                    <div class="d-flex justify-content-between">
+                        <p class="blockquote-footer mt-2">Mise à jour le {{ post.update_date | date("d/m/Y",
+                            "Europe/Paris") }}</p>
+                        <p><a class="dropdown-item" href="index.php?p=post/retailPost/{{post.id}}"><i
+                                    class="fas fa-book-open me-2 "></i>Lire la
+                                suite ...</a></p>
+                    </div>
+                    {# btn de modération - todo ajouter un hover #}
+                    <div class="d-flex justify-content-end me-2">
+                        <div class="p-1 ">
+                            <a class=" btn btn-darkblue " href="#!" title="Modifier l'article"><i
+                                    class="fas fa-edit"></i></a>
+                        </div>
+                        <div class="p-1 ">
+                            <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?')"
+                                class=" btn btn-darkblue " href="#!" title="Supprimer l'article"><i
+                                    class="fas fa-trash"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center my-5">
+                    <img src="../public/images/logo/origami.png" class="separation2 logo" alt="separation small">
+                    <img src="../public/images/logo/origami.png" class="separation logo" alt="separation">
+                    <img src="../public/images/logo/origami.png" class="separation2 logo" alt="separation small">
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
