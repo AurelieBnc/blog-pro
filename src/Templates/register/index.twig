@@ -1,0 +1,64 @@
+{% extends "base.twig" %}
+
+{% block title %} Accueil {% endblock %}
+
+{% block body %}
+
+{% block content %}
+
+<section class="py-5">
+    <div class="container mb-2">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <h2 class="fs-3 mb-5" title="Connexion à votre compte"> Connexion à votre
+                    compte
+                </h2>
+                <form method="post" action="home/userpage" name="register" id="RegisterForm">
+
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="floatingInput" name="email"
+                            placeholder="name@example.com" autocomplete required title="Veuillez renseigner votre email"
+                            data-validation-required-message="Merci d'entrer votre adresse email">
+                        <label for="floatingInput">Adresse email</label>
+                    </div>
+                    {#INVALID INPUT
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control is-invalid" id="floatingInputInvalid"
+                            placeholder="name@example.com" value="test@example.com">
+                        <label for="floatingInputInvalid">Invalid input</label>
+                    </div> #}
+                    <div class="form-floating mb-3 controls">
+                        <input type="password" class="form-control" id="floatingInput" name="password"
+                            placeholder="password" required
+                            data-validation-required-message="Merci d'entrer votre mot de passe"
+                            title="Veuillez renseigner un mot de passe" required>
+                        <label for="floatingInput">Mot de passe</label>
+                    </div>
+
+                    <br>
+
+                    <div id="success"></div>
+                    <div class="form-group text-center d-flex justify-content-between">
+                        <button type="submit" class="btn btn-outline-secondary" id="sendMessageButton"
+                            title="Envoyer">Envoyer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="d-flex justify-content-center mt-0 mb-3">
+    <img src="../public/images/logo/origami.png" class="separation2 logo" alt="separation small">
+    <img src="../public/images/logo/origami.png" class="separation logo" alt="separation">
+    <img src="../public/images/logo/origami.png" class="separation2 logo" alt="separation small">
+</div>
+<section>
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <p class="lead text-center">... Ou si vous n'avez pas encore de compte ... </p>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
+{% endblock body %}
