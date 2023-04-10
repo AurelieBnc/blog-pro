@@ -49,9 +49,17 @@
     {# footer #}
     <footer class="py-5 bg-dark">
         <div class="container">
-            <p class="nav-item row "><a class="col-4 nav-link {{ activeClass('admin') }} " href="{{ ROOT }}index.php?p=admin"
-                    title="Accès administration">Accès administration</a>
+            {% if session.logUser is same as 'user_verified' %}
+            <p class="nav-item row "><a class="col-4 nav-link " href="{{ ROOT }}index.php?p=home/userPage"
+                title="Mon compte">Mon compte</a>
             </p>
+            {% endif %}
+            {% if session.logUser is same as 'admin' %}
+            <p class="nav-item row "><a class="col-4 nav-link " href="{{ ROOT }}index.php?p=admin"
+                title="Accès administration">Accès administration</a>
+            </p>
+            {% endif %}
+
             <ul class="p-0 text-center">
                 <li class="list-inline-item">
                     <a href="https://twitter.com/">

@@ -35,4 +35,8 @@ Class HomeController extends AbstractController
         return $this->twig->display('partial/pageFormError.twig');
     }
 
+    public function userPage()
+    {
+        return $this->twig->display('home/userPage.twig', [ 'session' => $_SESSION]);
+    }
 }                //todo créer une variable global pour la root
