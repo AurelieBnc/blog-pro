@@ -34,7 +34,9 @@
                     <li class="nav-item"><a class="nav-link {{ activeClass('register') }}" href="{{ ROOT }}index.php?p=register"
                             title="Connexion">Connexion</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="#!" title="Déconnexion">Déconnexion</a></li>
+                    {% if session.logVisitor is same as false %}
+                    <li class="nav-item"><a class="nav-link" href="{{ ROOT }}index.php?p=register/logout" title="Déconnexion">Déconnexion</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

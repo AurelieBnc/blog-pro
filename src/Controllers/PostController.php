@@ -17,7 +17,7 @@ Class PostController extends AbstractController
         //todo-ajouter éventuellement la possibilité de désactiver un post en ajoutant une propriété "active" et findBy(['actif' => 1])
         $posts = $post->findAll();
         //var_dump($posts);
-        $this->twig->display('post/index.twig', ['posts' => $posts]);
+        $this->twig->display('post/index.twig', ['posts' => $posts,'session' => $_SESSION]);
     }
 
     /**
@@ -29,7 +29,7 @@ Class PostController extends AbstractController
 
         $post = $post->find($id);
 
-        $this->twig->display('post/retailPost.twig', ['post' => $post]);
+        $this->twig->display('post/retailPost.twig', ['post' => $post, 'session' => $_SESSION]);
     }
 
 }
