@@ -8,9 +8,12 @@ use App\Entity\ContactForm;
  */
 Class HomeController extends AbstractController
 {
+    public function __construct() {
+        parent::__construct();
+    }
+
     public function index()
     {
-        var_dump('index session :', $_SESSION);
         $this->twig->display('home/index.twig', ['session' => $_SESSION]);
     }
 
@@ -27,7 +30,7 @@ Class HomeController extends AbstractController
             'firstname' => $_POST['firstname'],
             'contentFormContact' => $_POST['content'],
             'email' => $_POST['email'],
-            'ROOT' => 'http://localhost/blog-pro/public/'
+            'ROOT' => $this->root
             ]);
 
         }
@@ -39,4 +42,4 @@ Class HomeController extends AbstractController
     {
         return $this->twig->display('home/userPage.twig', [ 'session' => $_SESSION]);
     }
-}                //todo créer une variable global pour la root
+}

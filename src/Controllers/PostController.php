@@ -5,6 +5,10 @@ use App\Entity\Post;
 
 Class PostController extends AbstractController
 {
+    public function __construct() {
+        parent::__construct();
+    }
+
     /**
      * Methode affichant la liste de tous les posts
      */

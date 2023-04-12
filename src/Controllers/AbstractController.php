@@ -11,9 +11,12 @@ abstract Class AbstractController
     private $loader;
     protected $twig;
     private $page = 'home';
+    public $root;
 
     public function __construct()
     {
+        $this->root = 'http://localhost/blog-pro/public/';
+
         //On démarre une session
         session_start();
 
@@ -33,7 +36,7 @@ abstract Class AbstractController
             'auto-reload' => true,
             // 'strict_variables' => true,
             'charset' => 'utf-8',
-            'ROOT' => 'http://localhost/blog-pro/public/',
+            // 'ROOT' => 'http://localhost/blog-pro/public/',
         ]);
 
         //Current page name setting

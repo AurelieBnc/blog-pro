@@ -13,7 +13,7 @@
                 <h2 class="fs-3 mb-5" title="Connexion à votre compte"> Connexion à votre
                     compte
                 </h2>
-                <form method="post" action="register/logIn" name="register" id="RegisterForm">
+                <form method="post" action="register/logIn" name="login" id="loginForm">
 
                     <div class="form-floating mb-3">
                         <input type="email" class="form-control" id="floatingInput" name="email"
@@ -21,12 +21,7 @@
                             data-validation-required-message="Merci d'entrer votre adresse email">
                         <label for="floatingInput">Adresse email</label>
                     </div>
-                    {#INVALID INPUT
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control is-invalid" id="floatingInputInvalid"
-                            placeholder="name@example.com" value="test@example.com">
-                        <label for="floatingInputInvalid">Invalid input</label>
-                    </div> #}
+
                     <div class="form-floating mb-3 controls">
                         <input type="password" class="form-control" id="floatingInput" name="password"
                             placeholder="password" required
@@ -59,6 +54,74 @@
         </div>
     </div>
 </section>
+{# register form #}
+<section class="py-5">
+    <div class="container mb-2">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <h2 class="text-center fs-3 mb-5" title="Donner votre avis"> Rejoignez nous !
+                </h2>
 
+                <form method="post" action="register/register" name="register" id="RegisterForm" enctype= "multipart/form-data">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" name="lastname" placeholder="nom"
+                            data-validation-required-message="Merci d'entrer votre nom."
+                            title="Veuillez renseigner votre nom" autocomplete required>
+                        <p class="help-block text-danger"></p>
+                        <label for="floatingInput">Nom</label>
+                    </div>
+
+                    <div class="form-floating mb-3 controls">
+                        <input type="text" class="form-control" id="floatingInput" name="firstname" placeholder="prénom"
+                            data-validation-required-message="Merci d'entrer votre prénom."
+                            title="Veuillez renseigner votre prénom" autocomplete required>
+                        <label for="floatingInput">Prénom</label>
+                    </div>
+                    <div class="form-floating mb-3 controls">
+                        <input type="text" class="form-control" id="floatingInput" name="pseudonym" placeholder="pseudonym"
+                            data-validation-required-message="Merci d'entrer votre surnom."
+                            title="Veuillez renseigner votre surnom" autocomplete required>
+                        <label for="floatingInput">Surnom</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="floatingInput" name="email"
+                            placeholder="name@example.com" autocomplete required title="Veuillez renseigner votre email"
+                            data-validation-required-message="Merci d'entrer votre adresse email">
+                        <label for="floatingInput">Adresse email</label>
+                    </div>
+                    <div class="form-floating mb-3 controls">
+                        <input type="password" class="form-control" id="floatingInput" name="password" placeholder="password"
+                            data-validation-required-message="Merci d'entrer votre mot de passe."
+                            title="Veuillez renseigner un mot de passe" required>
+                        <label for="floatingInput">Mot de passe</label>
+                    </div>
+                    <div class="form-floating mb-3 controls">
+                        <input type="password" class="form-control" id="floatingInput" name="confirmPassword" placeholder="ConfirmedPassword"
+                            required data-validation-required-message="Merci de confirmer votre mot de passe."
+                            title="Veuillez confirmer votre mot de passe" required>
+                        <label for="floatingInput">Confirmation du mot de passe</label>
+                    </div>
+                    <div class="form-control mb-3 controls">
+                        <label class="mb-2" for="avatar">Vous pouvez télécharger un avatar</label>
+                        {# <input type="hidden" name="MAX_FILE_SIZE" value="1048576" /> #}
+                        <input type="file" class="form-control mb-2" id="avatar" name="avatar" placeholder="avatar"
+                            accept="image/png, image/jpeg" title="Vous pouvez télécharger un avatar">
+                    </div>
+                    <br>
+
+                    <div id="success"></div>
+                    <div class="form-group text-center d-flex justify-content-between">
+                        <button type="submit" class="btn btn-outline-secondary" id="sendMessageButton"
+                            title="Envoyer">Envoyer</button>
+                        <button type="reset" class="btn btn-outline-secondary" id="resetMessageButton"
+                            title="Réinitialiser">Réinitialiser</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock content %}
 {% endblock body %}
