@@ -96,11 +96,11 @@ Class RegisterController extends AbstractController
         $user = new User;
         $user_exist = null;
         $file = null;
-
+    //if(isset($_POST['valider'])) {}
         /**
          * Nous déterminons si l'utilisateur existe déjà avec cette adresse mail
          */
-        if ( isset($_POST['email']) )
+        if ( !empty($_POST['email']) )
         {
             $datas = [
                 'firstname' => $_POST['firstname'],
@@ -117,50 +117,53 @@ Class RegisterController extends AbstractController
                     $user_exist = false;
                 }
             }
+        }else{
+            echo "veuillez entre votre email";
         }
 
-        if ( $user_exist ) {
-            return $this->twig->display('register/userExist.twig', [
-                'ROOT' => $this->root,
-                'email' => $_POST['email'],
-                ['session' => $_SESSION],
-            ]
-        );
-
-        } elseif (isset($_FILES['avatar']) && $_FILES['avatar']['error'] !== 4 ) {
-
-            /**
-             * gestion de l'image d'avatar
-             */
-            $tmpName = $_FILES['avatar']['tmp_name'];
-            $name = $_FILES['avatar']['name'];
-            $size = $_FILES['avatar']['size'];
-            $error = $_FILES['avatar']['error'];
-
-            // Vérification du type et de la taille du fichier uploader
-            $tabExtension = explode('.', $name);
-            $extension = strtolower(end($tabExtension));
-
-            $extensions = ['jpg', 'png', 'jpeg', 'gif'];
-            $maxSize = 400000;
-
-            if(in_array($extension, $extensions) && $size <= $maxSize && $error == 0){
-                $uniqueName = uniqid('', true);
-                $file = $uniqueName.".".$extension;
-                move_uploaded_file($tmpName, './images/avatar_upload/'.$file);
-            }
-            else{
-                //todo détaillé les erreurs
-                echo "Mauvaise extension, taille trop grande ou une erreur est survenue";
-            }
-            return $file;
+        if ($user_exist) {
+            return $this->twig->display('register/userExist.twig',
+                [
+                    'ROOT' => $this->root,
+                    'email' => $_POST['email'],
+                    ['session' => $_SESSION],
+                ]
+            );
         }
 
         if (!$user_exist)
         {
             /**
+             * gestion de l'image d'avatar
+             */
+            if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] !== 4) {
+                $tmpName = $_FILES['avatar']['tmp_name'];
+                $name = $_FILES['avatar']['name'];
+                $size = $_FILES['avatar']['size'];
+                $error = $_FILES['avatar']['error'];
+
+                // Vérification du type et de la taille du fichier uploader
+                $tabExtension = explode('.', $name);
+                $extension = strtolower(end($tabExtension));
+
+                $extensions = ['jpg', 'png', 'jpeg', 'gif'];
+                $maxSize = 400000;
+
+                if (in_array($extension, $extensions) && $size <= $maxSize && $error == 0) {
+                    $uniqueName = uniqid('', true);
+                    $file = $uniqueName.".".$extension;
+                    move_uploaded_file($tmpName, './images/avatar_upload/'.$file);
+                } else {
+                    //todo détaillé les erreurs
+                    echo "Mauvaise extension, taille trop grande ou une erreur est survenue";
+                }
+                return $file;
+            }
+
+            /**
              * création de l'utilisateur
              */
+            $token = rand(10000000, 90000000);
             $model = new User;
 
             $user = $model
@@ -169,6 +172,7 @@ Class RegisterController extends AbstractController
                 ->setPseudonym($_POST['pseudonym'])
                 ->setEmail($_POST['email'])
                 ->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT))
+                ->setToken($token)
                 ->setRole('utilisateur')
                 ->setIs_verified('0');
 
@@ -177,36 +181,85 @@ Class RegisterController extends AbstractController
                 $user = $model->setAvatar($file);
             }
 
-            //$model->create($user);
+            $model->create($user);
+            $userId = $user->lastId();
 
-            //sendMail($_POST['email']);
+            function smtpmailer($to, $from, $from_name, $subject, $body)
+            {
+                $mail = new PHPMailer();
+                $mail->IsSMTP();
+                $mail->SMTPAuth = true;
 
-            //Create a new PHPMailer instance
-            $mail = new PHPMailer();
-            //Set who the message is to be sent from
-            $mail->setFrom('aurelie.beninca@gmail.com', 'John Doe');
-            //Set an alternative reply-to address
-            $mail->addReplyTo('replyto@example.com', 'First Last');
-            //Set who the message is to be sent to
-            $mail->addAddress($_POST['email']);
-            //Set the subject line
-            $mail->Subject = 'PHPMailer mail() test';
-            //Read an HTML message body from an external file, convert referenced images to embedded,
-            //convert HTML into a basic plain-text alternative body
-            $mail->msgHTML(file_get_contents(ROOT.'/src/Templates/home/contents.html'));
-            //Replace the plain text body with one created manually
-            $mail->AltBody = 'This is a plain-text message body';
-            //Attach an image file
-            // $mail->addAttachment('images/phpmailer_mini.png');
-
-            //send the message, check for errors
-            if (!$mail->send()) {
-                echo 'Mailer Error: ' . $mail->ErrorInfo;
-            } else {
-                echo 'Message sent!';
+                $mail->SMTPSecure = 'ssl';
+                $mail->Host = 'smtp.gmail.com';
+                $mail->Port = 465;
+                $mail->Username = $_ENV['USERMAILER'];
+                $mail->Password = $_ENV['PASSMAILER'];
+                $mail->IsHTML(true);
+                $mail->From=$_ENV['USERMAILER'];
+                $mail->FromName=$from_name;
+                $mail->Sender=$from;
+                $mail->AddReplyTo($from, $from_name);
+                $mail->Subject = $subject;
+                $mail->Body = $mail->msgHTML($body);
+                //$mail->msgHTML(file_get_contents(ROOT.'/src/Templates/home/contents.html'), $dataMail);
+                $mail->AddAddress($to);
+                if(!$mail->Send())
+                {
+                    $error ="Please try Later, Error Occured while Processing...";
+                    return $error;
+                }
+                else
+                {
+                    $error = "Thanks You !! Your email is sent.";
+                    return $error;
+                }
             }
 
+            $to   = $_POST['email'];
+            $from = $_ENV['USERMAILER'];
+            $name = 'Aurelie test blog-pro';
+            $subj = 'Confirmation de compte';
+            $msg = 'Bienvenue sur Blog-pro,
+
+            Pour activer votre compte, veuillez cliquer sur le lien ci-dessous
+            ou copier/coller dans votre navigateur Internet.
+
+            http://localhost/blog-pro/public/index.php?p=register/confirmMail/'.urlencode($userId).'/'.urlencode($token).'
+
+            ---------------
+            Ceci est un mail automatique, Merci de ne pas y répondre.';
+            //$msg = 'http://localhost/blog-pro/template/home/contents.php?id=&';
+            //$msg = file_get_contents(ROOT.'/src/Templates/home/contents.html');
+            //$msg = ROOT.'/src/Templates/home/contents.html?id='.$_SESSION['id'].'&token='.$token;
+            $error = smtpmailer($to,$from, $name ,$subj, $msg);
+
             return $this->twig->display('register/confirmRegister.twig', ['ROOT' => $this->root, 'session' => $_SESSION]);
+        }
+    }
+
+    public function confirmMail( $params1, $params2)
+    {
+        $log = intval("$params1");
+        $token = $params2;
+
+        if ( isset($log) && isset($token) && !empty($log) && !empty($token) )
+        {
+            $model = new User;
+            $confirmUser = $model->find($log);
+            $userToken = $confirmUser['token'];
+
+            if ( $token === $userToken )
+            {
+                $confirmUser = $model->setIs_verified(1);
+                $confirmUser->update($log, $model);
+                return $this->twig->display('register/confirmMail.twig');
+            } else {
+                echo "Votre jeton d'identification a expiré";
+            }
+
+        } else {
+            echo "Une erreur est survenue";
         }
     }
 }

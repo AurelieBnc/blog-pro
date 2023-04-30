@@ -24,12 +24,16 @@ class Model extends Db
             // requête préparée
             $query = $this->db->prepare($sql);
             $query->execute($attributs);
-            $this->last_id = $this->db->lastInsertId();
+            if($this->db->lastInsertId()) {
+                $this->last_id = $this->db->lastInsertId();
+            }
             return $query;
         } else {
             //Requête simple
             $query = $this->db->query($sql);
-            $this->last_id = $this->db->lastInsertId();
+            if($this->db->lastInsertId()) {
+                $this->last_id = $this->db->lastInsertId();
+            }
             return $query;
         }
     }
