@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Entity\User;
+use PHPMailer\PHPMailer\PHPMailer;
 
 /**
  * Controlleur du système de connexion
@@ -43,6 +44,7 @@ Class RegisterController extends AbstractController
             {
                 $_SESSION['logVisitor'] = false;
                 $_SESSION['pseudo'] = $user['pseudonym'];
+                $_SESSION['id'] = $user['id'];
 
 
                 // Vérification du role de l'utilisateur et redirection
@@ -90,9 +92,10 @@ Class RegisterController extends AbstractController
         // todo :  vérifier que le pseudo existe déjà
         // todo : vérficiation de l'utilisateur par mail + mdp oublié
         // fix : ne reconnais pas la colonne max files
-
+        // todo : sécurisation des données entrées par l'utilisateur avec  'firstname' => htmlspecialcchars($_POST['firstname']),
         $user = new User;
         $user_exist = null;
+        $file = null;
 
         /**
          * Nous déterminons si l'utilisateur existe déjà avec cette adresse mail
@@ -123,7 +126,8 @@ Class RegisterController extends AbstractController
                 ['session' => $_SESSION],
             ]
         );
-        } else {
+
+        } elseif (isset($_FILES['avatar']) && $_FILES['avatar']['error'] !== 4 ) {
 
             /**
              * gestion de l'image d'avatar
@@ -149,7 +153,11 @@ Class RegisterController extends AbstractController
                 //todo détaillé les erreurs
                 echo "Mauvaise extension, taille trop grande ou une erreur est survenue";
             }
+            return $file;
+        }
 
+        if (!$user_exist)
+        {
             /**
              * création de l'utilisateur
              */
@@ -162,10 +170,41 @@ Class RegisterController extends AbstractController
                 ->setEmail($_POST['email'])
                 ->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT))
                 ->setRole('utilisateur')
-                ->setIs_verified('0')
-                ->setAvatar($file);
+                ->setIs_verified('0');
 
-            $model->create($user);
+            if($file)
+            {
+                $user = $model->setAvatar($file);
+            }
+
+            //$model->create($user);
+
+            //sendMail($_POST['email']);
+
+            //Create a new PHPMailer instance
+            $mail = new PHPMailer();
+            //Set who the message is to be sent from
+            $mail->setFrom('aurelie.beninca@gmail.com', 'John Doe');
+            //Set an alternative reply-to address
+            $mail->addReplyTo('replyto@example.com', 'First Last');
+            //Set who the message is to be sent to
+            $mail->addAddress($_POST['email']);
+            //Set the subject line
+            $mail->Subject = 'PHPMailer mail() test';
+            //Read an HTML message body from an external file, convert referenced images to embedded,
+            //convert HTML into a basic plain-text alternative body
+            $mail->msgHTML(file_get_contents(ROOT.'/src/Templates/home/contents.html'));
+            //Replace the plain text body with one created manually
+            $mail->AltBody = 'This is a plain-text message body';
+            //Attach an image file
+            // $mail->addAttachment('images/phpmailer_mini.png');
+
+            //send the message, check for errors
+            if (!$mail->send()) {
+                echo 'Mailer Error: ' . $mail->ErrorInfo;
+            } else {
+                echo 'Message sent!';
+            }
 
             return $this->twig->display('register/confirmRegister.twig', ['ROOT' => $this->root, 'session' => $_SESSION]);
         }

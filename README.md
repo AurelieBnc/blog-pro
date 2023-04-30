@@ -16,6 +16,9 @@ cd blog-pro
 
 ### Taper les commandes suivantes :
 
+(twig)
+(composer require twig/intl-extra)
+
 ```
 composer install
 ```

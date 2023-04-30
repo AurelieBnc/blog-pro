@@ -58,5 +58,75 @@
     </div>
 </section>
 
+{# register form #}
+<section class="py-5">
+    <div class="container mb-2">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <h2 class="text-center fs-3 mb-5" title="Donner votre avis"> Rejoignez nous !
+                </h2>
+
+                <form name="register" id="RegisterForm" novalidate>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="name" required
+                            data-validation-required-message="Merci d'entrer votre nom."
+                            title="Veuillez renseigner votre nom">
+                        <p class="help-block text-danger"></p>
+                        <label for="floatingInput">Nom</label>
+                    </div>
+
+                    <div class="form-floating mb-3 controls">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="firstname" required
+                            data-validation-required-message="Please enter your name."
+                            title="Veuillez renseigner votre prénom">
+                        <label for="floatingInput">Prénom</label>
+                    </div>
+                    <div class="form-floating mb-3 controls">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="nickname" required
+                            data-validation-required-message="Please enter your nickname."
+                            title="Veuillez renseigner votre surnom">
+                        <label for="floatingInput">Surnom</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+                            title="Veuillez renseigner votre email">
+                        <label for="floatingInput">Adresse email</label>
+                    </div>
+                    <div class="form-floating mb-3 controls">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="password" required
+                            data-validation-required-message="Please enter your password."
+                            title="Veuillez renseigner un mot de passe">
+                        <label for="floatingInput">Mot de passe</label>
+                    </div>
+                    <div class="form-floating mb-3 controls">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="ConfirmedPassword"
+                            required data-validation-required-message="Please confirm your password."
+                            title="Veuillez confirmer votre mot de passe">
+                        <label for="floatingInput">Confirmation du mot de passe</label>
+                    </div>
+                    <div class="form-control mb-3 controls">
+                        <label class="mb-2" for="avatar">Vous pouvez télécharger un avatar</label>
+                        <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
+                        <input type="file" class="form-control mb-2" id="avatar" placeholder="avatar" required
+                            data-validation-required-message="Vous pouvez télécharger un avatar"
+                            accept="image/png, image/jpeg" title="Vous pouvez télécharger un avatar">
+                    </div>
+                    <br>
+
+                    <div id="success"></div>
+                    <div class="form-group text-center d-flex justify-content-between">
+                        <button type="submit" class="btn btn-outline-secondary" id="sendMessageButton"
+                            title="Envoyer">Envoyer</button>
+                        <button type="reset" class="btn btn-outline-secondary" id="resetMessageButton"
+                            title="Réinitialiser">Réinitialiser</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+
 {% endblock content %}
 {% endblock body %}
