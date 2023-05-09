@@ -121,6 +121,25 @@ Class RegisterController extends AbstractController
             echo "veuillez entre votre email";
         }
 
+        if ( !empty($_POST['pseudonym']) )
+        {
+            $datas = [
+                'firstname' => $_POST['firstname'],
+                'lastname' => $_POST['lastname'],
+                'email' => $_POST['email'],
+                'pseudonym' => $_POST['pseudonym']
+            ];
+
+            $users = $user->findBy($datas);
+            foreach ($users as $user) {
+                if ($user['pseudonym'] === $_POST['pseudonym']) {
+                    echo 'Ce nom d\'utilisateur est déjà pris.';
+                }
+            }
+        } else {
+            echo "veuillez entre votre pseudonym";
+        }
+
         if ($user_exist) {
             return $this->twig->display('register/userExist.twig',
                 [

@@ -31,9 +31,11 @@
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link {{ activeClass('post') }}" aria-current="page"
                             href="{{ ROOT }}index.php?p=post" title="Posts">Posts</a></li>
+                    {% if session.logVisitor is same as true %}
                     <li class="nav-item"><a class="nav-link {{ activeClass('register') }}" href="{{ ROOT }}index.php?p=register"
                             title="Connexion">Connexion</a>
                     </li>
+                    {% endif %}
                     {% if session.logVisitor is same as false %}
                     <li class="nav-item"><a class="nav-link" href="{{ ROOT }}index.php?p=register/logout" title="Déconnexion">Déconnexion</a></li>
                     {% endif %}
@@ -98,6 +100,7 @@
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
     {# Core theme JS#}
+    <script src="{{ ROOT }}js/jquery-3.6.4.min.js"></script>
     <script src="{{ ROOT }}js/scripts.js"></script>
 
     {% block javascripts %}
