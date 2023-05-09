@@ -11,6 +11,7 @@ class Model extends Db
 
     //Instance de Db
     private $db;
+    private $last_id = null;
 
     public function runQuery(string $sql, array $attributs = null)
     {
@@ -23,11 +24,23 @@ class Model extends Db
             // requête préparée
             $query = $this->db->prepare($sql);
             $query->execute($attributs);
+            if($this->db->lastInsertId()) {
+                $this->last_id = $this->db->lastInsertId();
+            }
             return $query;
         } else {
             //Requête simple
-            return $this->db->query($sql);
+            $query = $this->db->query($sql);
+            if($this->db->lastInsertId()) {
+                $this->last_id = $this->db->lastInsertId();
+            }
+            return $query;
         }
+    }
+
+    public function lastId()
+    {
+        return $this->last_id;
     }
 
     //READ

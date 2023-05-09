@@ -14,9 +14,23 @@
                 <p class="blockquote-footer d-flex justify-content-end pt-5">Mise à jour le {{ post.update_date |
                     date("d/m/Y",
                     "Europe/Paris") }}</p>
+                {# btn de modération - todo ajouter un hover#}
+                {% if session.logUser is same as 'admin' %}
+                <div class="d-flex justify-content-end me-2">
+                    <div class="p-1 ">
+                        <a class=" btn btn-darkblue " href="#!" title="Modifier l'article"><i class="fas fa-edit"></i></a>
+                    </div>
+                    <div class="p-1 ">
+                        <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?')"
+                        class=" btn btn-darkblue " href="#!" title="Supprimer l'article"><i class="fas fa-trash"></i></a>
+                    </div>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
+
+
 </section>
 
 {# comments list #}
@@ -51,10 +65,14 @@
                     </div>
                     {# btn de modération #}
                     <div class="d-flex justify-content-end me-2">
+                        {% if session.logUser is same as 'admin' %}
                         <div class="p-2 ">
                             <a class=" btn btn-darkblue " href="#!" title="Valider le commentaire"><i
                                     class="fas fa-regular fa-square-check alert-success "></i></a>
                         </div>
+                        {% endif %}
+                        {# todo : ajout d'une condition si sessionUserId = comment.id_user #}
+                        {% if session.logUser is same as 'admin' %}
                         <div class="p-2 ">
                             <a class=" btn btn-darkblue " href="#!" title="Modifier le commentaire"><i
                                     class="fas fa-edit"></i></a>
@@ -64,6 +82,7 @@
                                 class=" btn btn-darkblue " href="#!" title="Supprimer le commentaire"><i
                                     class="fas fa-trash"></i></a>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -108,6 +127,7 @@
 </section>
 
 {# comments form #}
+{% if session.logVisitor is same as false %}
 <section class="py-5">
     <div class="container mb-2">
         <div class="row justify-content-center">
@@ -166,5 +186,5 @@
         </div>
     </div>
 </section>
-
+{% endif %}
 {% endblock %}

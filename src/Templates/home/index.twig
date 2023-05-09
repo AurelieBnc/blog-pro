@@ -4,9 +4,9 @@
 
 {% block content %}
 {# Header - set the background image for the header in the line below #}
-<header class="py-5 bg-image-full" style="background-image: url('../public/images/background/blackwaves.jpg')">
+<header class="py-5 bg-image-full" style="background-image: url('{{ ROOT }}images/background/blackwaves.jpg')">
     <div class="text-center my-5">
-        <img class="img-fluid rounded-circle mb-4" src="../public/images/avatar/myavatar2.png" alt="..." />
+        <img class="img-fluid rounded-circle mb-4" src="{{ ROOT }}images/avatar/myavatar2.png" alt="..." />
         <h1 class="text-white fs-3 fw-bolder">Beninca Aurélie</h1>
         <p class="text-white-50 mb-0">Phrase d'accroche</p>
     </div>
@@ -22,7 +22,7 @@
                 <p class="mb-0">The universe is almost 14 billion years old, and, wow! Life had no problem starting
                     here on Earth! I think it would be inexcusably egocentric of us to suggest that we're alone in
                     the universe.</p>
-                <a class="mt-5 d-flex justify-content-end" href="../public/images/CV_2022-03-03_Aurélie_BENINCA D.pdf"
+                <a class="mt-5 d-flex justify-content-end" href="{{ ROOT }}images/CV_2022-03-03_Aurélie_BENINCA D.pdf"
                     target="_blank" id="CV-link" download="CV.pdf"><i class="fa-solid fa-rocket px-2"></i> Mon Cv en
                     PDF</a>
             </div>

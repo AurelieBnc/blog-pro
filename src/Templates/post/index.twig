@@ -26,17 +26,17 @@
                                 suite ...</a></p>
                     </div>
                     {# btn de modération - todo ajouter un hover #}
+                    {% if session.logUser is same as 'admin' %}
                     <div class="d-flex justify-content-end me-2">
                         <div class="p-1 ">
-                            <a class=" btn btn-darkblue " href="#!" title="Modifier l'article"><i
-                                    class="fas fa-edit"></i></a>
+                            <a class=" btn btn-darkblue " href="#!" title="Modifier l'article"><i class="fas fa-edit"></i></a>
                         </div>
                         <div class="p-1 ">
                             <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?')"
-                                class=" btn btn-darkblue " href="#!" title="Supprimer l'article"><i
-                                    class="fas fa-trash"></i></a>
+                                class=" btn btn-darkblue " href="#!" title="Supprimer l'article"><i class="fas fa-trash"></i></a>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
 
                 <div class="d-flex justify-content-center my-5">
@@ -44,6 +44,11 @@
                     <img src="../public/images/logo/origami.png" class="separation logo" alt="separation">
                     <img src="../public/images/logo/origami.png" class="separation2 logo" alt="separation small">
                 </div>
+
+                {% else %}
+
+                <p class="col-12 text-center alert ">Aucun article publié </p>
+
                 {% endfor %}
 
             </div>
@@ -51,4 +56,4 @@
     </div>
 </section>
 
-{% endblock %}
+{% endblock content %}

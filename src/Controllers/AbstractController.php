@@ -11,9 +11,21 @@ abstract Class AbstractController
     private $loader;
     protected $twig;
     private $page = 'home';
+    public $root;
 
     public function __construct()
     {
+        $this->root = 'http://localhost/blog-pro/public/';
+
+        //On démarre une session
+        session_start();
+
+        if (isset($_SESSION) && isset($_SESSION['hasLoggedIn']) && $_SESSION['hasLoggedIn'] === true) {
+            $_SESSION['logVisitor'] = false;
+        } else {
+            $_SESSION['logVisitor'] = true;
+        }
+
         //Set the folder containing templates
         $this->loader = new FilesystemLoader(__DIR__.'/../Templates');
 
@@ -24,6 +36,7 @@ abstract Class AbstractController
             'auto-reload' => true,
             // 'strict_variables' => true,
             'charset' => 'utf-8',
+            // 'ROOT' => 'http://localhost/blog-pro/public/',
         ]);
 
         //Current page name setting

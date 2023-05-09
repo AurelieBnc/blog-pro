@@ -8,29 +8,38 @@ use App\Entity\ContactForm;
  */
 Class HomeController extends AbstractController
 {
+    public function __construct() {
+        parent::__construct();
+    }
+
     public function index()
     {
-        $this->twig->display('home/index.twig');
+        $this->twig->display('home/index.twig', ['session' => $_SESSION]);
     }
 
     public function contact()
     {
-
         if(!empty($_POST))
         {
-            $this->twig->display('home/contact.twig',[
+            $model = new ContactForm;
+            $contactForm = $model->hydrate($_POST);
+            $model->create($contactForm);
+
+            return $this->twig->display('home/contact.twig',[
             'lastname' => $_POST['lastname'],
             'firstname' => $_POST['firstname'],
             'contentFormContact' => $_POST['content'],
             'email' => $_POST['email'],
+            'ROOT' => $this->root
             ]);
 
-            $model = new ContactForm;
-            $contactForm = $model->hydrate($_POST);
-            $model->create($contactForm);
         }
 
-        $this->twig->display('partial/pageFormError.twig');
+        return $this->twig->display('partial/pageFormError.twig');
     }
 
+    public function userPage()
+    {
+        return $this->twig->display('home/userPage.twig', [ 'session' => $_SESSION]);
+    }
 }
