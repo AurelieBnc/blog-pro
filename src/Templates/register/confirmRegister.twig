@@ -6,8 +6,16 @@
 <h1>Bienvenue !</h1>
 <p>Vous avez bien créer votre compte</p>
 {% block content %}
+
+{% if mailType is same as 1 %}
 <p>Un mail vous a été envoyé afin de confirmer votre compte.</p>
 <p>Votre compte doit être vérifié afin d'avoir la possibilité de commenter et d'accéder à votre espace personnel.</p>
-{# {% include "post/index.twig" %} #}
+{% endif %}
+
+{% if mailType is same as 2 %}
+<p>Un mail vous a été envoyé afin de confirmer votre nouvelle adresse mail.</p>
+<p>Votre adresse mail doit être vérifiée afin d'avoir de nouveau la possibilité de commenter et d'accéder à votre espace personnel.</p>
+{% endif %}
+
 {% endblock content %}
 {% endblock body %}
