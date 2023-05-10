@@ -18,7 +18,11 @@ Class HomeController extends AbstractController
     public function index()
     {
         $model = new User;
-        $user = $model->find($_SESSION['id']);
+        $user = new User;
+        if(isset($_SESSION['id'])){
+            $user = $model->find($_SESSION['id']);
+        }
+
         $this->twig->display('home/index.twig', ['user' => $user, 'ROOT' => $this->root,'session' => $_SESSION]);
     }
 

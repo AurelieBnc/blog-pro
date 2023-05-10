@@ -136,13 +136,12 @@ class Model extends Db
             }
 
         }
-        $valeurs[] = $id;
 
         //On transforme le tableau champts en une chaine de caractéres
         $list_champs= implode(', ', $champs);
 
         //On exédute la requête
-        return $this->runQuery('UPDATE '.$this->table.' SET '. $list_champs.' WHERE id = ?', $valeurs);
+        return $this->runQuery('UPDATE '.$this->table.' SET '. $list_champs.' WHERE id = '.$id, $valeurs);
     }
 
     //DELETE
