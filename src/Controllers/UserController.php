@@ -10,8 +10,8 @@ use App\Entity\User;
  */
 Class UserController extends AbstractController
 {
-    public function editAvatar() {
-
+    public function editAvatar()
+    {
         $file = null;
         $idUser = $_SESSION['id'];
         $editUser = new User;
@@ -59,8 +59,8 @@ Class UserController extends AbstractController
         }
     }
 
-    public function editUserDatas() {
-
+    public function editUserDatas()
+    {
         $model = new User;
         $idUser = $_SESSION['id'];
         $editUser = new User;
@@ -123,6 +123,64 @@ Class UserController extends AbstractController
             $userDatas = $model->find($_SESSION['id']);
 
             return $this->twig->display('home/userPage.twig', ['comments' => $comments,'user' => $userDatas,'ROOT' => $this->root, 'session' => $_SESSION]);
+        }
+    }
+
+    public function editPassword()
+    {
+        if (!empty($_POST['actualPassword']) && !empty($_POST['newPassword'])
+            && isset($_POST['actualPassword']) && isset($_POST['newPassword']))
+        {
+            $idUser = $_SESSION['id'];
+            $actualPassword = $_POST['actualPassword'];
+            $newPassword = $_POST['newPassword'];
+
+            $model = new User;
+            $user = $model->find($idUser);
+
+
+            if (password_verify( $actualPassword , $user['password']))
+            {
+                $token = $user->getToken();
+                $model = new User;
+                $user = $model
+                    ->setPassword(password_hash($newPassword, PASSWORD_BCRYPT))
+                    ->setIs_verified('0');
+                $model->update($idUser, $user);
+                $mailType = 2;
+
+                /**
+                 * Envoi du mail de confirmation
+                 */
+                $to   = $_POST['email'];
+                $from = $_ENV['USERMAILER'];
+                $name = 'Aurelie test blog-pro';
+                $subj = 'Confirmation de compte';
+                $msg = 'Bienvenue sur Blog-pro,
+
+                Pour activer votre nouvelle adresse mail, veuillez cliquer sur le lien ci-dessous
+                ou copier/coller dans votre navigateur Internet.
+
+                http://localhost/blog-pro/public/index.php?p=mailer/confirmMail/'.urlencode($idUser).'/'.urlencode($token).'
+
+                ---------------
+                Ceci est un mail automatique, Merci de ne pas y répondre.';
+                //$msg = 'http://localhost/blog-pro/template/home/contents.php?id=&';
+                //$msg = file_get_contents(ROOT.'/src/Templates/home/contents.html');
+                //$msg = ROOT.'/src/Templates/home/contents.html?id='.$_SESSION['id'].'&token='.$token;
+                $smtmailer = new MailerController;
+                $error = $smtmailer->smtpmailer($to, $from, $name, $subj, $msg);
+                echo "mail envoyé";
+
+                return $this->twig->display('register/confirmRegister.twig', ['mailtype' => $mailType,'ROOT' => $this->root, 'session' => $_SESSION]);
+            }
+
+            $comment = new Comment;
+            $userDataComment = ['id_user' => $idUser];
+            $comments = $comment->findBy($userDataComment);
+
+            return $this->twig->display('home/userPage.twig', ['comments' => $comments,'user' => $user,'ROOT' => $this->root, 'session' => $_SESSION]);
+
         }
     }
 }
