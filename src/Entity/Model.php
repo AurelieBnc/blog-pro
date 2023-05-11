@@ -121,7 +121,7 @@ class Model extends Db
     }
 
     //UPDATE
-    public function update(int $id, Model $model)
+    public function update(string $id, Model $model)
     {
         $champs = [];
         $valeurs= [];
@@ -141,7 +141,7 @@ class Model extends Db
         $list_champs= implode(', ', $champs);
 
         //On exédute la requête
-        return $this->runQuery('UPDATE '.$this->table.' SET '. $list_champs.' WHERE id = '.$id, $valeurs);
+        return $this->runQuery('UPDATE '.$this->table.' SET '. $list_champs.' WHERE '.$id, $valeurs);
     }
 
     //DELETE

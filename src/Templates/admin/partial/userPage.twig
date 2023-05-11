@@ -42,7 +42,7 @@
                         <img src="{{ ROOT }}images/deco/compasreverse.jpg" class="separation logo " alt="separation " alt="">
                         <img src="{{ ROOT }}images/deco/compas.jpg" class="separation logo " alt="separation " alt="">
                     </div>
-                    <form  method="POST" action="user/editUserDatas" name="editUserDatas" id="editUserDatasForm" classe="p-3">
+                    <form  method="POST" action="user/editUserDatas" name="editUserDatas" id="editUserDatasForm" classe="p-3" novalidate>
                         <div class="form-floating controls mb-3 col-lg-10 mx-auto ">
                             <input type="text" class="form-control " id="floatingInput" placeholder="name" name="lastname" required
                                 data-validation-required-message="Merci d'entrer votre nom."
@@ -123,13 +123,12 @@
                     <!--todo : truncate +lien vers le commentaire + condition si validé ou non (color)-->
                     <img src="{{ ROOT }}images/deco/bookline.jpg" class="separation logo" alt="separation " alt="">
                     <li class=" list-inline-item px-4">
-                        <a href="" id="title-link" class="text-decoration-none lead p-0">
-                            {% for post in posts %}
-                                {% if comment.id_post is same as post.id %}
-                                    {{ post.title }}
-                                {% endif %}
-                            {% endfor %}
-                        </a>
+                    {% for post in posts %}
+                        {% if comment.id_post is same as post.id %}
+                        <a href="index.php?p=post/retailPost/{{post.id}}" id="title-link" class="text-decoration-none lead p-0">
+                            {{ post.title }}</a>
+                        {% endif %}
+                    {% endfor %}
                         <p class="mt-3 mb-0">{{ comment.content }}</p>
                         <p class="m-0  blockquote-footer text-end ">le {{ comment.update_date }} </p>
                     </li>

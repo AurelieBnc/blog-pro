@@ -45,8 +45,9 @@ Class UserController extends AbstractController
         }
 
         if ($file !== null) {
+            $id = "id = ".$idUser;
             $editUser = $model->setAvatar($file);
-            $model->update($idUser,$editUser);
+            $model->update($id, $editUser);
             echo "avatar mise à jour";
             $editdUserDatas = $model->find($_SESSION['id']);
 
@@ -61,6 +62,7 @@ Class UserController extends AbstractController
 
     public function editUserDatas()
     {
+        var_dump($_POST['lastname']);
         $model = new User;
         $idUser = $_SESSION['id'];
         $editUser = new User;
@@ -72,10 +74,12 @@ Class UserController extends AbstractController
 
         if (isset($_POST['email']) && !empty($_POST['email'])) {
             $datas = ['email' => $_POST['email']];
+            $editUser = $model->setEmail($_POST['email']);
         }
 
         if (isset($_POST['pseudonym']) && !empty($_POST['pseudonym'])) {
             $datas = ['pseudonym' => $_POST['pseudonym']];
+            $editUser = $model->setPseudonym($_POST['pseudonym']);
         }
 
         if (isset($_POST['lastname']) && !empty($_POST['lastname'])) {
@@ -89,7 +93,7 @@ Class UserController extends AbstractController
         if (isset($_POST['pseudonym']) && !empty($_POST['pseudonym'])) {
             $users = $model->findBy($datas);
             foreach ($users as $user) {
-                if ($user['pseudonym'] === $_POST['pseudonym']) {
+                if ($user['pseudonym'] === $_POST['pseudonym'] && $_POST['pseudonym'] !== null) {
                     echo 'Ce nom d\'utilisateur est déjà pris.';
                 } else {
                     $editUser = $model->setPseudonym($_POST['pseudonym']);
@@ -102,18 +106,18 @@ Class UserController extends AbstractController
         if (isset($_POST['email']) && !empty($_POST['email'])) {
             $users = $model->findBy($datas);
             foreach ($users as $user) {
-                if ($user['email'] === $_POST['email']) {
+                if ($user['email'] === $_POST['email'] && $_POST['email'] !== null ) {
                     echo 'Cet email est déjà associé à un compte.';
                 } else {
                     $editUser = $model->setEmail($_POST['email']);
                     echo "email ok";
                 }
             }
-            echo "Cet email est déjà associé à un compte";
         }
 
-        if (!empty($datas)) {
-            $model->update($idUser, $editUser);
+        if (!empty($editUser)) {
+            $id = "id = ".$idUser;
+            $model->update($id, $editUser);
             echo "données bien mise à jour";
             $editdUserDatas = $model->find($_SESSION['id']);
 
@@ -141,12 +145,13 @@ Class UserController extends AbstractController
 
             if (password_verify( $actualPassword , $user['password']))
             {
+                $id = "id = ".$idUser;
                 $token = $user->getToken();
                 $model = new User;
                 $user = $model
                     ->setPassword(password_hash($newPassword, PASSWORD_BCRYPT))
                     ->setIs_verified('0');
-                $model->update($idUser, $user);
+                $model->update($id, $user);
                 $mailType = 2;
 
                 /**
@@ -187,12 +192,23 @@ Class UserController extends AbstractController
     public function deleteUser()
     {
         $idUser = $_SESSION['id'];
-        $model = new User;
-        $user = $model->find($idUser);
+        $modelUser = new User;
+        $user = $modelUser->find($idUser);
 
         if (password_verify( $_POST['password'] , $user['password']))
         {
-            $model->delete($idUser);
+            //anonnymisation des commentaires
+            $data = ['id_user'=> $idUser];
+            $modelComment = new Comment;
+            $listComments = $modelComment->findBy($data);
+
+            foreach ( $listComments as $comment ) {
+                $id = "id_user = ".$idUser;
+                $comment = $modelComment->setId_user(2);
+                $comment = $modelComment->update($id, $comment );
+            }
+
+            $modelUser->delete($idUser);
 
             //destruction de la session existante + reinitialisation des variables de Session
             session_destroy();
