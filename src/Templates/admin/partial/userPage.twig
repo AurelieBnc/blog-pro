@@ -20,7 +20,7 @@
                         {% endif %}
                         alt="..." />
 
-                        <form class="col-lg-6 mt-5" method="POST" action="user/editAvatar" name="editAvatar" id="editAvatarForm" enctype= "multipart/form-data" novalidate>
+                        <form class="col-lg-6 mt-5" method="POST" action="user/editAvatar" name="editAvatar" id="editAvatarForm" enctype= "multipart/form-data">
                             <div class="form-control controls mt-5">
                                 <label class="mb-2" for="avatar">Vous pouvez télécharger un avatar</label>
                                 {# <input type="hidden" name="MAX_FILE_SIZE" value="1048576" /> #}
@@ -42,7 +42,7 @@
                         <img src="{{ ROOT }}images/deco/compasreverse.jpg" class="separation logo " alt="separation " alt="">
                         <img src="{{ ROOT }}images/deco/compas.jpg" class="separation logo " alt="separation " alt="">
                     </div>
-                    <form  method="POST" action="user/editUserDatas" name="editUserDatas" id="editUserDatasForm" classe="p-3" novalidate>
+                    <form  method="POST" action="user/editUserDatas" name="editUserDatas" id="editUserDatasForm" classe="p-3">
                         <div class="form-floating controls mb-3 col-lg-10 mx-auto ">
                             <input type="text" class="form-control " id="floatingInput" placeholder="name" name="lastname" required
                                 data-validation-required-message="Merci d'entrer votre nom."
@@ -75,7 +75,6 @@
                     </form>
                 </div>
                 <div>
-
                     <h3 class="ps-2 mt-5 mb-3 text-center">Modification du mot de passe</h3>
                     <div class="d-flex justify-content-between">
                         <img src="{{ ROOT }}images/deco/compasreverse.jpg" class="separation logo " alt="separation "
@@ -102,53 +101,39 @@
                         </div>
                     </form>
                 </div>
+                <div>
+                    <form method="POST" action="user/deleteUser" name="deleteUser" id="deleteUserForm" class="row g-3 ps-5">
+                        <div class="col-auto">
+                          <input type="password" class="form-control my-5" id="inputPassword2" placeholder="Mot de passe" name="password" required>
+                        </div>
+                        <div class="col-auto">
+                          <button type="submit" class="btn btn-danger my-5">SUPPRIMER MON COMPTE *</button>
+                        </div>
+                    </form>
+                    <p class="blockquote-footer px-3" for="floatingInput">* En cliquant j'ai conscience que mon compte sera définitivement supprimé et mes commentaires rendus anonymes</p>
+                </div>
             </div>
 
             {# aside - personal comments #}
-            {% set role = null %}
-            {% if user.role is same as "admin" %}
-                {% set role = "admin" %}
-            {% else %}
-                {% set role = "utilisateur" %}
-            {% endif %}
 
             <aside class=" col-lg-4 rounded-3 shadow-lg mt-5 mb-3 ms-1 p-0">
                 <ul class="p-0">
-                    <h3 class="ps-2 text-center my-3">
-                        {% if role is same as "admin" %}
-                            Mes articles
-                        {% else %}
-                            Mes commentaires
-                        {% endif %}
-                    </h3>
-                    {% if role is same as "admin" %}
-                        {% for post in posts %}
-                        <!--todo : truncate +lien vers le commentaire + condition si validé ou non (color)-->
-                        <img src="{{ ROOT }}images/deco/bookline.jpg" class="separation logo" alt="separation " alt="">
-                        <li class=" list-inline-item px-4">
-                            <a href="" id="title-link" class="text-decoration-none lead p-0">{{ post.title }}</a>
-                            <p class="mt-3 mb-0">{{ post.lead }}</p>
-                            <p class="m-0  blockquote-footer text-end ">le {{ post.update_date }} </p>
-                        </li>
-                        {% endfor %}
-                    {% else %}
-                        {% for comment in comments %}
-                        <!--todo : truncate +lien vers le commentaire + condition si validé ou non (color)-->
-                        <img src="{{ ROOT }}images/deco/bookline.jpg" class="separation logo" alt="separation " alt="">
-                        <li class=" list-inline-item px-4">
-                            <a href="" id="title-link" class="text-decoration-none lead p-0">
-                                {% for post in posts %}
-                                    {% if comment.id_post is same as post.id %}
-                                        {{ post.title }}
-                                        {% endif %}
-                                {% endfor %}
-                            </a>
-                            <p class="mt-3 mb-0">{{ comment.content }}</p>
-                            <p class="m-0  blockquote-footer text-end ">le {{ comment.update_date }} </p>
-                        </li>
-                        {% endfor %}
-                    {% endif %}
-
+                    <h3 class="ps-2 text-center my-3">Mes commentaires</h3>
+                    {% for comment in comments %}
+                    <!--todo : truncate +lien vers le commentaire + condition si validé ou non (color)-->
+                    <img src="{{ ROOT }}images/deco/bookline.jpg" class="separation logo" alt="separation " alt="">
+                    <li class=" list-inline-item px-4">
+                        <a href="" id="title-link" class="text-decoration-none lead p-0">
+                            {% for post in posts %}
+                                {% if comment.id_post is same as post.id %}
+                                    {{ post.title }}
+                                {% endif %}
+                            {% endfor %}
+                        </a>
+                        <p class="mt-3 mb-0">{{ comment.content }}</p>
+                        <p class="m-0  blockquote-footer text-end ">le {{ comment.update_date }} </p>
+                    </li>
+                    {% endfor %}
                 </ul>
             </aside>
         </div>

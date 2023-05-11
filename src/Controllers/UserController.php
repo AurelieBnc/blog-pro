@@ -183,4 +183,25 @@ Class UserController extends AbstractController
 
         }
     }
+
+    public function deleteUser()
+    {
+        $idUser = $_SESSION['id'];
+        $model = new User;
+        $user = $model->find($idUser);
+
+        if (password_verify( $_POST['password'] , $user['password']))
+        {
+            $model->delete($idUser);
+
+            //destruction de la session existante + reinitialisation des variables de Session
+            session_destroy();
+            $_SESSION['logVisitor'] = true;
+            $_SESSION['hasLoggedIn'] = false;
+
+            return $this->twig->display('home/index.twig', ['ROOT' => $this->root, 'session' => $_SESSION]);
+
+        }
+        echo "mot de passe incorrect";
+    }
 }
