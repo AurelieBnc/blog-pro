@@ -1,0 +1,140 @@
+<section class="py-5">
+    <div class="container p-0 mt-5 mb-3">
+        <div class="row d-flex justify-content-between m-0 p-0">
+            {# personal datas #}
+            <div class=" col-lg-7 rounded-3 shadow-lg mt-5 mb-3 me-1 p-0 ">
+                <div class="row">
+                    <h3 class="ps-2 my-5 text-center">Edition de l'avatar</h3>
+                    <div class="d-flex justify-content-between">
+                        <img src="{{ ROOT }}images/deco/compasreverse.jpg" class="separation logo " alt="separation "
+                            alt="">
+                        <img src="{{ ROOT }}images/deco/compas.jpg" class="separation logo " alt="separation " alt="">
+                    </div>
+
+                    <div class="row p-3">
+                        <img class="col-lg-5 img-fluid rounded-circle ms-3 mb-4"
+                        {% if user.avatar is not null %}
+                            src="{{ ROOT }}images/avatar_upload/{{ user.avatar }}"
+                        {% else %}
+                            src="{{ ROOT }}images/avatar/default-avatar.png"
+                        {% endif %}
+                        alt="..." />
+
+                        <form class="col-lg-6 mt-5" method="POST" action="user/editAvatar" name="editAvatar" id="editAvatarForm" enctype= "multipart/form-data">
+                            <div class="form-control controls mt-5">
+                                <label class="mb-2" for="avatar">Vous pouvez télécharger un avatar</label>
+                                {# <input type="hidden" name="MAX_FILE_SIZE" value="1048576" /> #}
+                                <input type="file" class="form-control mb-2" id="avatar" name="avatar" placeholder="avatar"
+                                    accept="image/png, image/jpeg" title="Vous pouvez télécharger un avatar">
+                            </div>
+                            <div class="form-group text-center my-3">
+                                <button type="submit" class="btn btn-outline-secondary " id="sendMessageButton"
+                                    title="Envoyer">Sauvegarder</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="ps-2 mt-5 mb-3 text-center">Informations du compte</h3>
+                    <div class="d-flex justify-content-between">
+                        <img src="{{ ROOT }}images/deco/compasreverse.jpg" class="separation logo " alt="separation " alt="">
+                        <img src="{{ ROOT }}images/deco/compas.jpg" class="separation logo " alt="separation " alt="">
+                    </div>
+                    <form  method="POST" action="user/editUserDatas" name="editUserDatas" id="editUserDatasForm" classe="p-3" novalidate>
+                        <div class="form-floating controls mb-3 col-lg-10 mx-auto ">
+                            <input type="text" class="form-control " id="floatingInput" placeholder="name" name="lastname" required
+                                data-validation-required-message="Merci d'entrer votre nom."
+                                title="Veuillez renseigner votre nom">
+                            <p class="help-block text-danger"></p>
+                            <label for="floatingInput">{{ user.lastname }}</label>
+                        </div>
+
+                        <div class="form-floating mb-3 controls col-lg-10 mx-auto">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="firstname" name="firstname" required
+                                data-validation-required-message="Please enter your name."
+                                title="Veuillez renseigner votre prénom">
+                            <label for="floatingInput">{{ user.firstname }}</label>
+                        </div>
+                        <div class="form-floating mb-3 controls col-lg-10 mx-auto">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="nickname" name="pseudonym" required
+                                data-validation-required-message="Please enter your nickname."
+                                title="Veuillez renseigner votre surnom">
+                            <label for="floatingInput">{{ user.pseudonym }}</label>
+                        </div>
+                        <div class="form-floating mb-3 col-lg-10 mx-auto">
+                            <input type="email" class="form-control " id="floatingInput" name="email" placeholder="name@example.com"
+                                title="Veuillez renseigner votre email">
+                            <label for="floatingInput">{{ user.email }}</label>
+                        </div>
+                        <div class="form-group text-center my-3">
+                            <button type="submit" class="btn btn-outline-secondary my-5" id="sendMessageButton"
+                                title="Envoyer">Sauvegarder</button>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <h3 class="ps-2 mt-5 mb-3 text-center">Modification du mot de passe</h3>
+                    <div class="d-flex justify-content-between">
+                        <img src="{{ ROOT }}images/deco/compasreverse.jpg" class="separation logo " alt="separation "
+                            alt="">
+                        <img src="{{ ROOT }}images/deco/compas.jpg" class="separation logo " alt="separation " alt="">
+                    </div>
+                    <form method="POST" action="user/editPassword" name="editPassword" id="editPasswordForm">
+                        <div class="form-floating mb-3 controls col-lg-10 mx-auto">
+                            <input type="password" class="form-control" id="floatingInput" placeholder="password" name="actualPassword" required
+                                data-validation-required-message="Please enter your password."
+                                title="Veuillez renseigner un mot de passe">
+                            <label for="floatingInput">Mot de passe actuel</label>
+                        </div>
+                        <div class="form-floating mb-3 controls col-lg-10 mx-auto">
+                            <input type="password" class="form-control" id="floatingInput" placeholder="ConfirmedPassword" name="newPassword"
+                                required data-validation-required-message="Please confirm your password."
+                                title="Veuillez confirmer votre mot de passe">
+                            <label for="floatingInput">Nouveau mot de passe</label>
+                        </div>
+                        <div id="success"></div>
+                        <div class="form-group text-center my-3">
+                            <button type="submit" class="btn btn-outline-secondary my-5" id="sendMessageButton"
+                                title="Envoyer">Sauvegarder</button>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <form method="POST" action="user/deleteUser" name="deleteUser" id="deleteUserForm" class="row g-3 ps-5">
+                        <div class="col-auto">
+                          <input type="password" class="form-control my-5" id="inputPassword2" placeholder="Mot de passe" name="password" required>
+                        </div>
+                        <div class="col-auto">
+                          <button type="submit" class="btn btn-danger my-5">SUPPRIMER MON COMPTE *</button>
+                        </div>
+                    </form>
+                    <p class="blockquote-footer px-3" for="floatingInput">* En cliquant j'ai conscience que mon compte sera définitivement supprimé et mes commentaires rendus anonymes</p>
+                </div>
+            </div>
+
+            {# aside - personal comments #}
+
+            <aside class=" col-lg-4 rounded-3 shadow-lg mt-5 mb-3 ms-1 p-0">
+                <ul class="p-0">
+                    <h3 class="ps-2 text-center my-3">Mes commentaires</h3>
+                    {% for comment in comments %}
+                    <!--todo : truncate +lien vers le commentaire + condition si validé ou non (color)-->
+                    <img src="{{ ROOT }}images/deco/bookline.jpg" class="separation logo" alt="separation " alt="">
+                    <li class=" list-inline-item px-4">
+                    {% for post in posts %}
+                        {% if comment.id_post is same as post.id %}
+                        <a href="index.php?p=post/retailPost/{{post.id}}" id="title-link" class="text-decoration-none lead p-0">
+                            {{ post.title }}</a>
+                        {% endif %}
+                    {% endfor %}
+                        <p class="mt-3 mb-0">{{ comment.content }}</p>
+                        <p class="m-0  blockquote-footer text-end ">le {{ comment.update_date }} </p>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </aside>
+        </div>
+    </div>
+</section>

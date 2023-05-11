@@ -1,7 +1,10 @@
 <?php
 namespace App\Controllers;
 
+use App\Entity\Comment;
 use App\Entity\ContactForm;
+use App\Entity\Post;
+use App\Entity\User;
 
 /**
  * controlleur de la page d'accueil
@@ -14,7 +17,13 @@ Class HomeController extends AbstractController
 
     public function index()
     {
-        $this->twig->display('home/index.twig', ['session' => $_SESSION]);
+        $model = new User;
+        $user = new User;
+        if(isset($_SESSION['id'])){
+            $user = $model->find($_SESSION['id']);
+        }
+
+        return $this->twig->display('home/index.twig', ['user' => $user, 'ROOT' => $this->root,'session' => $_SESSION]);
     }
 
     public function contact()
@@ -40,6 +49,22 @@ Class HomeController extends AbstractController
 
     public function userPage()
     {
-        return $this->twig->display('home/userPage.twig', [ 'session' => $_SESSION]);
+        if (!empty($_SESSION['id'])) {
+            $model = new User;
+            $user = $model->find($_SESSION['id']);
+            $userData = ['id_user' =>$_SESSION['id']];
+
+            $post = new Post;
+            $posts = $post->findAll();
+
+            $comment = new Comment;
+            $comments = $comment->findBy($userData);
+
+            return $this->twig->display('home/userPage.twig', ['comments' => $comments, 'posts' => $posts, 'user' => $user, 'ROOT' => $this->root, 'session' => $_SESSION]);
+        } else {
+
+            return $this->twig->display('register/index.twig', ['ROOT' => $this->root, 'session' => $_SESSION]);
+        }
+
     }
 }

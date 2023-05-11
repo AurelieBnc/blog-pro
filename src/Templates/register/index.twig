@@ -62,7 +62,7 @@
                 <h2 class="text-center fs-3 mb-5" title="Donner votre avis"> Rejoignez nous !
                 </h2>
 
-                <form method="post" action="register/register" name="register" id="RegisterForm" enctype= "multipart/form-data">
+                <form method="POST" action="register/register" name="register" id="RegisterForm" enctype= "multipart/form-data">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInput" name="lastname" placeholder="nom"
                             data-validation-required-message="Merci d'entrer votre nom."
@@ -95,12 +95,12 @@
                             title="Veuillez renseigner un mot de passe" required>
                         <label for="floatingInput">Mot de passe</label>
                     </div>
-                    <div class="form-floating mb-3 controls">
+                    {# <div class="form-floating mb-3 controls">
                         <input type="password" class="form-control" id="floatingInput" name="confirmPassword" placeholder="ConfirmedPassword"
                             required data-validation-required-message="Merci de confirmer votre mot de passe."
                             title="Veuillez confirmer votre mot de passe" required>
                         <label for="floatingInput">Confirmation du mot de passe</label>
-                    </div>
+                    </div> #}
                     <div class="form-control mb-3 controls">
                         <label class="mb-2" for="avatar">Vous pouvez télécharger un avatar</label>
                         {# <input type="hidden" name="MAX_FILE_SIZE" value="1048576" /> #}
