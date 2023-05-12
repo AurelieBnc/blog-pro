@@ -115,7 +115,7 @@
                           <input type="password" class="form-control my-5" id="inputPassword2" placeholder="Mot de passe" name="password" required>
                         </div>
                         <div class="col-auto">
-                          <button type="submit" class="btn btn-danger my-5">SUPPRIMER MON COMPTE *</button>
+                          <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')" class="btn btn-danger my-5">SUPPRIMER MON COMPTE *</button>
                         </div>
                     </form>
                     <p class="blockquote-footer px-3" for="floatingInput">* En cliquant j'ai conscience que mon compte sera définitivement supprimé et mes commentaires rendus anonymes</p>
@@ -128,20 +128,24 @@
             <aside class=" col-lg-4 rounded-3 shadow-lg mt-5 mb-3 ms-1 p-0">
                 <ul class="p-0">
                     <h3 class="ps-2 text-center my-3">Mes commentaires</h3>
-                    {% for comment in comments %}
-                    <!--todo : truncate +lien vers le commentaire + condition si validé ou non (color)-->
-                    <img src="{{ ROOT }}images/deco/bookline.jpg" class="separation logo" alt="separation " alt="">
-                    <li class=" list-inline-item px-4">
-                    {% for post in posts %}
-                        {% if comment.id_post is same as post.id %}
-                        <a href="index.php?p=post/retailPost/{{post.id}}" id="title-link" class="text-decoration-none lead p-0">
-                            {{ post.title }}</a>
-                        {% endif %}
-                    {% endfor %}
-                        <p class="mt-3 mb-0">{{ comment.content }}</p>
-                        <p class="m-0  blockquote-footer text-end ">le {{ comment.update_date }} </p>
-                    </li>
-                    {% endfor %}
+                    {% if comments is not null or comment is not empty %}
+                        {% for comment in comments %}
+                        <!--todo : truncate +lien vers le commentaire + condition si validé ou non (color)-->
+                        <img src="{{ ROOT }}images/deco/bookline.jpg" class="separation logo" alt="separation " alt="">
+                        <li class=" list-inline-item px-4">
+                        {% for post in posts %}
+                            {% if comment.id_post is same as post.id %}
+                            <a href="index.php?p=post/retailPost/{{post.id}}" id="title-link" class="text-decoration-none lead p-0">
+                                {{ post.title }}</a>
+                            {% endif %}
+                        {% endfor %}
+                            <p class="mt-3 mb-0">{{ comment.content }}</p>
+                            <p class="m-0  blockquote-footer text-end ">le {{ comment.update_date }} </p>
+                        </li>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-center">Vous n'avez pas encore posté de commentaires !</p>
+                    {% endif %}
                 </ul>
             </aside>
         </div>

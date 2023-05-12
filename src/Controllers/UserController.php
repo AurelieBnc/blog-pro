@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Entity\Comment;
 use App\Entity\User;
+use App\Entity\Post;
 
 /**
  * Controlleur des users

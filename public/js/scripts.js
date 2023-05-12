@@ -11,7 +11,7 @@ window.addEventListener("DOMContentLoaded", function() {
     console.log("DOM entièrement chargé");
 
 
-///SYSTEME DE TABULATION///
+    ///SYSTEME DE TABULATION///
     // Mise en place d'un écouteur d'évènement "click" sur tous les boutons du système de tabulation
     $('.tab-container .tabs .tab').click(function(){
 
@@ -52,7 +52,7 @@ window.addEventListener("DOMContentLoaded", function() {
     //     console.log("viewOpen", viewOpen);
     //     viewOpen.classList.add('active');
 
-});
+    });
 
-  });
+});
 
