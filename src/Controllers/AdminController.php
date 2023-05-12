@@ -42,11 +42,11 @@ use App\Entity\User;
 
     public function newPost()
     {
-        $this->twig->display('admin/createPost.twig', ['session' => $_SESSION]);
+        $this->twig->display('admin/createPost.twig', ['ROOT' => $this->root,'session' => $_SESSION]);
     }
 
     public function manageUser()
     {
-        $this->twig->display('admin/manageUser.twig', ['session' => $_SESSION]);
+        $this->twig->display('admin/manageUser.twig', ['ROOT' => $this->root,'session' => $_SESSION]);
     }
 }
