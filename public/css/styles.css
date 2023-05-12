@@ -89,6 +89,108 @@ body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+/*page utilisateur*/
+.bg {
+  background-color: grey;
+  height: auto;
+
+}
+
+.bgb {
+  background-color: white;
+}
+
+a.CV-link,
+#title-link {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #939eae;
+  text-decoration: none;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-link {
+      transition: none;
+  }
+}
+
+a,
+.CV-link:hover,
+a .CV-link:focus,
+#title-link:hover,
+#title-link:focus {
+  color: black;
+
+}
+
+/*Système de tabulation du sous-Menu*/
+.tab-container .tabs {
+  display: flex;
+  flex-direction: row;
+}
+.tab-container .tabs .tab {
+  cursor: pointer;
+  padding: 5px 20px;
+  background-color: var(--darkcolor);
+  color: var(--light);
+  transition: all .2s ease;
+
+}
+.tab-container .tabs .tab.active {
+  background-color: var(--lightcolor);
+  color: var(--darkcolor);
+  cursor: auto;
+}
+.tab-container .views .view {
+  display: none;
+  background-color: var(--lightcolor);
+  color: var(--darkcolor);
+  padding: 5px 20px;
+  transition: all .2s ease;
+}
+.tab-container .views .view.active {
+  display: block;
+}
+/*div de présentation du blog*/
+.blog-describe{
+  height: auto;
+  width: 95%;
+  margin: auto;
+}
+/*date du header*/
+.blog-describe>header>p{
+  font-family: 'CormorantGaramond', Arial, Helvetica, sans-serif;
+  font-size: 1.5rem;
+}
+/*asides*/
+div.sticky-aside div.aside-content>ul>li{
+  list-style: none;
+}
+
+#blog-aside div.aside-content>ul>li>a{
+  text-decoration: none;
+  color: var(--darkcolor);
+}
+div.sticky-aside div.aside-content>ul>li>a:hover{
+  font-weight: bolder;
+  text-decoration: underline;
+}
+
+#blog-aside>aside>div.aside-content>div>article.aside>h4>a{
+  text-decoration: none;
+  color: var(--darkcolor);
+  font-size: 1.2rem;
+}
+#blog-aside>aside>div.aside-content>div>article.aside>h4>a:hover{
+  text-decoration: underline;
+}
+
+.separation-icon{
+  width: 50px;
+  margin:auto;
+}
+
 .logo.separation{
   width:60px;
   height:60px;
@@ -105,7 +207,7 @@ body {
   margin:0;
 }
 
-a.CV-link {
+a.CV-link, .title-link {
   display: block;
   padding: 0.5rem 1rem;
   color: #939eae;
@@ -117,7 +219,7 @@ a.CV-link {
     transition: none;
   }
 }
-a, .CV-link:hover, a .CV-link:focus {
+a, .CV-link:hover, a .CV-link:focus, .title-link:hover, .title-link:focus {
   color: #f8f9fa;
 }
 .nav-link.disabled {

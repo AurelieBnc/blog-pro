@@ -21,6 +21,9 @@ Class UserController extends AbstractController
         $userDataComment = ['id_user' => $idUser];
         $comments = $comment->findBy($userDataComment);
 
+        $post = new Post;
+        $posts = $post->findAll();
+
         if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] !== 4) {
             $tmpName = $_FILES['avatar']['tmp_name'];
             $name = $_FILES['avatar']['name'];
@@ -51,18 +54,30 @@ Class UserController extends AbstractController
             echo "avatar mise à jour";
             $editdUserDatas = $model->find($_SESSION['id']);
 
-            return $this->twig->display('home/userPage.twig', ['comments' => $comments,'user' => $editdUserDatas,'ROOT' => $this->root, 'session' => $_SESSION]);
+            return $this->twig->display('admin/index.twig', [
+                'posts' => $posts,
+                'comments' => $comments,
+                'user' => $editdUserDatas,
+                'ROOT' => $this->root,
+                'session' => $_SESSION
+            ]);
+
         } else {
             echo "donnée vide";
             $userDatas = $model->find($_SESSION['id']);
 
-            return $this->twig->display('home/userPage.twig', ['comments' => $comments,'user' => $userDatas,'ROOT' => $this->root, 'session' => $_SESSION]);
+            return $this->twig->display('admin/index.twig', [
+                'posts' => $posts,
+                'comments' => $comments,
+                'user' => $userDatas,
+                'ROOT' => $this->root,
+                'session' => $_SESSION
+            ]);
         }
     }
 
     public function editUserDatas()
     {
-        var_dump($_POST['lastname']);
         $model = new User;
         $idUser = $_SESSION['id'];
         $editUser = new User;
@@ -71,6 +86,9 @@ Class UserController extends AbstractController
         $comment = new Comment;
         $userDataComment = ['id_user' => $idUser];
         $comments = $comment->findBy($userDataComment);
+
+        $post = new Post;
+        $posts = $post->findAll();
 
         if (isset($_POST['email']) && !empty($_POST['email'])) {
             $datas = ['email' => $_POST['email']];
@@ -121,12 +139,25 @@ Class UserController extends AbstractController
             echo "données bien mise à jour";
             $editdUserDatas = $model->find($_SESSION['id']);
 
-            return $this->twig->display('home/userPage.twig', ['comments' => $comments,'user' => $editdUserDatas,'ROOT' => $this->root, 'session' => $_SESSION]);
+            return $this->twig->display('admin/index.twig', [
+                'posts' => $posts,
+                'comments' => $comments,
+                'user' => $editdUserDatas,
+                'ROOT' => $this->root,
+                'session' => $_SESSION
+            ]);
+
         } else {
             echo "donnée vide";
             $userDatas = $model->find($_SESSION['id']);
 
-            return $this->twig->display('home/userPage.twig', ['comments' => $comments,'user' => $userDatas,'ROOT' => $this->root, 'session' => $_SESSION]);
+            return $this->twig->display('admin/index.twig', [
+                'posts' => $posts,
+                'comments' => $comments,
+                'user' => $userDatas,
+                'ROOT' => $this->root,
+                'session' => $_SESSION
+            ]);
         }
     }
 
@@ -184,7 +215,16 @@ Class UserController extends AbstractController
             $userDataComment = ['id_user' => $idUser];
             $comments = $comment->findBy($userDataComment);
 
-            return $this->twig->display('home/userPage.twig', ['comments' => $comments,'user' => $user,'ROOT' => $this->root, 'session' => $_SESSION]);
+            $post = new Post;
+            $posts = $post->findAll();
+
+            return $this->twig->display('admin/index.twig', [
+                'posts' => $posts,
+                'comments' => $comments,
+                'user' => $user,
+                'ROOT' => $this->root,
+                'session' => $_SESSION
+            ]);
 
         }
     }
