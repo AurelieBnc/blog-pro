@@ -37,19 +37,22 @@ Class PostController extends AbstractController
 
     public function createPost()
     {
-        $model = new Post;
+        if ($_SESSION['logUser'] === 'admin') {
+            $model = new Post;
 
-        $post = $model
-            ->setTitle($_POST['title'])
-            ->setLead($_POST['lead'])
-            ->setContent($_POST['content'])
-            ->setId_User($_SESSION['id']);
+            $post = $model
+                ->setTitle($_POST['title'])
+                ->setLead($_POST['lead'])
+                ->setContent($_POST['content'])
+                ->setId_User($_SESSION['id']);
 
 
-        $model->create($post);
-        $lastId = $post->lastId();
+            $model->create($post);
+            $lastId = $post->lastId();
 
-        $this->retailPost($lastId);
+            $this->retailPost($lastId);
+        }
+
 
     }
 }
