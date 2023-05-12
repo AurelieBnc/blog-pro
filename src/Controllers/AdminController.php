@@ -17,6 +17,9 @@ use App\Entity\User;
 
     public function index()
     {
+        $user = new User;
+        $usersList = $user->findAll();
+
         $model = new User;
         $user = $model->find($_SESSION['id']);
 
@@ -27,7 +30,14 @@ use App\Entity\User;
         $userDataComment = ['id_user' => $_SESSION['id']];
         $comments = $comment->findBy($userDataComment);
 
-        $this->twig->display('admin/index.twig', ['user' => $user, 'posts' => $posts,'comments' => $comments,'ROOT' => $this->root,'session' => $_SESSION]);
+        $this->twig->display('admin/index.twig', [
+            'user' => $user,
+            'users' => $usersList,
+            'posts' => $posts,
+            'comments' => $comments,
+            'ROOT' => $this->root,
+            'session' => $_SESSION
+        ]);
     }
 
     public function newPost()
