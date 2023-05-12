@@ -4,71 +4,71 @@
 
 {% block body %}
 
-{% set role = null %}
-{% if user.role is same as "admin" %}
-    {% set role = "admin" %}
-{% else %}
-    {% set role = "utilisateur" %}
-{% endif %}
+    {% set role = null %}
+    {% if user.role is same as "admin" %}
+        {% set role = "admin" %}
+    {% else %}
+        {% set role = "utilisateur" %}
+    {% endif %}
 
-<header class="py-5 bg-image-full" style="background-image: url('{{ ROOT }}images/background/blackwaves.jpg')">
-    <div class="text-center my-5">
-        <img class="img-fluid rounded-circle mb-4 separation " src="{{ ROOT }}images/deco/lineface.png" alt="..." />
-        {% if user.role is same as "admin" %}
-            <h1 class="text-white  fw-bolder">Page d'administration</h1>
-        {% else %}
-            <h1 class="text-white  fw-bolder">Mon compte</h1>
-        {% endif %}
+    <header class="py-5 bg-image-full" style="background-image: url('{{ ROOT }}images/background/blackwaves.jpg')">
+        <div class="text-center my-5">
+            <img class="img-fluid rounded-circle mb-4 separation " src="{{ ROOT }}images/deco/lineface.png" alt="..." />
+            {% if user.role is same as "admin" %}
+                <h1 class="text-white  fw-bolder">Page d'administration</h1>
+            {% else %}
+                <h1 class="text-white  fw-bolder">Mon compte</h1>
+            {% endif %}
+        </div>
+    </header>
+
+    {% if user.role is same as "admin" %}
+    {# container général de la partie admin +aside #}
+    <div class="container p-0">
+
+        <div class="row">
+            {# Conteneur général du système de tabulation du Sous-Menus Catégorie d'article #}
+            <section class="my-5 tab-container">
+
+                {# Conteneur des boutons #}
+                <div class="tabs">
+                    {# Bouton 1 (affiché par défaut avec la classe active) #}
+                    <div class="tab active" data-open="view1">
+                        <h3>Mes informations</h3>
+                    </div>
+                    {# Bouton 2 #}
+                    <div class="tab " data-open="view2">
+                        <h3>Ajouter un article</h3>
+                    </div>
+                    {# Bouton 3 #}
+                    <div class="tab " data-open="view3">
+                        <h3>Gestion des utilisateurs</h3>
+                    </div>
+                </div>
+
+                {# Conteneur des vues correspondant aux boutons #}
+                <div class="views">
+                    {# Vue 1 - Mes informations (affichée par défaut avec la classe active) #}
+                    <div class="view active" id="view1">
+                        {% include 'admin/partial/userPage.twig' %}
+                    </div>{# Fin de Vue 1 #}
+
+                    {# Vue 2 - Ajout d'article #}
+                    <div class="view" id="view2">
+                        {% include 'admin/partial/createPost.twig' %}
+                    </div>{# Fin de Vue 2 #}
+
+                    {# Vue 3 - Utilisateurs #}
+                    <div class="view " id="view3">
+                        {% include 'admin/partial/manageUser.twig' %}
+                    </div> {# Fin de Vue 3 #}
+                </div>
+
+            </section>
+        </div>
     </div>
-</header>
-
-{% if user.role is same as "admin" %}
-{# container général de la partie admin +aside #}
-<div class="container p-0">
-
-    <div class="row">
-        {# Conteneur général du système de tabulation du Sous-Menus Catégorie d'article #}
-        <section class="my-5 tab-container">
-
-            {# Conteneur des boutons #}
-            <div class="tabs">
-                {# Bouton 1 (affiché par défaut avec la classe active) #}
-                <div class="tab " data-open="view1">
-                    <h3>Mes informations</h3>
-                </div>
-                {# Bouton 2 #}
-                <div class="tab active" data-open="view2">
-                    <h3>Ajouter un article</h3>
-                </div>
-                {# Bouton 3 #}
-                <div class="tab" data-open="view3">
-                    <h3>Gestion des utilisateurs</h3>
-                </div>
-            </div>
-
-            {# Conteneur des vues correspondant aux boutons #}
-            <div class="views">
-                {# Vue 1 - Mes informations (affichée par défaut avec la classe active) #}
-                <div class="view active" id="view1">
-                    {% include 'admin/partial/userPage.twig' %}
-                </div>{# Fin de Vue 1 #}
-
-                {# Vue 2 - Ajout d'article #}
-                <div class="view" id="view2">
-                    {% include 'admin/partial/createPost.twig' %}
-                </div>{# Fin de Vue 2 #}
-
-                {# Vue 3 - Utilisateurs #}
-                <div class="view" id="view3">
-                    {% include 'admin/partial/manageUser.twig' %}
-                </div> {# Fin de Vue 3 #}
-            </div>
-
-        </section>
-    </div>
-</div>
-{% else %}
-    {% include 'admin/partial/userPage.twig' %}
-{% endif %}
+    {% else %}
+        {% include 'admin/partial/userPage.twig' %}
+    {% endif %}
 
 {% endblock body %}
