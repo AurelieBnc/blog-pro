@@ -60,7 +60,14 @@ Class HomeController extends AbstractController
             $comment = new Comment;
             $comments = $comment->findBy($userData);
 
-            return $this->twig->display('home/userPage.twig', ['comments' => $comments, 'posts' => $posts, 'user' => $user, 'ROOT' => $this->root, 'session' => $_SESSION]);
+            return $this->twig->display('admin/index.twig', [
+                'posts' => $posts,
+                'comments' => $comments,
+                'user' => $user,
+                'ROOT' => $this->root,
+                'session' => $_SESSION
+            ]);
+
         } else {
 
             return $this->twig->display('register/index.twig', ['ROOT' => $this->root, 'session' => $_SESSION]);
