@@ -7,10 +7,9 @@ Class Comment extends Model
 {
     protected $id;
     protected $content;
-    protected $author;
     protected $created_at;
     protected $update_date;
-    protected $is_enable;
+    protected $is_enabled;
     protected $id_user;
     protected $id_post;
 
@@ -60,26 +59,6 @@ Class Comment extends Model
     }
 
     /**
-     * Get the value of author
-     */ 
-    public function getAuthor()
-    {
-        return $this->author;
-    }
-
-    /**
-     * Set the value of author
-     *
-     * @return  self
-     */ 
-    public function setAuthor($author)
-    {
-        $this->author = $author;
-
-        return $this;
-    }
-
-    /**
      * Get the value of created_at
      */ 
     public function getCreated_at()
@@ -120,21 +99,21 @@ Class Comment extends Model
     }
 
     /**
-     * Get the value of is_enable
+     * Get the value of is_enabled
      */ 
-    public function getIs_enable()
+    public function getIs_enabled()
     {
-        return $this->is_enable;
+        return $this->is_enabled;
     }
 
     /**
-     * Set the value of is_enable
+     * Set the value of is_enabled
      *
      * @return  self
      */ 
-    public function setIs_enable($is_enable)
+    public function setIs_enabled($is_enabled)
     {
-        $this->is_enable = $is_enable;
+        $this->is_enabled = $is_enabled;
 
         return $this;
     }

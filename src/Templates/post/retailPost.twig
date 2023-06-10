@@ -1,7 +1,7 @@
 {% extends "base.twig" %}
 
 {% block title %} Accueil {% endblock %}
-
+{# todo modifier apparence comme userPage #}
 {% block content %}
 {# article #}
 <section class="py-5">
@@ -40,27 +40,34 @@
             <div class="col-lg-6">
                 <div class="text-center mb-5">
                     <div>
-                        <img src="../public/images/logo/origami.png" class="separation2 logo" alt="separation small">
-                        <img src="../public/images/logo/origami.png" class="separation logo" alt="separation">
-                        <img src="../public/images/logo/origami.png" class="separation2 logo" alt="separation small">
+                        <img src="{{ ROOT }}/images/logo/origami.png" class="separation2 logo" alt="separation small">
+                        <img src="{{ ROOT }}/images/logo/origami.png" class="separation logo" alt="separation">
+                        <img src="{{ ROOT }}/images/logo/origami.png" class="separation2 logo" alt="separation small">
                     </div>
                     <h2 class="fs-3 mt-1">Commentaires</h2>
                 </div>
                 {# block commentaire (boucle) #}
+                {% for comment in comments %}
                 <div class="">
                     <div class="d-flex justify-content-between">
                         <div class="pe-3">
-                            <img class="img-fluid rounded-circle mb-4 avatar" src="../public/images/avatar/arcade.PNG "
-                                alt="..." />
-                            <p class="fs-5">Auteur</p>
+                        {% for user in users %}
+                            {% if comment.id_user is same as user.id %}
+                            <img class="img-fluid rounded-circle mb-4 avatar"
+                            {% if user.avatar is not null %}
+                                src="{{ ROOT }}images/avatar_upload/{{ user.avatar }}"
+                            {% else %}
+                                src="{{ ROOT }}images/avatar/default-avatar.png"
+                            {% endif %}
+                            alt="..." />
+                            <p class="fs-5">{{ user.pseudonym }}</p>
+                            {% endif %}
+                        {% endfor %}
                         </div>
                         <div class="ps-3 pt-2">
-                            <p class="small text-center ">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Expedita,
-                                voluptatibus? Sequi, quos. Temporibus, cupiditate alias, laborum ipsum ratione enim
-                                odio
-                                magnam iusto eaque fugiat pariatur dolore sint quo fugit necessitatibus.</p>
-                            <p class="blockquote-footer d-flex justify-content-end mt-2">Le 20/02/2023</p>
+                            <p class="small text-center ">{{ comment.content }}</p>
+                            <p class="blockquote-footer d-flex justify-content-end mt-2">Le {{ comment.update_date | date("d/m/Y",
+                                "Europe/Paris") }}</p>
                         </div>
                     </div>
                     {# btn de modération #}
@@ -85,42 +92,7 @@
                         {% endif %}
                     </div>
                 </div>
-
-
-                {# block commentaire (boucle) #}
-                <div class="">
-                    <div class="d-flex justify-content-between">
-                        <div class="pe-3">
-                            <img class="img-fluid rounded-circle mb-4 avatar"
-                                src="../public/images/avatar/137904_rAxFeqys.png " alt="..." />
-                            <p class="fs-5">Auteur</p>
-                        </div>
-                        <div class="ps-3 pt-2">
-                            <p class="small text-center ">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Expedita,
-                                voluptatibus? Sequi, quos. Temporibus, cupiditate alias, laborum ipsum ratione enim
-                                odio
-                                magnam iusto eaque fugiat pariatur dolore sint quo fugit necessitatibus.</p>
-                            <p class="blockquote-footer d-flex justify-content-end mt-2">Le 26/02/2023</p>
-                        </div>
-                    </div>
-                    {# btn de modération #}
-                    <div class="d-flex justify-content-end me-2">
-                        <div class="p-2 ">
-                            <a class=" btn btn-darkblue " href="#!" title="Valider le commentaire"><i
-                                    class="fas fa-regular fa-square-check alert-danger "></i></a>
-                        </div>
-                        <div class="p-2 ">
-                            <a class=" btn btn-darkblue " href="#!" title="Modifier le commentaire"><i
-                                    class="fas fa-edit"></i></a>
-                        </div>
-                        <div class="p-2 ">
-                            <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?')"
-                                class=" btn btn-darkblue " href="#!" title="Supprimer le commentaire"><i
-                                    class="fas fa-trash"></i></a>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -132,30 +104,12 @@
     <div class="container mb-2">
         <div class="row justify-content-center">
             <div class="col-lg-6">
-                <h2 class="fs-3 mb-5" title="Donner votre avis">Donner votre avis
+                <h2 class="fs-3 mb-4" title="Donner votre avis">Donner votre avis
                 </h2>
 
-                <form name="sentComment" id="CommentForm" novalidate>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="name" required
-                            data-validation-required-message="Merci d'entrer votre nom."
-                            title="Veuillez renseigner votre nom">
-                        <p class="help-block text-danger"></p>
-                        <label for="floatingInput">Nom</label>
-                    </div>
-
-                    <div class="form-floating mb-3 controls">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="firstname" required
-                            data-validation-required-message="Please enter your name."
-                            title="Veuillez renseigner votre prénom">
-                        <label for="floatingInput">Prénom</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
-                            title="Veuillez renseigner votre email">
-                        <label for="floatingInput">Adresse email</label>
-                    </div>
+                <form method="POST" action="comment/addComment" name="addComment" id="CommentForm" novalidate>
+                    <input name="userId" type="hidden" value={{ session.id }}>
+                    <input name="postId" type="hidden" value={{ post.id }}>
                     {#INVALID INPUT
                     <div class="form-floating mb-3">
                         <input type="email" class="form-control is-invalid" id="floatingInputInvalid"
@@ -163,15 +117,12 @@
                         <label for="floatingInputInvalid">Invalid input</label>
                     </div> #}
                     <div class="form-group mb-3 controls">
-                        <textarea rows="7" class="form-control" placeholder="Laisser votre commentaire"
+                        <textarea rows="7" class="form-control" id="content" name="content" placeholder="Laisser votre commentaire"
                             id="floatingTextarea2" required
                             data-validation-required-message="Please enter ypur comment."
                             title="Laisser votre commentaire"></textarea>
                         <p class="help-block text-danger"></p>
                     </div>
-
-                    <br>
-
                     <div id="success"></div>
                     <div class="form-group text-center d-flex justify-content-between">
                         <button type="submit" class="btn btn-outline-secondary" id="sendMessageButton"
