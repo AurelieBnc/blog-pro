@@ -16,25 +16,25 @@
                 <form method="post" action="register/logIn" name="login" id="loginForm">
 
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" name="email"
-                            placeholder="name@example.com" autocomplete required title="Veuillez renseigner votre email"
+                        <input type="email" class="form-control" id="floatingInput1" name="email"
+                            placeholder="name@example.com" autocomplete="on" required title="Veuillez renseigner votre email"
                             data-validation-required-message="Merci d'entrer votre adresse email">
-                        <label for="floatingInput">Adresse email</label>
+                        <label for="floatingInput1">Adresse email</label>
                     </div>
 
                     <div class="form-floating mb-3 controls">
-                        <input type="password" class="form-control" id="floatingInput" name="password"
-                            placeholder="password" required autocomplete="current-password"
+                        <input type="password" class="form-control" id="floatingInput2" name="password"
+                            placeholder="password" required autocomplete="on"
                             data-validation-required-message="Merci d'entrer votre mot de passe"
                             title="Veuillez renseigner un mot de passe" required>
-                        <label for="floatingInput">Mot de passe</label>
+                        <label for="floatingInput2">Mot de passe</label>
                     </div>
 
                     <br>
 
                     <div id="success"></div>
                     <div class="form-group text-center d-flex justify-content-between">
-                        <button type="submit" class="btn btn-outline-secondary" id="sendMessageButton"
+                        <button type="submit" class="btn btn-outline-secondary" id="sendLoginButton"
                             title="Envoyer">Envoyer</button>
                     </div>
                 </form>
@@ -64,39 +64,39 @@
 
                 <form method="POST" action="register/register" name="register" id="RegisterForm" enctype= "multipart/form-data">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" name="lastname" placeholder="nom"
+                        <input type="text" class="form-control" id="floatingInput3" name="lastname" placeholder="nom"
                             data-validation-required-message="Merci d'entrer votre nom."
-                            title="Veuillez renseigner votre nom" autocomplete required>
+                            title="Veuillez renseigner votre nom" autocomplete="on" required>
                         <p class="help-block text-danger"></p>
-                        <label for="floatingInput">Nom</label>
+                        <label for="floatingInput3">Nom</label>
                     </div>
 
                     <div class="form-floating mb-3 controls">
-                        <input type="text" class="form-control" id="floatingInput" name="firstname" placeholder="prénom"
+                        <input type="text" class="form-control" id="floatingInput4" name="firstname" placeholder="prénom"
                             data-validation-required-message="Merci d'entrer votre prénom."
-                            title="Veuillez renseigner votre prénom" autocomplete required>
-                        <label for="floatingInput">Prénom</label>
+                            title="Veuillez renseigner votre prénom" autocomplete="on" required>
+                        <label for="floatingInput4">Prénom</label>
                     </div>
                     <div class="form-floating mb-3 controls">
-                        <input type="text" class="form-control" id="floatingInput" name="pseudonym" placeholder="pseudonym"
+                        <input type="text" class="form-control" id="floatingInput5" name="pseudonym" placeholder="pseudonym"
                             data-validation-required-message="Merci d'entrer votre surnom."
-                            title="Veuillez renseigner votre surnom" autocomplete required>
-                        <label for="floatingInput">Surnom</label>
+                            title="Veuillez renseigner votre surnom" autocomplete="on" required>
+                        <label for="floatingInput5">Surnom</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" name="email"
-                            placeholder="name@example.com" autocomplete required title="Veuillez renseigner votre email"
+                        <input type="email" class="form-control" id="floatingInput6" name="email"
+                            placeholder="name@example.com" autocomplete="on" required title="Veuillez renseigner votre email"
                             data-validation-required-message="Merci d'entrer votre adresse email">
-                        <label for="floatingInput">Adresse email</label>
+                        <label for="floatingInput6">Adresse email</label>
                     </div>
                     <div class="form-floating mb-3 controls">
-                        <input type="password" class="form-control" id="floatingInput" name="password" placeholder="password"
+                        <input type="password" class="form-control" id="floatingInput7" name="password" placeholder="password"
                             data-validation-required-message="Merci d'entrer votre mot de passe."
                             title="Veuillez renseigner un mot de passe" required>
-                        <label for="floatingInput">Mot de passe</label>
+                        <label for="floatingInput7">Mot de passe</label>
                     </div>
                     {# <div class="form-floating mb-3 controls">
-                        <input type="password" class="form-control" id="floatingInput" name="confirmPassword" placeholder="ConfirmedPassword"
+                        <input type="password" class="form-control" id="floatingInput8" name="confirmPassword" placeholder="ConfirmedPassword"
                             required data-validation-required-message="Merci de confirmer votre mot de passe."
                             title="Veuillez confirmer votre mot de passe" required>
                         <label for="floatingInput">Confirmation du mot de passe</label>
@@ -111,9 +111,9 @@
 
                     <div id="success"></div>
                     <div class="form-group text-center d-flex justify-content-between">
-                        <button type="submit" class="btn btn-outline-secondary" id="sendMessageButton"
+                        <button type="submit" class="btn btn-outline-secondary" id="sendCreatedButton"
                             title="Envoyer">Envoyer</button>
-                        <button type="reset" class="btn btn-outline-secondary" id="resetMessageButton"
+                        <button type="reset" class="btn btn-outline-secondary" id="resetFormButton"
                             title="Réinitialiser">Réinitialiser</button>
                     </div>
 
