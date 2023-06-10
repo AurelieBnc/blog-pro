@@ -11,13 +11,14 @@ use App\Controllers\MailerController;
  */
 Class RegisterController extends AbstractController
 {
+
     public function __construct() {
         parent::__construct();
     }
 
     public function index()
     {
-        $this->twig->display('register/index.twig', ['session' => $_SESSION]);
+        $this->twig->display('register/index.twig', ['ROOT' => $this->root,'session' => $_SESSION]);
     }
 
     public function logIn()
