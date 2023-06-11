@@ -40,7 +40,6 @@ Class PostController extends AbstractController
 
         $comment = new Comment;
         $comments = $comment->findBy($commentData);
-        var_dump($comments);
 
         $this->twig->display('post/retailPost.twig', ['ROOT' => $this->root, 'post' => $post, 'session' => $_SESSION, 'comments' => $comments, 'users' => $users]);
     }
