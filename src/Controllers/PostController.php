@@ -1,7 +1,9 @@
 <?php
 namespace App\Controllers;
 
+use App\Entity\Comment;
 use App\Entity\Post;
+use App\Entity\User;
 
 Class PostController extends AbstractController
 {
@@ -31,7 +33,15 @@ Class PostController extends AbstractController
         $post = new Post;
         $post = $post->find($id);
 
-        $this->twig->display('post/retailPost.twig', ['ROOT' => $this->root, 'post' => $post, 'session' => $_SESSION]);
+        $user = new User;
+        $users = $user->findAll();
+
+        $commentData = ['id_post' => $id];
+
+        $comment = new Comment;
+        $comments = $comment->findBy($commentData);
+
+        $this->twig->display('post/retailPost.twig', ['ROOT' => $this->root, 'post' => $post, 'session' => $_SESSION, 'comments' => $comments, 'users' => $users]);
     }
 
     public function createPost()

@@ -232,24 +232,24 @@ Class UserController extends AbstractController
 
     public function deleteUser()
     {
-        $idUser = $_SESSION['id'];
+        $userId = $_SESSION['id'];
         $modelUser = new User;
-        $user = $modelUser->find($idUser);
+        $user = $modelUser->find($userId);
 
         if (password_verify( $_POST['password'] , $user['password']))
         {
             //anonnymisation des commentaires
-            $data = ['id_user'=> $idUser];
+            $data = ['id_user'=> $userId];
             $modelComment = new Comment;
             $listComments = $modelComment->findBy($data);
 
             foreach ( $listComments as $comment ) {
-                $id = "id_user = ".$idUser;
+                $id = "id_user = ".$userId;
                 $comment = $modelComment->setId_user(2);
                 $comment = $modelComment->update($id, $comment );
             }
 
-            $modelUser->delete($idUser);
+            $modelUser->delete($userId);
 
             //destruction de la session existante + reinitialisation des variables de Session
             session_destroy();

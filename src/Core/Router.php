@@ -46,16 +46,11 @@ Class Router
             if(method_exists($controller, $action)){
                 if(isset($params[0])) {
                     while (!empty($params)){
-                        var_dump($params);
-
                         $arrayParams = [array_shift($params)];
-                        var_dump('after array_shift', $params);
                     }
-                    var_dump('array params',$arrayParams);
                 }
 
                 isset($arrayParams) ? call_user_func_array([$controller, $action], $arrayParams) : $controller->$action();
-
             }else{
                 // http_response_code(404);
                 // echo 'La page recherchée n\'existe pas';
