@@ -54,7 +54,7 @@ Class MailerController extends AbstractController
             {
                 $confirmUser = $model->setIs_verified(1);
                 $confirmUser->update($log, $model);
-                return $this->twig->display('register/confirmMail.twig');
+                return $this->twig->display('partial/confirmMail.twig');
             } else {
                 echo "Votre jeton d'identification a expiré";
             }

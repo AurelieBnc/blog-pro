@@ -1,0 +1,19 @@
+{% extends "base.twig" %}
+
+{% block title %} Utilisateur non vérifié {% endblock %}
+
+{% block content %}
+<section class="py-3">
+    <div class="container my-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <h1 class="text-center mb-3">Utilisateur non vérifié</h1>
+                <p class="lead text-center mt-5 mb-0">Un mail de confirmation a été envoyer sur l'adresse mail que vous nous avez communiquer.</p>
+                <p class="lead text-center mt-5 mb-0">Veuillez cliquer sur le lien qu'il contient pour accéder à votre compte.</p>
+                <img src="{{ ROOT }}images/page_erreur/ooopsCat.jpg" class="img-fluid mx-auto d-block"
+                    alt="page d'erreur- oops cat">
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
