@@ -22,6 +22,7 @@
                     <h2>Edition de l'article</h2>
                 </div>
                 <form method="POST" action="post/editPost" name="editPost" id="editPostForm" novalidate>
+                    <input name="postId" type="hidden" value={{ post.id }}>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInput" name="title" placeholder="Modifier le titre" title="Modifier le titre">
                         <p class="help-block text-danger"></p>
@@ -58,9 +59,7 @@
                     <h4 class="text-center text-capitalize pb-5 mt-5">{{ post.title }}</h2>
                     <p class="lead mb-5">{{ post.lead }}</p>
                     <p>{{ post.content }}</p>
-                    <p class="blockquote-footer d-flex justify-content-end pt-5">Mise à jour le {{ post.update_date |
-                        date("d/m/Y",
-                        "Europe/Paris") }}</p>
+                    <p class="blockquote-footer d-flex justify-content-end pt-5">Mise à jour le {{ post.update_date | date("d/m/Y","Europe/Paris") }}</p>
                 </ul>
             </aside>
         </div>
