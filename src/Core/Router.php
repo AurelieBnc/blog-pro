@@ -26,6 +26,8 @@ Class Router
 
         // management of url parameters
         $params = [];
+        $arrayParams = [];
+
         if(isset($_GET['p'])){
             $params = explode('/', $_GET['p']);
         }
@@ -42,7 +44,13 @@ Class Router
             $action = (isset($params[0])) ? array_shift($params) : 'index';
 
             if(method_exists($controller, $action)){
-                (isset($params[0])) ? call_user_func_array([$controller, $action], array($params[0], $params[1])) : $controller->$action();
+                if(isset($params[0])) {
+                    while (!empty($params)){
+                        $arrayParams = [array_shift($params)];
+                    }
+                }
+
+                isset($arrayParams) ? call_user_func_array([$controller, $action], $arrayParams) : $controller->$action();
             }else{
                 // http_response_code(404);
                 // echo 'La page recherchée n\'existe pas';

@@ -41,37 +41,8 @@ Class HomeController extends AbstractController
             'email' => $_POST['email'],
             'ROOT' => $this->root
             ]);
-
         }
 
         return $this->twig->display('partial/pageFormError.twig');
-    }
-
-    public function userPage()
-    {
-        if (!empty($_SESSION['id'])) {
-            $model = new User;
-            $user = $model->find($_SESSION['id']);
-            $userData = ['id_user' =>$_SESSION['id']];
-
-            $post = new Post;
-            $posts = $post->findAll();
-
-            $comment = new Comment;
-            $comments = $comment->findBy($userData);
-
-            return $this->twig->display('admin/index.twig', [
-                'posts' => $posts,
-                'comments' => $comments,
-                'user' => $user,
-                'ROOT' => $this->root,
-                'session' => $_SESSION
-            ]);
-
-        } else {
-
-            return $this->twig->display('register/index.twig', ['ROOT' => $this->root, 'session' => $_SESSION]);
-        }
-
     }
 }

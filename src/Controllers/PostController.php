@@ -48,7 +48,6 @@ Class PostController extends AbstractController
     {
         if ($_SESSION['logUser'] === 'admin') {
             $model = new Post;
-
             $post = $model
                 ->setTitle($_POST['title'])
                 ->setLead($_POST['lead'])
