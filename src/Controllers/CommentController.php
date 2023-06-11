@@ -23,7 +23,7 @@ Class CommentController extends AbstractController
         $post = $post->find($_POST['postId']);
 
         $comment = new Comment;
-        $userDataComment = ['id_user' => $_SESSION['id']];
+        $userDataComment = ['id_post' => $_POST['postId']];
         $comments = $comment->findBy($userDataComment);
 
         $user = new User;

@@ -18,11 +18,15 @@
                 {% if session.logUser is same as 'admin' %}
                 <div class="d-flex justify-content-end me-2">
                     <div class="p-1 ">
-                        <a class=" btn btn-darkblue " href="#!" title="Modifier l'article"><i class="fas fa-edit"></i></a>
+                        <a class=" btn btn-darkblue " href="{{ ROOT }}index.php?p=post/editPostPage/{{post.id}}" title="Modifier l'article"><i class="fas fa-edit"></i></a>
                     </div>
                     <div class="p-1 ">
-                        <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?')"
-                        class=" btn btn-darkblue " href="#!" title="Supprimer l'article"><i class="fas fa-trash"></i></a>
+                        <form method="POST" action="post/deletePost">
+                            <input name="postId" type="hidden" value={{ post.id }}>
+                            <button type="submit" class="btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article, ainsi que ses commentaires ?')" title="Supprimer l'article">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
                 {% endif %}

@@ -60,4 +60,68 @@ Class PostController extends AbstractController
             $this->retailPost($lastId);
         }
     }
+
+    public function editPostPage(int $postId)
+    {
+        $model = new Post;
+        $post = $model->find($postId);
+
+        return $this->twig->display('post/editPost.twig', ['ROOT' => $this->root, 'post' => $post, 'session' => $_SESSION]);
+    }
+
+    public function editPost()
+    {
+        $postId = $_POST['postId'];
+        $title = $_POST['title'];
+        $lead = $_POST['lead'];
+        $content = $_POST['content'];
+        $model = new Post;
+        $editPost = new Post;
+
+        if(isset($title) && !empty($title)){
+            $editPost = $model->setTitle($title);
+        }
+        if(isset($lead) && !empty($lead)){
+            $editPost = $model->setLead($lead);
+        }
+        if(isset($content) && !empty($content)){
+            $editPost = $model->setContent($content);
+        }
+
+        if (!empty($editPost)) {
+            $id = "id = ".$postId;
+            $model->update($id, $editPost);
+            echo "données bien mise à jour";
+           $editPost = $model->find($postId);
+        }
+
+        $editPostId = $editPost['id'];
+
+        $this->retailPost($editPostId);
+    }
+
+    public function deletePost()
+    {
+        $postId = $_POST['postId'];
+        $logUser = $_SESSION['logUser'];
+
+        if(isset($postId) && $logUser === 'admin')
+        {
+            $data = ['id_post'=> $postId];
+            $modelComment = new Comment;
+            $listComments = $modelComment->findBy($data);
+            foreach($listComments as $comment)
+            {
+                $commentId = $comment['id'];
+                $model = new Comment;
+                $model->delete($commentId);
+            }
+
+            $model = new Post;
+            $model->delete($postId);
+            echo 'L\'article et ses commentaires ont bien été supprimés';
+        }
+
+        $this->index();
+    }
 }
