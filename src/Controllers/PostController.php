@@ -60,4 +60,29 @@ Class PostController extends AbstractController
             $this->retailPost($lastId);
         }
     }
+
+    public function deletePost()
+    {
+        $postId = $_POST['postId'];
+        $logUser = $_SESSION['logUser'];
+
+        if(isset($postId) && $logUser === 'admin')
+        {
+            $data = ['id_post'=> $postId];
+            $modelComment = new Comment;
+            $listComments = $modelComment->findBy($data);
+            foreach($listComments as $comment)
+            {
+                $commentId = $comment['id'];
+                $model = new Comment;
+                $model->delete($commentId);
+            }
+
+            $model = new Post;
+            $model->delete($postId);
+            echo 'L\'article et ses commentaires ont bien été supprimés';
+        }
+
+        $this->index();
+    }
 }

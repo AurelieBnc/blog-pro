@@ -33,17 +33,23 @@
                             <a class=" btn btn-darkblue " href="#!" title="Modifier l'article"><i class="fas fa-edit"></i></a>
                         </div>
                         <div class="p-1 ">
-                            <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?')"
-                                class=" btn btn-darkblue " href="#!" title="Supprimer l'article"><i class="fas fa-trash"></i></a>
+                            <form method="POST" action="post/deletePost">
+                                <input name="postId" type="hidden" value={{ post.id }}>
+                                <button type="submit" class="btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article, ainsi que ses commentaires ?')" title="Supprimer l'article">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                            {# <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utlisateur ?')"
+                                class=" btn btn-darkblue " href="{{ ROOT }}admin/deleteUser" title="Supprimer l'utlisateur"><i class="fas fa-trash"></i></a> #}
                         </div>
                     </div>
                     {% endif %}
                 </div>
 
                 <div class="d-flex justify-content-center my-5">
-                    <img src="../public/images/logo/origami.png" class="separation2 logo" alt="separation small">
-                    <img src="../public/images/logo/origami.png" class="separation logo" alt="separation">
-                    <img src="../public/images/logo/origami.png" class="separation2 logo" alt="separation small">
+                    <img src="{{ ROOT }}/images/logo/origami.png" class="separation2 logo" alt="separation small">
+                    <img src="{{ ROOT }}/images/logo/origami.png" class="separation logo" alt="separation">
+                    <img src="{{ ROOT }}/images/logo/origami.png" class="separation2 logo" alt="separation small">
                 </div>
 
                 {% else %}
