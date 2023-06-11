@@ -1,0 +1,70 @@
+{% extends 'base.twig' %}
+
+{% block title %}Blog - {{ site_name }}{% endblock %}
+
+{% block body %}
+
+<header class="py-5 bg-image-full" style="background-image: url('{{ ROOT }}images/background/blackwaves.jpg')">
+    <div class="text-center my-5">
+        <img class="img-fluid rounded-circle mb-4 separation " src="{{ ROOT }}images/deco/lineface.png" alt="..." />
+        <h1 class="text-white  fw-bolder">Administration</h1>
+    </div>
+</header>
+
+
+
+<section class="py-5">
+    <div class="container p-0 mt-5 mb-3">
+        <div class="row d-flex justify-content-between m-0 p-0">
+            {# creat post form #}
+            <div class="col-lg-7 rounded-3 shadow-lg mt-5 mb-3 me-1 p-3">
+                <div class="text-center p-3 shadow mt-3 mb-5">
+                    <h2>Edition de l'article</h2>
+                </div>
+                <form method="POST" action="post/editPost" name="editPost" id="editPostForm" novalidate>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" name="title" placeholder="Modifier le titre" title="Modifier le titre">
+                        <p class="help-block text-danger"></p>
+                        <label for="floatingInput">Modifier le titre</label>
+                    </div>
+
+                    <div class="form-floating mb-3 controls">
+                        <input type="text" class="form-control" id="floatingInput" name="lead" placeholder="Modifier le chapô" title="Modifier le chapô">
+                        <label for="floatingInput">Modifier le chapô</label>
+                    </div>
+                    <div class="form-group mb-3 controls">
+                        <textarea rows="7" class="form-control" name="content" placeholder="Modifier l'article" title="Modifier l'article"
+                            id="floatingTextarea2" title="Modifier l'article"></textarea>
+                        <p class="help-block text-danger"></p>
+                    </div>
+
+                    <br>
+
+                    <div id="success"></div>
+                    <div class="form-group text-center d-flex justify-content-between">
+                        <button type="submit" class="btn btn-outline-secondary" id="sendMessageButton"
+                            title="Envoyer">Envoyer</button>
+                        <button type="reset" class="btn btn-outline-secondary" id="resetMessageButton"
+                            title="Réinitialiser">Réinitialiser</button>
+                    </div>
+
+                </form>
+
+            </div>
+            {# aside - 3 last posts #}
+            <aside class=" col-lg-4 rounded-3 shadow-lg mt-5 mb-3 ms-1 p-4">
+                <ul class="row p-0">
+                    <h3 class="ps-2 text-center my-3 p-3 shadow">Rappel de l'article</h3>
+                    <h4 class="text-center text-capitalize pb-5 mt-5">{{ post.title }}</h2>
+                    <p class="lead mb-5">{{ post.lead }}</p>
+                    <p>{{ post.content }}</p>
+                    <p class="blockquote-footer d-flex justify-content-end pt-5">Mise à jour le {{ post.update_date |
+                        date("d/m/Y",
+                        "Europe/Paris") }}</p>
+                </ul>
+            </aside>
+        </div>
+    </div>
+</section>
+
+{% endblock body %}
