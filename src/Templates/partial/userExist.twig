@@ -1,0 +1,25 @@
+{% extends "base.twig" %}
+
+{% block title %} Utilisateur existant {% endblock %}
+
+{% block content %}
+<section class="py-3">
+    <div class="container mt-3 mb-5">
+        <div class="row mt-5 justify-content-center">
+            <div class="col-lg-6">
+                <h1 class="text-center mb-3">Utilisateur déjà enregistré</h1>
+                {% if email is not null %}
+                <p class="lead text-center mt-5 mb-0">Nous avons déjà un utilisateur enregistré avec l'adresse mail : {{ email }}</p>
+                {% endif %}
+
+                {% if pseudonym is not null %}
+                <p class="lead text-center mt-5 mb-0">Ce pseudonym est déjà utilisé : {{ pseudonym }}</p>
+                {% endif %}
+            </div>
+            <div class="col-lg-3">
+                <img src="{{ ROOT }}images/page_erreur/cat.png" class="img-fluid d-block" alt="oops">
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
