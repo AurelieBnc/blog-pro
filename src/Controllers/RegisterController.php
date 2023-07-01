@@ -22,19 +22,21 @@ Class RegisterController extends AbstractController
 
     public function logIn()
     {
-        // Form validation
-        if (isset($_POST['email']) &&  isset($_POST['password']))
+        $post = htmlspecialchars($_POST);
+        $email = htmlspecialchars($_POST['email']);
+        $password = htmlspecialchars($_POST['password']);
+        // Validation du formulaire
+        if (isset($email) &&  isset($password))
         {
             // User search
             $user = new User;
-            $password = $_POST['password'];
             unset($_POST['password']);
-            $users = $user->findBy($_POST);
+            $users = $user->findBy($post);
             $user_exist = false;
 
             foreach ($users as $user) {
                 if (
-                    $user['email'] === $_POST['email'] &&
+                    $user['email'] === $email &&
                     password_verify( $password , $user['password'])
                     )
                 {
@@ -99,17 +101,20 @@ Class RegisterController extends AbstractController
         $file = null;
         $datas = [];
 
+        $email = htmlspecialchars($_POST['email']);
+        $pseudonym = htmlspecialchars($_POST['pseudonym']);
+
         /**
          * We determine if the user already exists with this email address
          */
-        if (isset($_POST['email']) && !empty($_POST['email']))
+        if (isset($email) && !empty($email))
         {
-            $datas = ['email' => $_POST['email']];
+            $datas = ['email' => $email];
 
             $users = $user->findBy($datas);
 
             foreach ($users as $user) {
-                if ($user['email'] === $_POST['email'])
+                if ($user['email'] === $email)
                 {
                     $user_exist = true;
                 } else {
@@ -125,14 +130,14 @@ Class RegisterController extends AbstractController
         /**
          * We determine if the nickname already exists
          */
-        if (isset($_POST['pseudonym']) && !empty($_POST['pseudonym']))
+        if (isset($pseudonym) && !empty($pseudonym))
         {
             $user = new User;
-            $datas = ['pseudonym' => $_POST['pseudonym']];
+            $datas = ['pseudonym' => $pseudonym];
             $users = $user->findBy($datas);
 
             foreach ($users as $user) {
-                if ($user['pseudonym'] === $_POST['pseudonym']) {
+                if ($user['pseudonym'] === $pseudonym) {
                     $pseudo_exist = true;
                 } else {
                     $pseudo_exist = false;
@@ -146,7 +151,7 @@ Class RegisterController extends AbstractController
             return $this->twig->display('partial/userExist.twig',
                 [
                     'ROOT' => $this->root,
-                    'email' => $_POST['email'],
+                    'email' => $email,
                     ['session' => $_SESSION],
                 ]
             );
@@ -155,7 +160,7 @@ Class RegisterController extends AbstractController
             return $this->twig->display('partial/userExist.twig',
                 [
                     'ROOT' => $this->root,
-                    'pseudonym' => $_POST['pseudonym'],
+                    'pseudonym' => $pseudonym,
                     ['session' => $_SESSION],
                 ]
             );
@@ -188,32 +193,29 @@ Class RegisterController extends AbstractController
                 }
             }
 
-            if (
-                isset($_POST['lastname']) && !empty($_POST['lastname']) &&
-                isset($_POST['firstname']) && !empty($_POST['firstname']) &&
-                isset($_POST['pseudonym']) && !empty($_POST['pseudonym']) &&
-                isset($_POST['email']) && !empty($_POST['email']) &&
-                isset($_POST['password']) && !empty($_POST['password'])
-             ) {
-                /**
-                 * user creation
-                 */
-                $token = rand(10000000, 90000000);
-                $model = new User;
+            /**
+             * création de l'utilisateur
+             */
+            $token = rand(10000000, 90000000);
+            $model = new User;
 
-                $user = $model
-                    ->setLastname($_POST['lastname'])
-                    ->setFirstname($_POST['firstname'])
-                    ->setPseudonym($_POST['pseudonym'])
-                    ->setEmail($_POST['email'])
-                    ->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT))
-                    ->setToken($token)
-                    ->setRole('utilisateur')
-                    ->setIs_verified('0');
+            $lastname = htmlspecialchars($_POST['lastname']);
+            $firstname = htmlspecialchars($_POST['firstname']);
+            $password = htmlspecialchars($_POST['password']);
 
-                if ($file !== null) {
-                    $user = $model->setAvatar($file);
-                }
+            $user = $model
+                ->setLastname($lastname)
+                ->setFirstname($firstname)
+                ->setPseudonym($pseudonym)
+                ->setEmail($email)
+                ->setPassword(password_hash($password, PASSWORD_BCRYPT))
+                ->setToken($token)
+                ->setRole('utilisateur')
+                ->setIs_verified('0');
+
+            if ($file !== null) {
+                $user = $model->setAvatar($file);
+            }
 
                 $model->create($user);
                 $userId = $user->lastId();
