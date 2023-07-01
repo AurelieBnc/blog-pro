@@ -245,4 +245,4 @@ Class RegisterController extends AbstractController
             return $this->twig->display('partial/pageFormError.twig', ['ROOT' => $this->root,'session' => $_SESSION]);
         }
     }
-}
+

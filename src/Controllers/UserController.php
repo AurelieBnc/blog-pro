@@ -187,7 +187,7 @@ Class UserController extends AbstractController
                 $model->update($id, $user);
 
                 //todo : finish user verification for email change
-                // $mailType = '2';
+                $mailType = '2';
 
                 // /**
                 //  * Send confirmation email
