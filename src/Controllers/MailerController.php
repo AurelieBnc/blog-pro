@@ -19,22 +19,23 @@ Class MailerController extends AbstractController
         $mail->Username = $_ENV['USERMAILER'];
         $mail->Password = $_ENV['PASSMAILER'];
         $mail->IsHTML(true);
-        $mail->From=$_ENV['USERMAILER'];
-        $mail->FromName=$from_name;
+        $mail->From = $_ENV['USERMAILER'];
+        $mail->FromName = $from_name;
         $mail->Sender=$from;
         $mail->AddReplyTo($from, $from_name);
         $mail->Subject = $subject;
         $mail->Body = $mail->msgHTML($body);
         //$mail->msgHTML(file_get_contents(ROOT.'/src/Templates/home/contents.html'), $dataMail);
         $mail->AddAddress($to);
+        //faire un try catch
         if(!$mail->Send())
         {
-            $error ="Please try Later, Error Occured while Processing...";
+            $error ="Essyez plus tard, une erreur est survenue...";
             return $error;
         }
         else
         {
-            $error = "Thanks You !! Your email is sent.";
+            $error = "Merci, le mail a bien été envoyé!";
             return $error;
         }
     }
