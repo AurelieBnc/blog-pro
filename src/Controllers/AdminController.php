@@ -50,8 +50,8 @@ use App\Entity\User;
             $disableUser = $model->setIs_verified($_POST['is_verified']);
             $id = "id = ".$disableUserId;
             $model->update($id, $disableUser);
-            echo "données bien mise à jour";
 
+            echo "données bien mise à jour";
         }
 
         $this->index($_SESSION['id']);

@@ -53,7 +53,6 @@ Class RegisterController extends AbstractController
                 // Vérification du role de l'utilisateur et redirection
                 if ($user['role'] === 'admin' && $user['is_verified'] === '1')
                 {
-                    //todo :  bug => n'affiche pas la bonne route dans l'url mais suis bien la bonne url (admin)??
                     echo 'je suis un admin';
                     $_SESSION['hasLoggedIn'] = true;
                     $_SESSION['logUser'] = 'admin';
@@ -71,11 +70,11 @@ Class RegisterController extends AbstractController
                     //todo detruire la session sur la page suivante ou ici et renvoyé l'adresse mail sur la page suivante
                     echo 'je suis un utilisateur non vérifié';
                     $_SESSION['logUser'] = 'user_not_verified';
-                    return $this->twig->display('register/userNotValid.twig', ['ROOT' => $this->root, 'session' => $_SESSION]);
+                    return $this->twig->display('partial/userNotValid.twig', ['ROOT' => $this->root, 'session' => $_SESSION]);
                 }
             } else {
                 //todo modifier la page d'erreur
-                return $this->twig->display('register/partial/userNotFind.twig', ['ROOT' => $this->root ]);
+                return $this->twig->display('partial/userNotFind.twig', ['ROOT' => $this->root ]);
             }
         }
 
@@ -85,9 +84,13 @@ Class RegisterController extends AbstractController
     public function logOut()
     {
         session_destroy();
+        unset($_SESSION['logUser']);
+        unset($_SESSION['pseudo']);
+        unset($_SESSION['id']);
         $_SESSION['logVisitor'] = true;
         $_SESSION['hasLoggedIn'] = false;
-        return $this->twig->display('register/logout.twig', ['ROOT' => $this->root ]);
+
+        return $this->twig->display('partial/logout.twig', ['ROOT' => $this->root ]);
     }
 
     public function register()
@@ -146,7 +149,7 @@ Class RegisterController extends AbstractController
         }
 
         if ($user_exist) {
-            return $this->twig->display('register/userExist.twig',
+            return $this->twig->display('partial/userExist.twig',
                 [
                     'ROOT' => $this->root,
                     'email' => $email,
@@ -155,8 +158,7 @@ Class RegisterController extends AbstractController
             );
         }
         if ($pseudo_exist) {
-            echo 'Ce nom d\'utilisateur est déjà utilisé.';
-            return $this->twig->display('register/userExist.twig',
+            return $this->twig->display('partial/userExist.twig',
                 [
                     'ROOT' => $this->root,
                     'pseudonym' => $pseudonym,
@@ -216,33 +218,35 @@ Class RegisterController extends AbstractController
                 $user = $model->setAvatar($file);
             }
 
-            $model->create($user);
-            $userId = $user->lastId();
-            $mailType = 1;
-            /**
-             * Envoi du mail de confirmation
-             */
-            $to   = $_POST['email'];
-            $from = $_ENV['USERMAILER'];
-            $name = 'Aurelie test blog-pro';
-            $subj = 'Confirmation de compte';
-            $msg = 'Bienvenue sur Blog-pro,
+                $model->create($user);
+                $userId = $user->lastId();
+                $mailType = '1';
+                /**
+                 * Envoi du mail de confirmation
+                 */
+                $to   = $_POST['email'];
+                $from = $_ENV['USERMAILER'];
+                $name = 'Aurelie test blog-pro';
+                $subj = 'Confirmation de compte';
+                $msg = 'Bienvenue sur Blog-pro,
 
-            Pour activer votre compte, veuillez cliquer sur le lien ci-dessous
-            ou copier/coller dans votre navigateur Internet.
+                Pour activer votre compte, veuillez cliquer sur le lien ci-dessous
+                ou copier/coller dans votre navigateur Internet.
 
-            http://localhost/blog-pro/public/index.php?p=mailer/confirmMail/'.urlencode($userId).'/'.urlencode($token).'
+                http://localhost/blog-pro/public/index.php?p=mailer/confirmMail/'.urlencode($userId).'/'.urlencode($token).'
 
-            ---------------
-            Ceci est un mail automatique, Merci de ne pas y répondre.';
-            //$msg = 'http://localhost/blog-pro/template/home/contents.php?id=&';
-            //$msg = file_get_contents(ROOT.'/src/Templates/home/contents.html');
-            //$msg = ROOT.'/src/Templates/home/contents.html?id='.$_SESSION['id'].'&token='.$token;
-            $smtmailer = new MailerController;
-            $error = $smtmailer->smtpmailer($to, $from, $name, $subj, $msg);
-            echo "mail envoyé";
+                ---------------
+                Ceci est un mail automatique, Merci de ne pas y répondre.';
+                //$msg = 'http://localhost/blog-pro/template/home/contents.php?id=&';
+                //$msg = file_get_contents(ROOT.'/src/Templates/home/contents.html');
+                //$msg = ROOT.'/src/Templates/home/contents.html?id='.$_SESSION['id'].'&token='.$token;
+                $smtmailer = new MailerController;
+                $error = $smtmailer->smtpmailer($to, $from, $name, $subj, $msg);
+                echo "mail envoyé";
 
-            return $this->twig->display('register/confirmRegister.twig', ['mailtype' => $mailType,'ROOT' => $this->root, 'session' => $_SESSION]);
+                return $this->twig->display('partial/confirmRegister.twig', ['mailType' => $mailType,'ROOT' => $this->root, 'session' => $_SESSION]);
+            }
+            return $this->twig->display('partial/pageFormError.twig', ['ROOT' => $this->root,'session' => $_SESSION]);
         }
     }
 }

@@ -209,7 +209,7 @@ Class UserController extends AbstractController
                 $error = $smtmailer->smtpmailer($to, $from, $name, $subj, $msg);
                 echo "mail envoyé";
 
-                return $this->twig->display('register/confirmRegister.twig', ['mailtype' => $mailType,'ROOT' => $this->root, 'session' => $_SESSION]);
+                return $this->twig->display('partial/confirmRegister.twig', ['mailtype' => $mailType,'ROOT' => $this->root, 'session' => $_SESSION]);
             }
 
             $comment = new Comment;

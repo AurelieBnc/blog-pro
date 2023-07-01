@@ -30,6 +30,7 @@ Class CommentController extends AbstractController
         $userDataComment = ['id_post' => $postId];
         $comments = $comment->findBy($userDataComment);
 
+
         $user = new User;
         $users = $user->findAll();
 
@@ -67,6 +68,7 @@ Class CommentController extends AbstractController
         $comment = new Comment;
         $userDataComment = ['id_user' => $userId];
         $comments = $comment->findBy($userDataComment);
+
 
         $user = new User;
         $users = $user->findAll();
