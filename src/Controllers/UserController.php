@@ -5,9 +5,10 @@ namespace App\Controllers;
 use App\Entity\Comment;
 use App\Entity\User;
 use App\Entity\Post;
+use App\Controllers\MailerController;
 
 /**
- * Controlleur des users
+ * User Controller
  */
 Class UserController extends AbstractController
 {
@@ -31,7 +32,7 @@ Class UserController extends AbstractController
             $size = $_FILES['avatar']['size'];
             $error = $_FILES['avatar']['error'];
 
-            // Vérification du type et de la taille du fichier uploader
+            // Checking uploader file type and size
             $tabExtension = explode('.', $name);
             $extension = strtolower(end($tabExtension));
 
@@ -43,7 +44,7 @@ Class UserController extends AbstractController
                 $file = $uniqueName.".".$extension;
                 move_uploaded_file($tmpName, './images/avatar_upload/'.$file);
             } else {
-                //todo détaillé les erreurs
+                // todo : detailed errors
                 echo "Mauvaise extension, taille trop grande ou une erreur est survenue";
             }
         }
@@ -121,7 +122,7 @@ Class UserController extends AbstractController
             }
         }
 
-        //todo : faire la confirmation de mail
+        // todo : confirm email
         if (isset($_POST['email']) && !empty($_POST['email'])) {
             $users = $model->findBy($datas);
             foreach ($users as $user) {
@@ -178,36 +179,35 @@ Class UserController extends AbstractController
             if (password_verify( $actualPassword , $user['password']))
             {
                 $id = "id = ".$idUser;
-                $token = $user->getToken();
+                $token = $user['token'];
                 $model = new User;
                 $user = $model
                     ->setPassword(password_hash($newPassword, PASSWORD_BCRYPT))
                     ->setIs_verified('0');
                 $model->update($id, $user);
-                $mailType = 2;
 
-                /**
-                 * Envoi du mail de confirmation
-                 */
-                $to   = $_POST['email'];
-                $from = $_ENV['USERMAILER'];
-                $name = 'Aurelie test blog-pro';
-                $subj = 'Confirmation de compte';
-                $msg = 'Bienvenue sur Blog-pro,
+                //todo : finish user verification for email change
+                // $mailType = '2';
 
-                Pour activer votre nouvelle adresse mail, veuillez cliquer sur le lien ci-dessous
-                ou copier/coller dans votre navigateur Internet.
+                // /**
+                //  * Send confirmation email
+                //  */
+                // $to   = $user->getEmail();
+                // $from = $_ENV['USERMAILER'];
+                // $name = 'Aurelie test blog-pro';
+                // $subj = 'Confirmation de compte';
+                // $msg = 'Bienvenue sur Blog-pro,
 
-                http://localhost/blog-pro/public/index.php?p=mailer/confirmMail/'.urlencode($idUser).'/'.urlencode($token).'
+                // Pour activer votre nouvelle adresse mail, veuillez cliquer sur le lien ci-dessous
+                // ou copier/coller dans votre navigateur Internet.
 
-                ---------------
-                Ceci est un mail automatique, Merci de ne pas y répondre.';
-                //$msg = 'http://localhost/blog-pro/template/home/contents.php?id=&';
-                //$msg = file_get_contents(ROOT.'/src/Templates/home/contents.html');
-                //$msg = ROOT.'/src/Templates/home/contents.html?id='.$_SESSION['id'].'&token='.$token;
-                $smtmailer = new MailerController;
-                $error = $smtmailer->smtpmailer($to, $from, $name, $subj, $msg);
-                echo "mail envoyé";
+                // http://localhost/blog-pro/public/index.php?p=mailer/confirmMail/'.urlencode($idUser).'/'.urlencode($token).'
+
+                // ---------------
+                // Ceci est un mail automatique, Merci de ne pas y répondre.';
+                // $smtmailer = new MailerController;
+                // $error = $smtmailer->smtpmailer($to, $from, $name, $subj, $msg);
+                // echo "mail envoyé";
 
                 return $this->twig->display('partial/confirmRegister.twig', ['mailtype' => $mailType,'ROOT' => $this->root, 'session' => $_SESSION]);
             }

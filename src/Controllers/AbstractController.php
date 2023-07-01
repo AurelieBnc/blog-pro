@@ -17,7 +17,7 @@ abstract Class AbstractController
     {
         $this->root = 'http://localhost/blog-pro/public/';
 
-        //On démarre une session
+        // We start a session
         session_start();
 
         if (isset($_SESSION) && isset($_SESSION['hasLoggedIn']) && $_SESSION['hasLoggedIn'] === true) {
@@ -26,10 +26,10 @@ abstract Class AbstractController
             $_SESSION['logVisitor'] = true;
         }
 
-        //Set the folder containing templates
+        // Set the folder containing templates
         $this->loader = new FilesystemLoader(__DIR__.'/../Templates');
 
-        //Set Twig Environnement
+        // Set Twig Environnement
         $this->twig = new Environment($this->loader, [
             'debug' => true,
             'cache' => false, //'../tmp',
@@ -39,7 +39,7 @@ abstract Class AbstractController
             // 'ROOT' => 'http://localhost/blog-pro/public/',
         ]);
 
-        //Current page name setting
+        // Current page name setting
         if (isset($_GET['p']))
         {
             $this->page = $_GET['p'];

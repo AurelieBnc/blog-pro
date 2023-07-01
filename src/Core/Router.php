@@ -36,8 +36,6 @@ Class Router
 
             if ($controllerName !== '') {
                 $controller = '\\App\\Controllers\\'.ucfirst($controllerName).'Controller';
-                //var_dump('controllerName', $controllerName);
-                var_dump('params', $params);
 
                 // controller instance if exist
                 if (class_exists($controller)) {
@@ -52,13 +50,10 @@ Class Router
                     }
                 }
 
-                var_dump('param', $params);
                 // we get the second parameter
                 $action = (isset($params[0])) ? array_shift($params) : 'index';
 
                 if (method_exists($controller, $action)) {
-
-                    //var_dump($params);
                     isset($params) ? call_user_func_array([$controller, $action], $params) : $controller->$action();
                 } else {
                     header('HTTP/1.0 404 Not Found');
@@ -66,7 +61,7 @@ Class Router
                 }
 
             } else {
-                //any parameter, default controller instance
+                // any parameter, default controller instance
                 $controller = new HomeController;
                 $controller->index();
             }

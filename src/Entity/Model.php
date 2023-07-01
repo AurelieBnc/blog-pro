@@ -6,22 +6,22 @@ use App\Core\Db;
 
 class Model extends Db
 {
-    //Table de la base de données
+    // Database table
     protected $table;
 
-    //Instance de Db
+    // DB instance
     private $db;
     private $last_id = null;
 
     public function runQuery(string $sql, array $attributs = null)
     {
-    //On récupére l'instance de Db
+    // We get the instance of Db
     $this->db = Db::getInstance();
     $this->db->exec("SET NAMES 'utf8';");
 
-        //On vérifie si on a des attributs
+        // We check if we have attributes
         if ($attributs !== null) {
-            // requête préparée
+            // prepared statement
             $query = $this->db->prepare($sql);
             $query->execute($attributs);
             if($this->db->lastInsertId()) {
@@ -29,7 +29,7 @@ class Model extends Db
             }
             return $query;
         } else {
-            //Requête simple
+            // Simple query
             $query = $this->db->query($sql);
             if($this->db->lastInsertId()) {
                 $this->last_id = $this->db->lastInsertId();
@@ -43,7 +43,7 @@ class Model extends Db
         return $this->last_id;
     }
 
-    //READ
+    // READ
     public function find(int $id)
     {
         return $this->runQuery('SELECT * FROM '.$this->table.' WHERE id = '.$id)->fetch();
@@ -60,22 +60,22 @@ class Model extends Db
         $champs = [];
         $valeurs= [];
 
-        //On boucle pour éclater le tableau
+        // We loop to explode the array
         foreach($datas as $champ => $valeur){
-            //SELECT * FROM annonces WHERE id = ? AND  test = ?
-            //bindValue(1, valeur)
+            // SELECT * FROM annonces WHERE id = ? AND  test = ?
+            // bindValue(1, valeur)
             $champs[] = "$champ = ?";
             $valeurs[] = $valeur;
         }
 
-        //On transforme le tableau champts en une chaine de caractéres
+        // We transform the array fields into a string of characters
         $list_champs= implode(' AND ', $champs);
 
-        //On exédute la requête
+        // Execute the request
         return $this->runQuery('SELECT *FROM '.$this->table.' WHERE '. $list_champs, $valeurs)->fetchAll();
     }
 
-   //CREATE
+   // CREATE
     public function create(Model $model)
     {
 
@@ -83,9 +83,9 @@ class Model extends Db
         $nbchamps = [];
         $valeurs= [];
 
-        //On boucle pour éclater le tableau
+        // We loop to explode the array
         foreach ($model as $champ => $valeur){
-            //INSERT INTO post (titre, content, author ect) VALUES (?, ?, ?)
+            // INSERT INTO post (titre, content, author ect) VALUES (?, ?, ?)
             if ($valeur != null && $champ != 'db' && $champ !='table')
             {
                 $champs[] = $champ;
@@ -95,11 +95,11 @@ class Model extends Db
 
         }
 
-        //On transforme le tableau champts en une chaine de caractéres
+        // We transform the array fields into a string of characters
         $list_champs= implode(', ', $champs);
         $list_nb_champs = implode(', ', $nbchamps);
 
-        //On exédute la requête
+        // Execute the request
         return $this->runQuery('INSERT INTO '.$this->table.' ('. $list_champs.') VALUES('.$list_nb_champs.')', $valeurs);
     }
 
@@ -107,28 +107,28 @@ class Model extends Db
     {
         foreach ($datas as $key => $value)
         {
-            //On récupère le setter correspondant à la clé (key)
+            // We retrieve the setter corresponding to the key (key)
             $setter = 'set'.ucfirst($key);
 
-            //On vérifie si le setter existe
+            // We check if the setter exists
             if (method_exists($this, $setter))
             {
-                //On appelle le setter
+                // We call the setter
                 $this->$setter($value);
             }
         }
         return $this;
     }
 
-    //UPDATE
+    // UPDATE
     public function update(string $id, Model $model)
     {
         $champs = [];
         $valeurs= [];
 
-        //On boucle pour éclater le tableau
+        // We loop to explode the table
         foreach ($model as $champ => $valeur){
-            //UPDATE post SET titre = ?, content = ?, author =? .. WHERE id = ?
+            // UPDATE post SET titre = ?, content = ?, author =? .. WHERE id = ?
             if ($valeur != null && $champ != 'db' && $champ !='table')
             {
                 $champs[] = "$champ = ?";
@@ -137,14 +137,14 @@ class Model extends Db
 
         }
 
-        //On transforme le tableau champts en une chaine de caractéres
+        // We transform the array fields into a string of characters
         $list_champs= implode(', ', $champs);
 
-        //On exédute la requête
+        // Execute the request
         return $this->runQuery('UPDATE '.$this->table.' SET '. $list_champs.' WHERE '.$id, $valeurs);
     }
 
-    //DELETE
+    // DELETE
     public function delete(int $id)
     {
         return $this->runQuery('DELETE FROM '.$this->table.' WHERE id=?', [$id]);

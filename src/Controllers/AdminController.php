@@ -7,7 +7,7 @@ use App\Entity\Post;
 use App\Entity\User;
 
 /**
- * Controlleur de la page admin
+ * Admin page controller
  */
  Class AdminController extends AbstractController
  {
@@ -64,7 +64,7 @@ use App\Entity\User;
             $deleteUserId = $_POST['userId'];
             $deleteUser = new User;
 
-            //anonnymisation des commentaires
+            // anonymization of comments
             $data = ['id_user'=> $deleteUserId];
             $modelComment = new Comment;
             $listComments = $modelComment->findBy($data);

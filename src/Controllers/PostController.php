@@ -12,21 +12,21 @@ Class PostController extends AbstractController
     }
 
     /**
-     * Methode affichant la liste de tous les posts
+     * Method displaying the list of all posts
      */
     public function index()
     {
-        // on instancie le model correspondant à la table des "posts"
+        // we instantiate the model corresponding to the "posts" table
         $post = new Post;
 
-        //on va chercher tous les posts
-        //todo-ajouter éventuellement la possibilité de désactiver un post en ajoutant une propriété "active" et findBy(['actif' => 1])
+        // we will look for all the posts
+        // todo : optionally add the ability to disable a post by adding an "active" property and findBy(['active' => 1])
         $posts = $post->findAll();
         $this->twig->display('post/index.twig', ['ROOT' => $this->root,'posts' => $posts,'session' => $_SESSION]);
     }
 
     /**
-     * affiche un post en particulier
+     * show a particular post
      */
     public function retailPost(int $id)
     {
