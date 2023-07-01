@@ -79,6 +79,6 @@ use App\Entity\User;
             echo "utilisateur supprimé";
         }
 
-        $this->home($_SESSION['id']);
+        $this->index($_SESSION['id']);
     }
 }

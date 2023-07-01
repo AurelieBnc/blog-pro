@@ -92,7 +92,7 @@ Class RegisterController extends AbstractController
         return $this->twig->display('partial/logout.twig', ['ROOT' => $this->root ]);
     }
 
-    public function register()
+    public function registerUser()
     {
         // todo :  vérifier que le pseudo existe déjà
         // todo : vérficiation de l'utilisateur par mail + mdp oublié
