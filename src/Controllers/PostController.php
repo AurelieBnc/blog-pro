@@ -46,13 +46,18 @@ Class PostController extends AbstractController
 
     public function createPost()
     {
+        $title = htmlspecialchars($_POST['title']);
+        $lead = htmlspecialchars($_POST['lead']);
+        $content = htmlspecialchars($_POST['content']);
+        $userId = htmlspecialchars($_SESSION['id']);
+
         if ($_SESSION['logUser'] === 'admin') {
             $model = new Post;
             $post = $model
-                ->setTitle($_POST['title'])
-                ->setLead($_POST['lead'])
-                ->setContent($_POST['content'])
-                ->setId_User($_SESSION['id']);
+                ->setTitle($title)
+                ->setLead($lead)
+                ->setContent($content)
+                ->setId_User($userId);
 
             $model->create($post);
             $lastId = $post->lastId();
@@ -71,10 +76,11 @@ Class PostController extends AbstractController
 
     public function editPost()
     {
-        $postId = $_POST['postId'];
-        $title = $_POST['title'];
-        $lead = $_POST['lead'];
-        $content = $_POST['content'];
+        $postId = htmlspecialchars($_POST['postId']);
+        $title = htmlspecialchars($_POST['title']);
+        $lead = htmlspecialchars($_POST['lead']);
+        $content = htmlspecialchars($_POST['content']);
+
         $model = new Post;
         $editPost = new Post;
 
@@ -102,7 +108,7 @@ Class PostController extends AbstractController
 
     public function deletePost()
     {
-        $postId = $_POST['postId'];
+        $postId = htmlspecialchars($_POST['postId']);
         $logUser = $_SESSION['logUser'];
 
         if(isset($postId) && $logUser === 'admin')
