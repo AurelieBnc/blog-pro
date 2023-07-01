@@ -96,8 +96,8 @@ Class CommentController extends AbstractController
         $post = $model->find($postId);
 
         $comment = new Comment;
-        $userDataComment = ['id_user' => $userId];
-        $comments = $comment->findBy($userDataComment);
+        $postDataComment = ['id_post' => $_POST['postId']];
+        $comments = $comment->findBy($postDataComment);
 
         $user = new User;
         $users = $user->findAll();

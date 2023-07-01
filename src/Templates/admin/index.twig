@@ -23,45 +23,45 @@
     </header>
 
     {% if user.role is same as "admin" %}
-    {# container général de la partie admin +aside #}
+    {# general container of the admin part + aside #}
     <div class="container p-0">
 
         <div class="row">
-            {# Conteneur général du système de tabulation du Sous-Menus Catégorie d'article #}
+            {# General container of the Item Category Sub-Menus tabulation system #}
             <section class="my-5 tab-container">
 
-                {# Conteneur des boutons #}
+                {# Button Container #}
                 <div class="tabs">
-                    {# Bouton 1 (affiché par défaut avec la classe active) #}
+                    {# Button 1 (displayed by default with active class) #}
                     <div class="tab active" data-open="view1">
                         <h3>Mes informations</h3>
                     </div>
-                    {# Bouton 2 #}
+                    {# Button 2 #}
                     <div class="tab " data-open="view2">
                         <h3>Ajouter un article</h3>
                     </div>
-                    {# Bouton 3 #}
+                    {# Button 3 #}
                     <div class="tab " data-open="view3">
                         <h3>Gestion des utilisateurs</h3>
                     </div>
                 </div>
 
-                {# Conteneur des vues correspondant aux boutons #}
+                {# Container of views corresponding to buttons #}
                 <div class="views">
-                    {# Vue 1 - Mes informations (affichée par défaut avec la classe active) #}
+                    {# View 1 - My information (displayed by default with the active class) #}
                     <div class="view active" id="view1">
                         {% include 'admin/partial/userPage.twig' %}
-                    </div>{# Fin de Vue 1 #}
+                    </div>{# End view 1 #}
 
-                    {# Vue 2 - Ajout d'article #}
+                    {# View 2 - Add item #}
                     <div class="view" id="view2">
                         {% include 'admin/partial/createPost.twig' %}
-                    </div>{# Fin de Vue 2 #}
+                    </div>{# End view 2 #}
 
-                    {# Vue 3 - Utilisateurs #}
+                    {# View 3 - Users #}
                     <div class="view " id="view3">
                         {% include 'admin/partial/manageUser.twig' %}
-                    </div> {# Fin de Vue 3 #}
+                    </div> {# End view 3 #}
                 </div>
 
             </section>

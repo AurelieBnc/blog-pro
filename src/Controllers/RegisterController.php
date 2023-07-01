@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\Controllers\MailerController;
 
 /**
- * Controlleur du système de connexion
+ * Connection system controller
  */
 Class RegisterController extends AbstractController
 {
@@ -28,7 +28,7 @@ Class RegisterController extends AbstractController
         // Validation du formulaire
         if (isset($email) &&  isset($password))
         {
-            // Recherche de l'utilisateur
+            // User search
             $user = new User;
             unset($_POST['password']);
             $users = $user->findBy($post);
@@ -50,7 +50,7 @@ Class RegisterController extends AbstractController
                 $_SESSION['id'] = $user['id'];
 
 
-                // Vérification du role de l'utilisateur et redirection
+                // User role verification and redirection
                 if ($user['role'] === 'admin' && $user['is_verified'] === '1')
                 {
                     echo 'je suis un admin';
@@ -67,13 +67,12 @@ Class RegisterController extends AbstractController
                 }
                 if ($user['role'] === 'utilisateur' && $user['is_verified'] === '0')
                 {
-                    //todo detruire la session sur la page suivante ou ici et renvoyé l'adresse mail sur la page suivante
+                    //todo : destroy the session on the next page or here and return the email address on the next page
                     echo 'je suis un utilisateur non vérifié';
                     $_SESSION['logUser'] = 'user_not_verified';
                     return $this->twig->display('partial/userNotValid.twig', ['ROOT' => $this->root, 'session' => $_SESSION]);
                 }
             } else {
-                //todo modifier la page d'erreur
                 return $this->twig->display('partial/userNotFind.twig', ['ROOT' => $this->root ]);
             }
         }
@@ -93,10 +92,9 @@ Class RegisterController extends AbstractController
         return $this->twig->display('partial/logout.twig', ['ROOT' => $this->root ]);
     }
 
-    public function register()
+    public function registerUser()
     {
-        // fix : ne reconnais pas la colonne max files
-        // todo : sécurisation des données entrées par l'utilisateur avec  'firstname' => htmlspecialcchars($_POST['firstname']),
+        // todo : user verification for change of email + forgotten password
         $user = new User;
         $user_exist = null;
         $pseudo_exist = null;
@@ -105,8 +103,9 @@ Class RegisterController extends AbstractController
 
         $email = htmlspecialchars($_POST['email']);
         $pseudonym = htmlspecialchars($_POST['pseudonym']);
+
         /**
-         * Nous déterminons si l'utilisateur existe déjà avec cette adresse mail
+         * We determine if the user already exists with this email address
          */
         if (isset($email) && !empty($email))
         {
@@ -129,7 +128,7 @@ Class RegisterController extends AbstractController
         }
 
         /**
-         * Nous déterminons si le pseudonym existe déjà
+         * We determine if the nickname already exists
          */
         if (isset($pseudonym) && !empty($pseudonym))
         {
@@ -169,7 +168,7 @@ Class RegisterController extends AbstractController
 
         if (!$user_exist && !$pseudo_exist) {
             /**
-             * gestion de l'image d'avatar
+             * avatar image management
              */
             if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] !== 4) {
                 $tmpName = $_FILES['avatar']['tmp_name'];
@@ -177,7 +176,7 @@ Class RegisterController extends AbstractController
                 $size = $_FILES['avatar']['size'];
                 $error = $_FILES['avatar']['error'];
 
-                // Vérification du type et de la taille du fichier uploader
+                // Checking uploader file type and size
                 $tabExtension = explode('.', $name);
                 $extension = strtolower(end($tabExtension));
 
@@ -189,7 +188,7 @@ Class RegisterController extends AbstractController
                     $file = $uniqueName.".".$extension;
                     move_uploaded_file($tmpName, './images/avatar_upload/'.$file);
                 } else {
-                    //todo détaillé les erreurs
+                    // todo : detailed errors
                     echo "Mauvaise extension, taille trop grande ou une erreur est survenue";
                 }
             }
@@ -222,7 +221,7 @@ Class RegisterController extends AbstractController
                 $userId = $user->lastId();
                 $mailType = '1';
                 /**
-                 * Envoi du mail de confirmation
+                 * Send confirmation email
                  */
                 $to   = $_POST['email'];
                 $from = $_ENV['USERMAILER'];
@@ -237,9 +236,6 @@ Class RegisterController extends AbstractController
 
                 ---------------
                 Ceci est un mail automatique, Merci de ne pas y répondre.';
-                //$msg = 'http://localhost/blog-pro/template/home/contents.php?id=&';
-                //$msg = file_get_contents(ROOT.'/src/Templates/home/contents.html');
-                //$msg = ROOT.'/src/Templates/home/contents.html?id='.$_SESSION['id'].'&token='.$token;
                 $smtmailer = new MailerController;
                 $error = $smtmailer->smtpmailer($to, $from, $name, $subj, $msg);
                 echo "mail envoyé";

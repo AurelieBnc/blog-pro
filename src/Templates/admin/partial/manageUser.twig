@@ -37,7 +37,7 @@
                                         </div>
                                     </div>
 
-                                    {# btn de modération - todo ajouter un hover #}
+                                    {# moderation button - todo : add a hover  #}
                                     {% if session.logUser is same as 'admin' and user.role is not same as 'admin' %}
                                         <div class="d-flex justify-content-end align-items-end col-2">
                                             <div class="p-1 ">
@@ -49,7 +49,6 @@
                                                                 <i class="fas fa-regular fa-square-check alert-danger"></i>
                                                             </button>
                                                         </form>
-                                                        {# <a class=" btn btn-darkblue " href="#!" title="Désactiver le compte utlisateur"><i class="fas fa-regular fa-square-check alert-danger"></i></a> #}
                                                     {% else %}
                                                         <form method="POST" action="admin/disableUser">
                                                             <input name="userId" type="hidden" value={{ user.id }}>
@@ -58,7 +57,6 @@
                                                                 <i class="fas fa-regular fa-square-check alert-info"></i>
                                                             </button>
                                                         </form>
-                                                        {# <a class=" btn btn-darkblue " href="#!" title="Activer le compte utlisateur"><i class="fas fa-regular fa-square-check alert-info"></i></a> #}
                                                     {% endif %}
                                             </div>
                                             <div class="p-1 ">
@@ -68,8 +66,6 @@
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </form>
-                                                {# <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utlisateur ?')"
-                                                    class=" btn btn-darkblue " href="{{ ROOT }}admin/deleteUser" title="Supprimer l'utlisateur"><i class="fas fa-trash"></i></a> #}
                                             </div>
                                         </div>
                                     {% else %}

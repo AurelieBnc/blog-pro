@@ -3,30 +3,30 @@ use App\Core\Router as CoreRouter;
 use App\Entity\Post;
 use App\Entity\User;
 
-//on définit une constante contenant le dossier racine du projet
+// we define a constant containing the root folder of the project
 define('ROOT', dirname(__DIR__));
 
-//on importe l'autoloader
+// we import the autoloader
 require ROOT.'/vendor/autoload.php';
 
-//on charge mon extension de twig
+// we load my branch extension
 require ROOT.'/src/Core/MyExtensionTwig.php';
 
 
-//on charge le fichier d'environnement
+// load the environment file
 Dotenv\Dotenv::createUnsafeImmutable(__DIR__ . '/../')->load();
 
-//on instancie le router
+// we instantiate the router
 $app = new CoreRouter();
 
-//On démarre l'application
+// We start the application
 $app->start();
 
 
 //////////////// Test Db connect & methods
 // $model = new Post;
 
-// //méthode d'hydratation pour utilisation avec méthode POST des forms
+// // hydration method for use with POST method of forms
 // $datas = [
 //     'title' => 'titre post test',
 //     'content' => 'contenu du post',

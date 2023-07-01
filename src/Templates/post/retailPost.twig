@@ -1,9 +1,9 @@
 {% extends "base.twig" %}
 
 {% block title %} Accueil {% endblock %}
-{# todo modifier apparence comme userPage #}
+{# todo : change appearance as userPage #}
 {% block content %}
-{# article #}
+{# post #}
 <section class="py-5">
     <div class="container mt-5 mb-1">
         <div class="row justify-content-center">
@@ -14,7 +14,7 @@
                 <p class="blockquote-footer d-flex justify-content-end pt-5">Mise à jour le {{ post.update_date |
                     date("d/m/Y",
                     "Europe/Paris") }}</p>
-                {# btn de modération - todo ajouter un hover#}
+                    {# moderation button - add hover #}
                 {% if session.logUser is same as 'admin' %}
                 <div class="d-flex justify-content-end me-2">
                     <div class="p-1 ">
@@ -50,7 +50,7 @@
                     </div>
                     <h2 class="fs-3 mt-1">Commentaires</h2>
                 </div>
-                {# block commentaire (boucle) #}
+                {# block comments (loop) #}
                 {% for comment in comments %}
                 <div class="pt-5 px-5 justify-content-around shadow">
                     <div class="d-flex justify-content-between">
@@ -74,7 +74,7 @@
                                 "Europe/Paris") }}</p>
                         </div>
                     </div>
-                    {# btn de modération #}
+                    {# moderation button - add hover #}
                     <div class="d-flex justify-content-end me-2">
                         {% if session.logUser is same as 'admin' %}
                         <div class="p-2 ">
@@ -83,11 +83,10 @@
                                 <input name="commentId" type="hidden" value={{ comment.id }}>
                                 <input name="is_enabled" type="hidden" value="0">
                                 <input name="postId" type="hidden" value={{ comment.id_post }}>
-                                <button type="submit" class="btn" title=title="Valider le commentaire">
+                                <button type="submit" class="btn" title="Valider le commentaire">
                                     <i class="fas fa-regular fa-square-check alert-success"></i>
                                 </button>
                             </form>
-                            {# <a class=" btn btn-darkblue " href="#!" title="Désactiver le compte utlisateur"><i class="fas fa-regular fa-square-check alert-danger"></i></a> #}
                             {% else %}
                             <form method="POST" action="comment/disableComment">
                                 <input name="commentId" type="hidden" value={{ comment.id }}>
@@ -97,12 +96,11 @@
                                     <i class="fas fa-regular fa-square-check alert-danger"></i>
                                 </button>
                             </form>
-                            {# <a class=" btn btn-darkblue " href="#!" title="Activer le compte utlisateur"><i class="fas fa-regular fa-square-check alert-info"></i></a> #}
                             {% endif %}
                         </div>
                         {% endif %}
 
-                        {% if (session.logUser is same as 'admin') or (sessionUserId is same as comment.id_user) %}
+                        {% if (session.logUser is same as 'admin') or (session.id is same as comment.id_user) %}
                         <div class="p-2 ">
                             <form method="POST" action="comment/deleteComment">
                                 <input name="commentId" type="hidden" value={{ comment.id }}>
@@ -133,12 +131,6 @@
                 <form method="POST" action="comment/addComment" name="addComment" id="CommentForm" novalidate>
                     <input name="userId" type="hidden" value={{ session.id }}>
                     <input name="postId" type="hidden" value={{ post.id }}>
-                    {#INVALID INPUT
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control is-invalid" id="floatingInputInvalid"
-                            placeholder="name@example.com" value="test@example.com">
-                        <label for="floatingInputInvalid">Invalid input</label>
-                    </div> #}
                     <div class="form-group mb-3 controls">
                         <textarea rows="7" class="form-control" id="content" name="content" placeholder="Laisser votre commentaire"
                             id="floatingTextarea2" required

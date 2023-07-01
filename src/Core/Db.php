@@ -5,24 +5,24 @@ namespace App\Core;
 use PDO;
 use PDOException;
 
-//Design patterne singleton = une seule possibilité d'instance
+// Design pattern singleton = only one possibility of instance
 class Db extends PDO
 {
-    // Instance unique de la classe
+    // Single instance of the class
     private static $instance;
 
     private function __construct()
     {
-        // Informations de connexion
+        // Login information
         $dbHost = $_ENV['DBHOST'];
         $dbUser = $_ENV['DBUSER'];
         $dbPass = $_ENV['DBPASS'];
         $dbName = $_ENV['DBNAME'];
 
-        // DSN de connexion
+        // Login DSN
         $_dsn = 'mysql:dbname='.$dbName.';host='.$dbHost;
 
-        // On appelle le constructeur de la classe PDO
+        // We call the constructor of the PDO class
         try{
             parent::__construct($_dsn, $dbUser, $dbPass);
 

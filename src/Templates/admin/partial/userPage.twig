@@ -30,7 +30,6 @@
                         <form class="col-lg-6 mt-5" method="POST" action="user/editAvatar" name="editAvatar" id="editAvatarForm" enctype= "multipart/form-data">
                             <div class="form-control controls mt-5">
                                 <label class="mb-2" for="avatar">Vous pouvez télécharger un avatar</label>
-                                {# <input type="hidden" name="MAX_FILE_SIZE" value="1048576" /> #}
                                 <input type="file" class="form-control mb-2" id="avatar" name="avatar" placeholder="avatar"
                                     accept="image/png, image/jpeg" title="Vous pouvez télécharger un avatar">
                             </div>
@@ -130,7 +129,6 @@
                     <h3 class="ps-2 text-center my-5">Mes commentaires</h3>
                     {% if comments is not null or comment is not empty %}
                         {% for comment in comments %}
-                        <!--todo : truncate +lien vers le commentaire + condition si validé ou non (color)-->
                         <img src="{{ ROOT }}images/deco/bookline.jpg" class="separation logo" alt="separation " alt="">
                         <li class=" list-inline-item px-4">
                         {% for post in posts %}

@@ -28,14 +28,14 @@ Class Router
 
             // management of url parameters
             $params = [];
-            $arrayParams = [];
 
             if (isset($_GET['p'])) {
                 $params = explode('/', $_GET['p']);
             }
+            $controllerName = array_shift($params);
 
-            if ($params[0] !== '') {
-                $controller = '\\App\\Controllers\\'.ucfirst(array_shift($params)).'Controller';
+            if ($controllerName !== '') {
+                $controller = '\\App\\Controllers\\'.ucfirst($controllerName).'Controller';
 
                 // controller instance if exist
                 if (class_exists($controller)) {
@@ -44,24 +44,24 @@ Class Router
                     throw new Exception('Aucun controller correspondant');
                 }
 
+                foreach($params as $param) {
+                    if (isset($params[0]) && $params[0] === $controllerName) {
+                        array_shift($params);
+                    }
+                }
+
                 // we get the second parameter
                 $action = (isset($params[0])) ? array_shift($params) : 'index';
 
                 if (method_exists($controller, $action)) {
-                    if (isset($params[0])) {
-                        while (!empty($params)){
-                            $arrayParams = [array_shift($params)];
-                        }
-                    }
-
-                    isset($arrayParams) ? call_user_func_array([$controller, $action], $arrayParams) : $controller->$action();
+                    isset($params) ? call_user_func_array([$controller, $action], $params) : $controller->$action();
                 } else {
                     header('HTTP/1.0 404 Not Found');
                     throw new Exception("La page recherchée n\'existe pas");
                 }
 
             } else {
-                //any parameter, default controller instance
+                // any parameter, default controller instance
                 $controller = new HomeController;
                 $controller->index();
             }

@@ -7,7 +7,7 @@ use App\Entity\Post;
 use App\Entity\User;
 
 /**
- * controlleur de la page d'accueil
+ * home page controller
  */
 Class HomeController extends AbstractController
 {
