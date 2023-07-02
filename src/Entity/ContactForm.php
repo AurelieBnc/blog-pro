@@ -5,11 +5,17 @@ use App\Entity\Model;
 
 Class ContactForm extends Model
 {
+
     protected $id;
+
     protected $lastname;
+
     protected $firstname;
+
     protected $email;
+
     protected $content;
+
     protected $created_at;
 
 
@@ -17,6 +23,7 @@ Class ContactForm extends Model
     {
         $this->table = 'contactform';
     }
+
 
     /**
      * Get the value of id

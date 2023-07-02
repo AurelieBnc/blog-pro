@@ -5,13 +5,21 @@ use App\Entity\Model;
 
 Class Post extends Model
 {
+
     protected $id;
+
     protected $title;
+
     protected $lead;
+
     protected $content;
+
     protected $created_at;
+
     protected $update_date;
+
     protected $id_user;
+
 
     public function __construct()
     {

@@ -11,7 +11,7 @@ class Model extends Db
     private $last_id = null;
 
 
-    public function runQuery( string $sql, array $attributs = null )
+    public function runQuery(string $sql, array $attributs = null)
     {
     $this->db = Db::getInstance();
     $this->db->exec("SET NAMES 'utf8';");
@@ -39,7 +39,7 @@ class Model extends Db
     }
 
 
-    public function find( int $id )
+    public function find(int $id)
     {
         return $this->runQuery('SELECT * FROM '.$this->table.' WHERE id = '.$id)->fetch();
     }
@@ -52,7 +52,7 @@ class Model extends Db
     }
 
 
-    public function findBy( array $datas )
+    public function findBy(array $datas)
     {
         $champs = [];
         $valeurs= [];
@@ -68,7 +68,7 @@ class Model extends Db
     }
 
 
-    public function create( Model $model )
+    public function create(Model $model)
     {
         $champs = [];
         $nbchamps = [];

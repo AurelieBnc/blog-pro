@@ -5,13 +5,21 @@ use App\Entity\Model;
 
 Class Comment extends Model
 {
+
     protected $id;
+
     protected $content;
+
     protected $created_at;
+
     protected $update_date;
+
     protected $is_enabled;
+
     protected $id_user;
+
     protected $id_post;
+
 
     public function __construct()
     {

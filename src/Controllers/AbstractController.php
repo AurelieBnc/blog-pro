@@ -8,9 +8,13 @@ use Twig\Extra\Intl\IntlExtension;
 
 abstract Class AbstractController
 {
+
     private $loader;
-    protected $twig;
+
     private $page = 'home';
+
+    protected $twig;
+
     public $root;
 
 

@@ -5,16 +5,27 @@ use App\Entity\Model;
 
 Class User extends Model
 {
+
     protected $id;
+
     protected $lastname;
+
     protected $firstname;
+
     protected $pseudonym;
+
     protected $email;
+
     protected $password;
+
     protected $token;
+
     protected $role;
+
     protected $is_verified;
+
     protected $avatar;
+
     protected $registration_date;
 
 
