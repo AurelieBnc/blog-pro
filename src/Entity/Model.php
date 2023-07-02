@@ -69,10 +69,7 @@ class Model extends Db
 
     public function findAll()
     {
-        if(isset($this->table)) {
-            $table = htmlspecialchars($this->table);
-        }
-        $query = $this->runQuery('SELECT * FROM '.$table);
+        $query = $this->runQuery('SELECT * FROM '.$this->getTable());
         return $query->fetchAll();
     }
 
@@ -89,7 +86,7 @@ class Model extends Db
 
         $list_champs= implode(' AND ', $champs);
 
-        return $this->runQuery('SELECT *FROM '.$this->table.' WHERE '. $list_champs, $valeurs)->fetchAll();
+        return $this->runQuery('SELECT *FROM '.$this->getTable().' WHERE '. $list_champs, $valeurs)->fetchAll();
     }
 
 //ok
@@ -111,7 +108,7 @@ class Model extends Db
         $list_champs= implode(', ', $champs);
         $list_nb_champs = implode(', ', $nbchamps);
 
-        return $this->runQuery('INSERT INTO '.$this->table.' ('. $list_champs.') VALUES('.$list_nb_champs.')', $valeurs);
+        return $this->runQuery('INSERT INTO '.$this->getTable().' ('. $list_champs.') VALUES('.$list_nb_champs.')', $valeurs);
     }
 
 //ok
@@ -146,13 +143,13 @@ class Model extends Db
 
         $list_champs= implode(', ', $champs);
 
-        return $this->runQuery('UPDATE '.$this->table.' SET '. $list_champs.' WHERE '.$id, $valeurs);
+        return $this->runQuery('UPDATE '.$this->getTable().' SET '. $list_champs.' WHERE '.$id, $valeurs);
     }
 
 
     public function delete(int $id)
     {
-        return $this->runQuery('DELETE FROM '.$this->table.' WHERE id=?', [$id]);
+        return $this->runQuery('DELETE FROM '.$this->getTable().' WHERE id=?', [$id]);
     }
 
 
