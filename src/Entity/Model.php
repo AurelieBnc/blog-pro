@@ -6,8 +6,11 @@ use App\Core\Db;
 
 class Model extends Db
 {
+
     protected $table;
+
     private $db;
+
     private $last_id = null;
 
 

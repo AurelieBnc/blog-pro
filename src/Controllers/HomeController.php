@@ -11,9 +11,12 @@ use App\Entity\User;
  */
 Class HomeController extends AbstractController
 {
+
+
     public function __construct() {
         parent::__construct();
     }
+
 
     public function index()
     {
@@ -25,6 +28,7 @@ Class HomeController extends AbstractController
 
         return $this->twig->display('home/index.twig', ['user' => $user, 'ROOT' => $this->root,'session' => $_SESSION]);
     }
+
 
     public function contact()
     {
@@ -59,4 +63,6 @@ Class HomeController extends AbstractController
 
         return $this->twig->display('partial/pageFormError.twig');
     }
+
+
 }
