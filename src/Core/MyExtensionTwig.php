@@ -10,6 +10,8 @@ use Twig\TwigFunction;
  */
 class MyExtensionTwig extends AbstractExtension
 {
+
+
     /**
      * Functions List
      */
@@ -19,6 +21,7 @@ class MyExtensionTwig extends AbstractExtension
         new TwigFunction('activeClass', [$this, 'activeClass'], ['needs_context' => true])
         ];
     }
+
 
     /**
      * Gives class 'active' to the current page
@@ -31,6 +34,7 @@ class MyExtensionTwig extends AbstractExtension
         }
     }
 
+
     /**
      * Filters List
      */
@@ -41,9 +45,11 @@ class MyExtensionTwig extends AbstractExtension
     ];
     }
 
+
     public function truncate(string $values, int $nbChar)
     {
         return mb_substr($values, 0, $nbChar,'UTF-8');
     }
+
 
 }

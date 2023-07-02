@@ -9,6 +9,8 @@ use Exception;
  */
 Class Router
 {
+
+
     public function start()
     {
         try {
@@ -70,4 +72,6 @@ Class Router
             echo 'Erreur : '.$e->getMessage();
         }
     }
+
+
 }

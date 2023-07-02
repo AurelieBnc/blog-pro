@@ -12,6 +12,8 @@ use App\Controllers\MailerController;
  */
 Class UserController extends AbstractController
 {
+
+
     public function editAvatar()
     {
         $file = null;
@@ -78,6 +80,7 @@ Class UserController extends AbstractController
             ]);
         }
     }
+
 
     public function editUserDatas()
     {
@@ -170,6 +173,7 @@ Class UserController extends AbstractController
         }
     }
 
+
     public function editPassword()
     {
         $actualPassword = htmlspecialchars($_POST['actualPassword']);
@@ -239,6 +243,7 @@ Class UserController extends AbstractController
         }
     }
 
+
     public function deleteUser()
     {
         $userId = htmlspecialchars($_SESSION['id']);
@@ -271,4 +276,6 @@ Class UserController extends AbstractController
         }
         echo "mot de passe incorrect";
     }
+
+
 }

@@ -7,9 +7,12 @@ use App\Entity\User;
 
 Class PostController extends AbstractController
 {
+
+
     public function __construct() {
         parent::__construct();
     }
+
 
     /**
      * Method displaying the list of all posts
@@ -24,6 +27,7 @@ Class PostController extends AbstractController
         $posts = $post->findAll();
         $this->twig->display('post/index.twig', ['ROOT' => $this->root,'posts' => $posts,'session' => $_SESSION]);
     }
+
 
     /**
      * show a particular post
@@ -43,6 +47,7 @@ Class PostController extends AbstractController
 
         $this->twig->display('post/retailPost.twig', ['ROOT' => $this->root, 'post' => $post, 'session' => $_SESSION, 'comments' => $comments, 'users' => $users]);
     }
+
 
     public function createPost()
     {
@@ -67,6 +72,7 @@ Class PostController extends AbstractController
         }
     }
 
+
     public function editPostPage(int $postId)
     {
         $model = new Post;
@@ -74,6 +80,7 @@ Class PostController extends AbstractController
 
         return $this->twig->display('post/editPost.twig', ['ROOT' => $this->root, 'post' => $post, 'session' => $_SESSION]);
     }
+
 
     public function editPost()
     {
@@ -107,6 +114,7 @@ Class PostController extends AbstractController
         $this->retailPost($editPostId);
     }
 
+
     public function deletePost()
     {
         $postId = htmlspecialchars($_POST['postId']);
@@ -131,4 +139,6 @@ Class PostController extends AbstractController
 
         $this->index();
     }
+
+
 }

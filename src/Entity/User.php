@@ -17,10 +17,12 @@ Class User extends Model
     protected $avatar;
     protected $registration_date;
 
+
     public function __construct()
     {
         $this->table = 'user';
     }
+
 
     /**
      * Get the value of id

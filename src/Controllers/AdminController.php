@@ -11,9 +11,12 @@ use App\Entity\User;
  */
  Class AdminController extends AbstractController
  {
+
+
     public function __construct() {
         parent::__construct();
     }
+
 
     public function index()
     {
@@ -41,6 +44,7 @@ use App\Entity\User;
         ]);
     }
 
+
     public function disableUser()
     {
         $disableUserId = $_POST['userId'];
@@ -62,13 +66,14 @@ use App\Entity\User;
         $this->index($userId);
     }
 
+
     public function deleteUser()
     {
         $logUser = htmlspecialchars($_SESSION['logUser']);
         $deleteUserId = htmlspecialchars($_POST['userId']);
         $sessionId = htmlspecialchars($_SESSION['id']);
 
-        if ( $logUser === 'admin' && isset($userId) && !empty($userId)) {
+        if ($logUser === 'admin' && isset($userId) && !empty($userId)) {
             $deleteUser = new User;
 
             // anonymization of comments
@@ -88,4 +93,6 @@ use App\Entity\User;
 
         $this->index($sessionId);
     }
+
+
 }

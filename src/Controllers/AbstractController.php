@@ -13,6 +13,7 @@ abstract Class AbstractController
     private $page = 'home';
     public $root;
 
+
     public function __construct()
     {
         $this->root = 'http://localhost/blog-pro/public/';
@@ -47,5 +48,6 @@ abstract Class AbstractController
         $this->twig->addExtension(new MyExtensionTwig());
         $this->twig->addExtension(new IntlExtension());
     }
+
 
 }

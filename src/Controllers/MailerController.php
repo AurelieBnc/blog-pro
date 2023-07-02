@@ -7,6 +7,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 Class MailerController extends AbstractController
 {
+
+
     function smtpmailer($to, $from, $from_name, $subject, $body)
     {
         $mail = new PHPMailer();
@@ -40,6 +42,7 @@ Class MailerController extends AbstractController
         }
     }
 
+
     public function confirmMail($params1, $params2)
     {
         $log = intval("$params1");
@@ -64,4 +67,6 @@ Class MailerController extends AbstractController
             echo "Une erreur est survenue";
         }
     }
+
+
 }

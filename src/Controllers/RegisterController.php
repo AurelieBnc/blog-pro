@@ -11,14 +11,17 @@ use App\Controllers\MailerController;
 Class RegisterController extends AbstractController
 {
 
+
     public function __construct() {
         parent::__construct();
     }
+
 
     public function index()
     {
         $this->twig->display('register/index.twig', ['ROOT' => $this->root,'session' => $_SESSION]);
     }
+
 
     public function logIn()
     {
@@ -75,6 +78,7 @@ Class RegisterController extends AbstractController
         return $this->twig->display('partial/pageFormError.twig', ['ROOT' => $this->root ]);
     }
 
+
     public function logOut()
     {
         session_destroy();
@@ -86,6 +90,7 @@ Class RegisterController extends AbstractController
 
         return $this->twig->display('partial/logout.twig', ['ROOT' => $this->root ]);
     }
+
 
     public function registerUser()
     {
@@ -198,32 +203,34 @@ Class RegisterController extends AbstractController
                 $user = $model->setAvatar($file);
             }
 
-                $model->create($user);
-                $userId = $user->lastId();
-                $mailType = '1';
-                /**
-                 * Send confirmation email
-                 */
-                $to   = $email;
-                $from = $_ENV['USERMAILER'];
-                $name = 'Aurelie test blog-pro';
-                $subj = 'Confirmation de compte';
-                $msg = 'Bienvenue sur Blog-pro,
+            $model->create($user);
+            $userId = $user->lastId();
+            $mailType = '1';
+            /**
+             * Send confirmation email
+             */
+            $to   = $email;
+            $from = $_ENV['USERMAILER'];
+            $name = 'Aurelie test blog-pro';
+            $subj = 'Confirmation de compte';
+            $msg = 'Bienvenue sur Blog-pro,
 
-                Pour activer votre compte, veuillez cliquer sur le lien ci-dessous
-                ou copier/coller dans votre navigateur Internet.
+            Pour activer votre compte, veuillez cliquer sur le lien ci-dessous
+            ou copier/coller dans votre navigateur Internet.
 
-                http://localhost/blog-pro/public/index.php?p=mailer/confirmMail/'.urlencode($userId).'/'.urlencode($token).'
+            http://localhost/blog-pro/public/index.php?p=mailer/confirmMail/'.urlencode($userId).'/'.urlencode($token).'
 
-                ---------------
-                Ceci est un mail automatique, Merci de ne pas y répondre.';
-                $smtmailer = new MailerController;
-                $error = $smtmailer->smtpmailer($to, $from, $name, $subj, $msg);
-                echo "mail envoyé";
+            ---------------
+            Ceci est un mail automatique, Merci de ne pas y répondre.';
+            $smtmailer = new MailerController;
+            $error = $smtmailer->smtpmailer($to, $from, $name, $subj, $msg);
+            echo "mail envoyé";
 
-                return $this->twig->display('partial/confirmRegister.twig', ['mailType' => $mailType,'ROOT' => $this->root, 'session' => $_SESSION]);
-            }
-            return $this->twig->display('partial/pageFormError.twig', ['ROOT' => $this->root,'session' => $_SESSION]);
+            return $this->twig->display('partial/confirmRegister.twig', ['mailType' => $mailType,'ROOT' => $this->root, 'session' => $_SESSION]);
         }
+        return $this->twig->display('partial/pageFormError.twig', ['ROOT' => $this->root,'session' => $_SESSION]);
     }
+
+
+}
 

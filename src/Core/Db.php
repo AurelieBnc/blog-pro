@@ -11,6 +11,7 @@ class Db extends PDO
     // Single instance of the class
     private static $instance;
 
+
     private function __construct()
     {
         // Login information
@@ -35,6 +36,7 @@ class Db extends PDO
         }
     }
 
+
     public static function getInstance():self
     {
         if(self::$instance === null)
@@ -43,5 +45,6 @@ class Db extends PDO
         }
         return self::$instance;
     }
+
 
 }

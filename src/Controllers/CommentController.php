@@ -7,6 +7,8 @@ use App\Entity\User;
 
 Class CommentController extends AbstractController
 {
+
+
     public function addComment()
     {
         $model = new Comment;
@@ -47,6 +49,7 @@ Class CommentController extends AbstractController
 
     }
 
+
     public function disableComment()
     {
         $commentId = htmlspecialchars($_POST['commentId']);
@@ -85,6 +88,7 @@ Class CommentController extends AbstractController
         ]);
 
     }
+
 
     public function deleteComment()
     {
