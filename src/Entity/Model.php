@@ -50,7 +50,8 @@ class Model extends Db
 
     public function findAll()
     {
-        $query = $this->runQuery('SELECT * FROM '.$this->table);
+        $table = $this->table;
+        $query = $this->runQuery('SELECT * FROM '.$table);
         return $query->fetchAll();
     }
 
