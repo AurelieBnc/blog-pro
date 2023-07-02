@@ -14,30 +14,28 @@ class Model extends Db
     private $last_id = null;
 
 
-    public function getTable(): string {
-        if(isset($this->table)) {
-           return $this->table = htmlspecialchars($this->table);
-        }
-    }
     public function runQuery(string $sql, array $attributs = null)
     {
     $this->db = Db::getInstance();
     $this->db->exec("SET NAMES 'utf8';");
 
-        if ($attributs !== null) {
-            $query = $this->db->prepare($sql);
-            // $attributs = ['table' => $this->table];
-            $query->execute($attributs);
-            // foreach ($attributs as $champ => $valeur){
-            //     $query->bindParam($champ, $valeur);
-            // }
-            // $query->bindParam(':thisTable', $this->table);
 
-            // $query->execute();
-            if($this->db->lastInsertId()) {
-                $this->last_id = $this->db->lastInsertId();
-            }
-            return $query;
+    if ($attributs !== null) {
+        $query = $this->db->prepare($sql);
+        //$query->bindParam(1, $attributs[0]);
+        $query->execute($attributs);
+        // foreach ($attributs as $valeur){
+        //     $champ =+ 1;
+        //     $query->bindParam($champ, $valeur);
+        // }
+        // // $query->bindParam(':thisTable', $this->table);
+
+        // $query->execute();
+        if($this->db->lastInsertId()) {
+            $this->last_id = $this->db->lastInsertId();
+        }
+        return $query;
+
         } else {
             $query = $this->db->query($sql);
             if($this->db->lastInsertId()) {
@@ -56,20 +54,24 @@ class Model extends Db
 
     public function find(int $idModel)
     {
-        $values = [$this->table, $idModel];
+        // $values = [$this->table, strval($idModel)];
+        // var_dump($values);
         //return $this->runQuery('SELECT * FROM :thisTable WHERE id = :idModel', $values)->fetch();
         // $sth = $this->db->prepare('SELECT * FROM :thisTable WHERE id = :idModel');
         // $sth->bindParam('thisTable', $this->table);
         // $sth->bindParam('idModel', $idModel, PDO::PARAM_INT);
         // return $sth->execute();
 
-        return $this->runQuery("SELECT * FROM ? WHERE id = ?", $values)->fetch();
+        //return $this->runQuery('SELECT * FROM ? WHERE id = ?', $values)->fetch();
+        return $this->runQuery('SELECT * FROM '.$this->table.' WHERE id = '.$idModel)->fetch();
     }
 
 
     public function findAll()
     {
-        $query = $this->runQuery('SELECT * FROM '.$this->getTable());
+        // $value[] = $this->table;
+        // var_dump($value);
+        $query = $this->runQuery('SELECT * FROM '.$this->table);
         return $query->fetchAll();
     }
 
@@ -86,7 +88,7 @@ class Model extends Db
 
         $list_champs= implode(' AND ', $champs);
 
-        return $this->runQuery('SELECT *FROM '.$this->getTable().' WHERE '. $list_champs, $valeurs)->fetchAll();
+        return $this->runQuery('SELECT * FROM '.$this->table.' WHERE '. $list_champs, $valeurs)->fetchAll();
     }
 
 //ok
@@ -108,7 +110,7 @@ class Model extends Db
         $list_champs= implode(', ', $champs);
         $list_nb_champs = implode(', ', $nbchamps);
 
-        return $this->runQuery('INSERT INTO '.$this->getTable().' ('. $list_champs.') VALUES('.$list_nb_champs.')', $valeurs);
+        return $this->runQuery('INSERT INTO '.$this->table.' ('. $list_champs.') VALUES('.$list_nb_champs.')', $valeurs);
     }
 
 //ok
@@ -143,7 +145,7 @@ class Model extends Db
 
         $list_champs= implode(', ', $champs);
 
-        return $this->runQuery('UPDATE '.$this->getTable().' SET '. $list_champs.' WHERE '.$id, $valeurs);
+        return $this->runQuery('UPDATE '.$this->table.' SET '. $list_champs.' WHERE '.$id, $valeurs);
     }
 
 
