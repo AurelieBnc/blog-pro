@@ -32,7 +32,7 @@ Class ContactForm extends Model
     }
 
 
-    public function setId($id): self
+    public function setId(int $id): self
     {
         $this->id = $id;
 
@@ -46,7 +46,7 @@ Class ContactForm extends Model
     }
 
 
-    public function setLastname($lastname): self
+    public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
 
@@ -60,7 +60,7 @@ Class ContactForm extends Model
     }
 
 
-    public function setFirstname($firstname): self
+    public function setFirstname(string $firstname): self
     {
         $this->firstname = $firstname;
 
@@ -74,7 +74,7 @@ Class ContactForm extends Model
     }
 
 
-    public function setEmail($email): self
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
@@ -88,7 +88,7 @@ Class ContactForm extends Model
     }
 
 
-    public function setContent($content): self
+    public function setContent(string $content): self
     {
         $this->content = $content;
 
@@ -102,7 +102,7 @@ Class ContactForm extends Model
     }
 
 
-    public function setCreated_at($created_at): self
+    public function setCreated_at(DateTime $created_at): self
     {
         $this->created_at = $created_at;
 

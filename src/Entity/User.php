@@ -42,7 +42,7 @@ Class User extends Model
     }
 
 
-    public function setId($id): self
+    public function setId(int $id): self
     {
         $this->id = $id;
 
@@ -56,7 +56,7 @@ Class User extends Model
     }
 
 
-    public function setLastname($lastname): self
+    public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
 
@@ -70,7 +70,7 @@ Class User extends Model
     }
 
 
-    public function setFirstname($firstname): self
+    public function setFirstname(string $firstname): self
     {
         $this->firstname = $firstname;
 
@@ -84,7 +84,7 @@ Class User extends Model
     }
 
 
-    public function setPseudonym($pseudonym): self
+    public function setPseudonym(string $pseudonym): self
     {
         $this->pseudonym = $pseudonym;
 
@@ -98,7 +98,7 @@ Class User extends Model
     }
 
 
-    public function setEmail($email): self
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
@@ -112,7 +112,7 @@ Class User extends Model
     }
 
 
-    public function setPassword($password): self
+    public function setPassword(string $password): self
     {
         $this->password = $password;
 
@@ -126,7 +126,7 @@ Class User extends Model
     }
 
 
-    public function setRole($role): self
+    public function setRole(string $role): self
     {
         $this->role = $role;
 
@@ -140,7 +140,7 @@ Class User extends Model
     }
 
 
-    public function setIs_verified($is_verified): self
+    public function setIs_verified(int $is_verified): self
     {
         $this->is_verified = $is_verified;
 
@@ -154,7 +154,7 @@ Class User extends Model
     }
 
 
-    public function setAvatar($avatar): self
+    public function setAvatar(string $avatar): self
     {
         $this->avatar = $avatar;
 
@@ -168,7 +168,7 @@ Class User extends Model
     }
 
 
-    public function setRegistration_date($registration_date): self
+    public function setRegistration_date(DateTime $registration_date): self
     {
         $this->registration_date = $registration_date;
 
@@ -182,7 +182,7 @@ Class User extends Model
     }
 
 
-    public function setToken($token): self
+    public function setToken(int $token): self
     {
         $this->token = $token;
 

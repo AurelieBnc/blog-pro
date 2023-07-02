@@ -34,7 +34,7 @@ Class Comment extends Model
     }
 
 
-    public function setId($id): self
+    public function setId(int $id): self
     {
         $this->id = $id;
 
@@ -48,7 +48,7 @@ Class Comment extends Model
     }
 
 
-    public function setContent($content): self
+    public function setContent(string $content): self
     {
         $this->content = $content;
 
@@ -62,7 +62,7 @@ Class Comment extends Model
     }
 
 
-    public function setCreated_at($created_at): self
+    public function setCreated_at(DateTime $created_at): self
     {
         $this->created_at = $created_at;
 
@@ -76,7 +76,7 @@ Class Comment extends Model
     }
 
 
-    public function setUpdate_date($update_date): self
+    public function setUpdate_date(DateTime $update_date): self
     {
         $this->update_date = $update_date;
 
@@ -90,7 +90,7 @@ Class Comment extends Model
     }
 
 
-    public function setIs_enabled($is_enabled): self
+    public function setIs_enabled(int $is_enabled): self
     {
         $this->is_enabled = $is_enabled;
 
@@ -104,7 +104,7 @@ Class Comment extends Model
     }
 
 
-    public function setId_user($id_user): self
+    public function setId_user(int $id_user): self
     {
         $this->id_user = $id_user;
 
@@ -118,7 +118,7 @@ Class Comment extends Model
     }
 
 
-    public function setId_post($id_post): self
+    public function setId_post(int $id_post): self
     {
         $this->id_post = $id_post;
 

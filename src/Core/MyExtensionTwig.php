@@ -26,7 +26,7 @@ class MyExtensionTwig extends AbstractExtension
     /**
      * Gives class 'active' to the current page
      */
-    public function activeClass(array $context, $page): ?string
+    public function activeClass(array $context, string $page): ?string
     {
         if (isset($context['current_page']) && $context['current_page'] === $page )
         {
