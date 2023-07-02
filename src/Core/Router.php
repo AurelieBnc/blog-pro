@@ -28,10 +28,10 @@ Class Router
 
             // management of url parameters
             $params = [];
-            $p = $_GET['p'];
+            $page = $_GET['p'];
 
-            if (isset($p)) {
-                $params = explode('/', $p);
+            if (isset($page)) {
+                $params = explode('/', $page);
             }
             $controllerName = array_shift($params);
 

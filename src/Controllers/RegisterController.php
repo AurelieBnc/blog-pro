@@ -182,6 +182,7 @@ Class RegisterController extends AbstractController
             $lastname = htmlspecialchars($_POST['lastname']);
             $firstname = htmlspecialchars($_POST['firstname']);
             $password = htmlspecialchars($_POST['password']);
+            $email = htmlspecialchars($_POST['email']);
 
             $user = $model
                 ->setLastname($lastname)
@@ -203,7 +204,7 @@ Class RegisterController extends AbstractController
                 /**
                  * Send confirmation email
                  */
-                $to   = $_POST['email'];
+                $to   = $email;
                 $from = $_ENV['USERMAILER'];
                 $name = 'Aurelie test blog-pro';
                 $subj = 'Confirmation de compte';

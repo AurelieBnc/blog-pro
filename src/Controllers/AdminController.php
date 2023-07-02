@@ -53,8 +53,8 @@ use App\Entity\User;
 
         if (isset($disableUserId) && !empty($disableUserId) && isset($isVerified)) {
             $disableUser = $model->setIs_verified($isVerified);
-            $id = "id = ".$disableUserId;
-            $model->update($id, $disableUser);
+            $idUser = "id = ".$disableUserId;
+            $model->update($idUser, $disableUser);
 
             echo "données bien mise à jour";
         }

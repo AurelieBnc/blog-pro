@@ -36,11 +36,11 @@ abstract Class AbstractController
             'charset' => 'utf-8',
             // 'ROOT' => 'http://localhost/blog-pro/public/',
         ]);
-        $p = htmlspecialchars($_GET['p']);
+        $page = htmlspecialchars($_GET['p']);
         // Current page name setting
-        if (isset($p))
+        if (isset($page))
         {
-            $this->page = $_GET['p'];
+            $this->page = $page;
         }
 
         $this->twig->addGlobal('current_page', $this->page);

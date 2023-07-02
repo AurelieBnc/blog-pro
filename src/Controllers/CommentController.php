@@ -11,7 +11,7 @@ Class CommentController extends AbstractController
     {
         $model = new Comment;
 
-        $content = htmlspecialchars($_POST['content']);
+        $content = $_POST ? htmlspecialchars($_POST['content']) : null;
         $userId = htmlspecialchars($_POST['userId']);
         $postId = htmlspecialchars($_POST['postId']);
 
@@ -51,7 +51,7 @@ Class CommentController extends AbstractController
     {
         $commentId = htmlspecialchars($_POST['commentId']);
         $isEnabled = htmlspecialchars($_POST['is_enabled']);
-        $userId = $_SESSION['id'];
+        $userId = htmlspecialchars($_SESSION['id']);
 
         $model = new Comment;
         $disableComment = new Comment;
@@ -88,7 +88,7 @@ Class CommentController extends AbstractController
 
     public function deleteComment()
     {
-        $commentId = htmlspecialchars($_POST['commentId']);;
+        $commentId = $_POST ? htmlspecialchars($_POST['commentId']) : null;
 
         $model = new Comment;
         $model->delete($commentId);
@@ -98,7 +98,7 @@ Class CommentController extends AbstractController
         $post = $model->find($postId);
 
         $comment = new Comment;
-        $postDataComment = ['id_post' => $_POST['postId']];
+        $postDataComment = ['id_post' => htmlspecialchars($_POST['postId'])];
         $comments = $comment->findBy($postDataComment);
 
         $user = new User;

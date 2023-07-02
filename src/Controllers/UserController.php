@@ -46,7 +46,6 @@ Class UserController extends AbstractController
                 $file = $uniqueName.".".$extension;
                 move_uploaded_file($tmpName, './images/avatar_upload/'.$file);
             } else {
-                // todo : detailed errors
                 echo "Mauvaise extension, taille trop grande ou une erreur est survenue";
             }
         }
@@ -255,9 +254,9 @@ Class UserController extends AbstractController
             $listComments = $modelComment->findBy($data);
 
             foreach ( $listComments as $comment ) {
-                $id = "id_user = ".$userId;
+                $idUser = "id_user = ".$userId;
                 $comment = $modelComment->setId_user(2);
-                $comment = $modelComment->update($id, $comment );
+                $comment = $modelComment->update($idUser, $comment );
             }
 
             $modelUser->delete($userId);
