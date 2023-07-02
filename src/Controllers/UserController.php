@@ -14,7 +14,10 @@ Class UserController extends AbstractController
 {
 
 
-    public function editAvatar()
+    /**
+     * function to edit a new avatar
+     */
+    public function editAvatar(): self
     {
         $file = null;
         $idUser = htmlspecialchars($_SESSION['id']);
@@ -82,7 +85,10 @@ Class UserController extends AbstractController
     }
 
 
-    public function editUserDatas()
+    /**
+     * function to edit user datas
+     */
+    public function editUserDatas(): self
     {
         $model = new User;
         $idUser = htmlspecialchars($_SESSION['id']);
@@ -131,7 +137,6 @@ Class UserController extends AbstractController
             }
         }
 
-        // todo : confirm email
         if (isset($email) && !empty($email)) {
             $users = $model->findBy($datas);
             foreach ($users as $user) {
@@ -174,7 +179,10 @@ Class UserController extends AbstractController
     }
 
 
-    public function editPassword()
+    /**
+     * function to edit password
+     */
+    public function editPassword(): self
     {
         $actualPassword = htmlspecialchars($_POST['actualPassword']);
         $newPassword = htmlspecialchars($_POST['newPassword']);
@@ -198,29 +206,7 @@ Class UserController extends AbstractController
                     ->setPassword(password_hash($newPassword, PASSWORD_BCRYPT))
                     ->setIs_verified('0');
                 $model->update($id, $user);
-
-                //todo : finish user verification for email change
                 $mailType = '2';
-                // $token = $user['token'];
-                // /**
-                //  * Send confirmation email
-                //  */
-                // $to   = $user->getEmail();
-                // $from = $_ENV['USERMAILER'];
-                // $name = 'Aurelie test blog-pro';
-                // $subj = 'Confirmation de compte';
-                // $msg = 'Bienvenue sur Blog-pro,
-
-                // Pour activer votre nouvelle adresse mail, veuillez cliquer sur le lien ci-dessous
-                // ou copier/coller dans votre navigateur Internet.
-
-                // http://localhost/blog-pro/public/index.php?p=mailer/confirmMail/'.urlencode($idUser).'/'.urlencode($token).'
-
-                // ---------------
-                // Ceci est un mail automatique, Merci de ne pas y répondre.';
-                // $smtmailer = new MailerController;
-                // $error = $smtmailer->smtpmailer($to, $from, $name, $subj, $msg);
-                // echo "mail envoyé";
 
                 return $this->twig->display('partial/confirmRegister.twig', ['mailtype' => $mailType,'ROOT' => $this->root, 'session' => $_SESSION]);
             }
@@ -244,7 +230,10 @@ Class UserController extends AbstractController
     }
 
 
-    public function deleteUser()
+    /**
+     * function to delete user and anonymization of comments
+     */
+    public function deleteUser(): self
     {
         $userId = htmlspecialchars($_SESSION['id']);
         $modelUser = new User;
@@ -253,7 +242,6 @@ Class UserController extends AbstractController
 
         if (password_verify( $password , $user['password']))
         {
-            //anonnymisation des commentaires
             $data = ['id_user'=> $userId];
             $modelComment = new Comment;
             $listComments = $modelComment->findBy($data);

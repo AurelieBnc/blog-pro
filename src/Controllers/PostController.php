@@ -17,7 +17,7 @@ Class PostController extends AbstractController
     /**
      * Method displaying the list of all posts
      */
-    public function index()
+    public function index(): self
     {
         // we instantiate the model corresponding to the "posts" table
         $post = new Post;
@@ -30,9 +30,9 @@ Class PostController extends AbstractController
 
 
     /**
-     * show a particular post
+     * displays the detail of an item
      */
-    public function retailPost(int $id)
+    public function retailPost(int $id): self
     {
         $post = new Post;
         $post = $post->find($id);
@@ -49,7 +49,10 @@ Class PostController extends AbstractController
     }
 
 
-    public function createPost()
+    /**
+     * function to create a post
+     */
+    public function createPost(): self
     {
         $title = htmlspecialchars($_POST['title']);
         $lead = htmlspecialchars($_POST['lead']);
@@ -73,7 +76,10 @@ Class PostController extends AbstractController
     }
 
 
-    public function editPostPage(int $postId)
+    /**
+     * function to display edit post page
+     */
+    public function editPostPage(int $postId): self
     {
         $model = new Post;
         $post = $model->find($postId);
@@ -82,7 +88,10 @@ Class PostController extends AbstractController
     }
 
 
-    public function editPost()
+    /**
+     * function that allows you to edit an article
+     */
+    public function editPost(): self
     {
         $postId = htmlspecialchars($_POST['postId']);
         $title = htmlspecialchars($_POST['title']);
@@ -115,7 +124,10 @@ Class PostController extends AbstractController
     }
 
 
-    public function deletePost()
+    /**
+     * function to delete a post and and all his comments
+     */
+    public function deletePost(): self
     {
         $postId = htmlspecialchars($_POST['postId']);
         $logUser = htmlspecialchars($_SESSION['logUser']);

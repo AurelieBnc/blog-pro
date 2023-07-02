@@ -9,7 +9,10 @@ Class CommentController extends AbstractController
 {
 
 
-    public function addComment()
+    /**
+     * function to add a comment to a specific article
+     */
+    public function addComment(): self
     {
         $model = new Comment;
 
@@ -50,7 +53,10 @@ Class CommentController extends AbstractController
     }
 
 
-    public function disableComment()
+    /**
+     * to disable or enable a comment
+     */
+    public function disableComment(): self
     {
         $commentId = htmlspecialchars($_POST['commentId']);
         $isEnabled = htmlspecialchars($_POST['is_enabled']);
@@ -90,7 +96,10 @@ Class CommentController extends AbstractController
     }
 
 
-    public function deleteComment()
+    /**
+     * function to delete comment
+     */
+    public function deleteComment(): self
     {
         $commentId = $_POST ? htmlspecialchars($_POST['commentId']) : null;
 

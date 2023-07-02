@@ -11,7 +11,10 @@ Class Router
 {
 
 
-    public function start()
+    /**
+     * rooter - explode the uri to find the requested controller, method and parameters
+     */
+    public function start(): void
     {
         try {
             // Get URL
@@ -24,8 +27,6 @@ Class Router
                 // we send a permanent redirect code
                 http_response_code(301);
 
-                // we redirect to the url without /
-                //header('Location: '.$uri); //ko redirige en boucle car il détecte un slash malgré les conditions.
             }
 
             // management of url parameters

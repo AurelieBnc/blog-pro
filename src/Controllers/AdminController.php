@@ -18,7 +18,10 @@ use App\Entity\User;
     }
 
 
-    public function index()
+    /**
+     * admin page index
+     */
+    public function index(): self
     {
         $userId = htmlspecialchars($_SESSION['id']);
         $user = new User;
@@ -45,9 +48,12 @@ use App\Entity\User;
     }
 
 
-    public function disableUser()
+    /**
+     * function to deactivate a user
+     */
+    public function disableUser(): self
     {
-        $disableUserId = $_POST['userId'];
+        $disableUserId = htmlspecialchars($_POST['userId']);
         $model = new User;
         $disableUser = new User;
         $userId = htmlspecialchars($_SESSION['id']);
@@ -67,7 +73,10 @@ use App\Entity\User;
     }
 
 
-    public function deleteUser()
+    /**
+     * function to delete an user and and anonymize their comments
+     */
+    public function deleteUser(): self
     {
         $logUser = htmlspecialchars($_SESSION['logUser']);
         $deleteUserId = htmlspecialchars($_POST['userId']);

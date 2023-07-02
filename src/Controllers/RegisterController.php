@@ -17,13 +17,19 @@ Class RegisterController extends AbstractController
     }
 
 
-    public function index()
+    /**
+     * display register page
+     */
+    public function index(): self
     {
         $this->twig->display('register/index.twig', ['ROOT' => $this->root,'session' => $_SESSION]);
     }
 
 
-    public function logIn()
+    /**
+     * function to login user
+     */
+    public function logIn(): self
     {
         $email = htmlspecialchars($_POST['email']);
         $password = htmlspecialchars($_POST['password']);
@@ -79,7 +85,10 @@ Class RegisterController extends AbstractController
     }
 
 
-    public function logOut()
+    /**
+     * function to logout user and destroy all env Session properties
+     */
+    public function logOut(): self
     {
         session_destroy();
         unset($_SESSION['logUser']);
@@ -92,7 +101,10 @@ Class RegisterController extends AbstractController
     }
 
 
-    public function registerUser()
+    /**
+     * function to register a new user. A confirm mail sent to his mail to activate account
+     */
+    public function registerUser(): self
     {
         $user = new User;
         $user_exist = null;
@@ -205,10 +217,11 @@ Class RegisterController extends AbstractController
 
             $model->create($user);
             $userId = $user->lastId();
-            $mailType = '1';
+
             /**
              * Send confirmation email
              */
+            $mailType = '1';
             $to   = $email;
             $from = $_ENV['USERMAILER'];
             $name = 'Aurelie test blog-pro';
@@ -224,10 +237,10 @@ Class RegisterController extends AbstractController
             Ceci est un mail automatique, Merci de ne pas y répondre.';
             $smtmailer = new MailerController;
             $error = $smtmailer->smtpmailer($to, $from, $name, $subj, $msg);
-            echo "mail envoyé";
 
             return $this->twig->display('partial/confirmRegister.twig', ['mailType' => $mailType,'ROOT' => $this->root, 'session' => $_SESSION]);
         }
+
         return $this->twig->display('partial/pageFormError.twig', ['ROOT' => $this->root,'session' => $_SESSION]);
     }
 
