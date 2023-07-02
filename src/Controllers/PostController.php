@@ -50,8 +50,9 @@ Class PostController extends AbstractController
         $lead = htmlspecialchars($_POST['lead']);
         $content = htmlspecialchars($_POST['content']);
         $userId = htmlspecialchars($_SESSION['id']);
+        $sessionLogUser = $_SESSION['logUser'];
 
-        if ($_SESSION['logUser'] === 'admin') {
+        if ( $sessionLogUser === 'admin' && isset($title) && isset($lead) && isset($content) && isset($userId)) {
             $model = new Post;
             $post = $model
                 ->setTitle($title)
@@ -109,7 +110,7 @@ Class PostController extends AbstractController
     public function deletePost()
     {
         $postId = htmlspecialchars($_POST['postId']);
-        $logUser = $_SESSION['logUser'];
+        $logUser = htmlspecialchars($_SESSION['logUser']);
 
         if(isset($postId) && $logUser === 'admin')
         {

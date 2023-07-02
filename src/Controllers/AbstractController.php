@@ -20,11 +20,9 @@ abstract Class AbstractController
         // We start a session
         session_start();
 
-        if (isset($_SESSION) && isset($_SESSION['hasLoggedIn']) && $_SESSION['hasLoggedIn'] === true) {
-            $_SESSION['logVisitor'] = false;
-        } else {
+        isset($_SESSION) && isset($_SESSION['hasLoggedIn']) && $_SESSION['hasLoggedIn'] === true ?
+            $_SESSION['logVisitor'] = false:
             $_SESSION['logVisitor'] = true;
-        }
 
         // Set the folder containing templates
         $this->loader = new FilesystemLoader(__DIR__.'/../Templates');
@@ -38,9 +36,9 @@ abstract Class AbstractController
             'charset' => 'utf-8',
             // 'ROOT' => 'http://localhost/blog-pro/public/',
         ]);
-
+        $p = htmlspecialchars($_GET['p']);
         // Current page name setting
-        if (isset($_GET['p']))
+        if (isset($p))
         {
             $this->page = $_GET['p'];
         }

@@ -15,7 +15,7 @@ Class UserController extends AbstractController
     public function editAvatar()
     {
         $file = null;
-        $idUser = $_SESSION['id'];
+        $idUser = htmlspecialchars($_SESSION['id']);
         $editUser = new User;
         $model = new User;
 
@@ -26,11 +26,13 @@ Class UserController extends AbstractController
         $post = new Post;
         $posts = $post->findAll();
 
-        if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] !== 4) {
-            $tmpName = $_FILES['avatar']['tmp_name'];
-            $name = $_FILES['avatar']['name'];
+        $fileError = $_FILES['avatar'] ? $_FILES['avatar']['error'] : null;
+
+        if (isset($_FILES['avatar']) && $fileError !== 4) {
+            $tmpName = htmlspecialchars($_FILES['avatar']['tmp_name']);
+            $name = htmlspecialchars($_FILES['avatar']['name']);
             $size = $_FILES['avatar']['size'];
-            $error = $_FILES['avatar']['error'];
+            $error = htmlspecialchars($_FILES['avatar']['error']);
 
             // Checking uploader file type and size
             $tabExtension = explode('.', $name);
@@ -54,7 +56,7 @@ Class UserController extends AbstractController
             $editUser = $model->setAvatar($file);
             $model->update($id, $editUser);
             echo "avatar mise à jour";
-            $editdUserDatas = $model->find($_SESSION['id']);
+            $editdUserDatas = $model->find($idUser);
 
             return $this->twig->display('admin/index.twig', [
                 'posts' => $posts,
@@ -66,7 +68,7 @@ Class UserController extends AbstractController
 
         } else {
             echo "donnée vide";
-            $userDatas = $model->find($_SESSION['id']);
+            $userDatas = $model->find($idUser);
 
             return $this->twig->display('admin/index.twig', [
                 'posts' => $posts,
@@ -81,7 +83,7 @@ Class UserController extends AbstractController
     public function editUserDatas()
     {
         $model = new User;
-        $idUser = $_SESSION['id'];
+        $idUser = htmlspecialchars($_SESSION['id']);
         $editUser = new User;
         $datas = [];
 
@@ -92,54 +94,60 @@ Class UserController extends AbstractController
         $post = new Post;
         $posts = $post->findAll();
 
-        if (isset($_POST['email']) && !empty($_POST['email'])) {
-            $datas = ['email' => $_POST['email']];
-            $editUser = $model->setEmail($_POST['email']);
+        $email = htmlspecialchars($_POST['email']);
+        $pseudonym = htmlspecialchars($_POST['pseudonym']);
+        $lastname = htmlspecialchars($_POST['lastname']);
+        $firstname = htmlspecialchars($_POST['firstname']);
+
+        if (isset($email) && !empty($email)) {
+            $datas = ['email' => $email];
+            $editUser = $model->setEmail($email);
         }
 
-        if (isset($_POST['pseudonym']) && !empty($_POST['pseudonym'])) {
+        if (isset($pseudonym) && !empty($pseudonym)) {
             $datas = ['pseudonym' => $_POST['pseudonym']];
-            $editUser = $model->setPseudonym($_POST['pseudonym']);
+            $editUser = $model->setPseudonym($pseudonym);
         }
 
-        if (isset($_POST['lastname']) && !empty($_POST['lastname'])) {
-            $editUser = $model->setLastname($_POST['lastname']);
+        if (isset($lastname) && !empty($lastname)) {
+            $editUser = $model->setLastname($lastname);
         }
 
-        if (isset($_POST['firstname']) && !empty($_POST['firstname'])) {
-            $editUser = $model->setFirstname($_POST['firstname']);
+        if (isset($firstname) && !empty($firstname)) {
+            $editUser = $model->setFirstname($firstname);
         }
 
-        if (isset($_POST['pseudonym']) && !empty($_POST['pseudonym'])) {
+        if (isset($pseudonym) && !empty($pseudonym)) {
             $users = $model->findBy($datas);
             foreach ($users as $user) {
-                if ($user['pseudonym'] === $_POST['pseudonym'] && $_POST['pseudonym'] !== null) {
+                if ($user['pseudonym'] === $pseudonym && $pseudonym !== null) {
                     echo 'Ce nom d\'utilisateur est déjà pris.';
                 } else {
-                    $editUser = $model->setPseudonym($_POST['pseudonym']);
+                    $editUser = $model->setPseudonym($pseudonym);
                     echo " pseudo ok";
                 }
             }
         }
 
         // todo : confirm email
-        if (isset($_POST['email']) && !empty($_POST['email'])) {
+        if (isset($email) && !empty($email)) {
             $users = $model->findBy($datas);
             foreach ($users as $user) {
-                if ($user['email'] === $_POST['email'] && $_POST['email'] !== null ) {
+                if ($user['email'] === $email && $email !== null ) {
                     echo 'Cet email est déjà associé à un compte.';
                 } else {
-                    $editUser = $model->setEmail($_POST['email']);
+                    $editUser = $model->setEmail($email);
                     echo "email ok";
                 }
             }
         }
 
+        $userId = htmlspecialchars($_SESSION['id']);
         if (!empty($editUser)) {
             $id = "id = ".$idUser;
             $model->update($id, $editUser);
             echo "données bien mise à jour";
-            $editdUserDatas = $model->find($_SESSION['id']);
+            $editdUserDatas = $model->find($userId);
 
             return $this->twig->display('admin/index.twig', [
                 'posts' => $posts,
@@ -151,7 +159,7 @@ Class UserController extends AbstractController
 
         } else {
             echo "donnée vide";
-            $userDatas = $model->find($_SESSION['id']);
+            $userDatas = $model->find($userId);
 
             return $this->twig->display('admin/index.twig', [
                 'posts' => $posts,
@@ -165,12 +173,15 @@ Class UserController extends AbstractController
 
     public function editPassword()
     {
-        if (!empty($_POST['actualPassword']) && !empty($_POST['newPassword'])
-            && isset($_POST['actualPassword']) && isset($_POST['newPassword']))
+        $actualPassword = htmlspecialchars($_POST['actualPassword']);
+        $newPassword = htmlspecialchars($_POST['newPassword']);
+
+        if (!empty($actualPassword) && !empty($newPassword)
+            && isset($actualPassword) && isset($newPassword))
         {
-            $idUser = $_SESSION['id'];
-            $actualPassword = $_POST['actualPassword'];
-            $newPassword = $_POST['newPassword'];
+            $idUser = htmlspecialchars($_SESSION['id']);
+            $actualPassword = $actualPassword;
+            $newPassword = $newPassword;
 
             $model = new User;
             $user = $model->find($idUser);
@@ -179,7 +190,6 @@ Class UserController extends AbstractController
             if (password_verify( $actualPassword , $user['password']))
             {
                 $id = "id = ".$idUser;
-                $token = $user['token'];
                 $model = new User;
                 $user = $model
                     ->setPassword(password_hash($newPassword, PASSWORD_BCRYPT))
@@ -188,7 +198,7 @@ Class UserController extends AbstractController
 
                 //todo : finish user verification for email change
                 $mailType = '2';
-
+                // $token = $user['token'];
                 // /**
                 //  * Send confirmation email
                 //  */
@@ -232,11 +242,12 @@ Class UserController extends AbstractController
 
     public function deleteUser()
     {
-        $userId = $_SESSION['id'];
+        $userId = htmlspecialchars($_SESSION['id']);
         $modelUser = new User;
         $user = $modelUser->find($userId);
+        $password = htmlspecialchars($_POST['password']);
 
-        if (password_verify( $_POST['password'] , $user['password']))
+        if (password_verify( $password , $user['password']))
         {
             //anonnymisation des commentaires
             $data = ['id_user'=> $userId];

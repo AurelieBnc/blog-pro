@@ -13,7 +13,7 @@ Class Router
     {
         try {
             // Get URL
-            $uri = $_SERVER['REQUEST_URI'];
+            $uri = htmlspecialchars($_SERVER['REQUEST_URI']);
 
             // we remove the possible "trailing slash" from the url
             if (!empty($uri) && $uri != '/' && $uri[-1] === "/") {
@@ -28,9 +28,10 @@ Class Router
 
             // management of url parameters
             $params = [];
+            $p = $_GET['p'];
 
-            if (isset($_GET['p'])) {
-                $params = explode('/', $_GET['p']);
+            if (isset($p)) {
+                $params = explode('/', $p);
             }
             $controllerName = array_shift($params);
 

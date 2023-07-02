@@ -22,16 +22,16 @@ Class RegisterController extends AbstractController
 
     public function logIn()
     {
-        $post = htmlspecialchars($_POST);
         $email = htmlspecialchars($_POST['email']);
         $password = htmlspecialchars($_POST['password']);
+
         // Validation du formulaire
         if (isset($email) &&  isset($password))
         {
             // User search
+            $datas = ['email' => $email];
             $user = new User;
-            unset($_POST['password']);
-            $users = $user->findBy($post);
+            $users = $user->findBy($datas);
             $user_exist = false;
 
             foreach ($users as $user) {
@@ -49,26 +49,21 @@ Class RegisterController extends AbstractController
                 $_SESSION['pseudo'] = $user['pseudonym'];
                 $_SESSION['id'] = $user['id'];
 
-
                 // User role verification and redirection
                 if ($user['role'] === 'admin' && $user['is_verified'] === '1')
                 {
-                    echo 'je suis un admin';
                     $_SESSION['hasLoggedIn'] = true;
                     $_SESSION['logUser'] = 'admin';
                     return $this->twig->display('home/index.twig', ['ROOT' => $this->root, 'session' => $_SESSION]);
                 }
                 if ($user['role'] === 'utilisateur' && $user['is_verified'] === '1')
                 {
-                    echo 'je suis un utilisateur vérifié';
                     $_SESSION['hasLoggedIn'] = true;
                     $_SESSION['logUser'] = 'user_verified';
                     return $this->twig->display('home/index.twig', ['ROOT' => $this->root, 'session' => $_SESSION]);
                 }
                 if ($user['role'] === 'utilisateur' && $user['is_verified'] === '0')
                 {
-                    //todo : destroy the session on the next page or here and return the email address on the next page
-                    echo 'je suis un utilisateur non vérifié';
                     $_SESSION['logUser'] = 'user_not_verified';
                     return $this->twig->display('partial/userNotValid.twig', ['ROOT' => $this->root, 'session' => $_SESSION]);
                 }
@@ -94,7 +89,6 @@ Class RegisterController extends AbstractController
 
     public function registerUser()
     {
-        // todo : user verification for change of email + forgotten password
         $user = new User;
         $user_exist = null;
         $pseudo_exist = null;
@@ -110,21 +104,12 @@ Class RegisterController extends AbstractController
         if (isset($email) && !empty($email))
         {
             $datas = ['email' => $email];
-
             $users = $user->findBy($datas);
 
             foreach ($users as $user) {
-                if ($user['email'] === $email)
-                {
-                    $user_exist = true;
-                } else {
-                    $user_exist = false;
-                }
+                $user['email'] === $email ? $user_exist = true : $user_exist = false;
             }
             $datas = null;
-
-        } else {
-            echo "veuillez entre votre email";
         }
 
         /**
@@ -137,14 +122,8 @@ Class RegisterController extends AbstractController
             $users = $user->findBy($datas);
 
             foreach ($users as $user) {
-                if ($user['pseudonym'] === $pseudonym) {
-                    $pseudo_exist = true;
-                } else {
-                    $pseudo_exist = false;
-                }
+                $user['pseudonym'] === $pseudonym ? $pseudo_exist = true : $pseudo_exist = false;
             }
-        } else {
-            echo "veuillez entrer votre pseudonym";
         }
 
         if ($user_exist) {
@@ -156,6 +135,7 @@ Class RegisterController extends AbstractController
                 ]
             );
         }
+
         if ($pseudo_exist) {
             return $this->twig->display('partial/userExist.twig',
                 [

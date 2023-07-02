@@ -14,10 +14,10 @@ class Db extends PDO
     private function __construct()
     {
         // Login information
-        $dbHost = $_ENV['DBHOST'];
-        $dbUser = $_ENV['DBUSER'];
-        $dbPass = $_ENV['DBPASS'];
-        $dbName = $_ENV['DBNAME'];
+        $dbHost = htmlspecialchars($_ENV['DBHOST']);
+        $dbUser = htmlspecialchars($_ENV['DBUSER']);
+        $dbPass = htmlspecialchars($_ENV['DBPASS']);
+        $dbName = htmlspecialchars($_ENV['DBNAME']);
 
         // Login DSN
         $_dsn = 'mysql:dbname='.$dbName.';host='.$dbHost;
