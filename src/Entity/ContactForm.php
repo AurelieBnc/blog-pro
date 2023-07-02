@@ -2,6 +2,7 @@
 namespace App\Entity;
 
 use App\Entity\Model;
+use DateTime;
 
 Class ContactForm extends Model
 {
@@ -25,123 +26,88 @@ Class ContactForm extends Model
     }
 
 
-    /**
-     * Get the value of id
-     */ 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * Set the value of id
-     *
-     * @return  self
-     */ 
-    public function setId($id)
+
+    public function setId($id): self
     {
         $this->id = $id;
 
         return $this;
     }
 
-    /**
-     * Get the value of lastname
-     */ 
-    public function getLastname()
+
+    public function getLastname(): string
     {
         return $this->lastname;
     }
 
-    /**
-     * Set the value of lastname
-     *
-     * @return  self
-     */ 
-    public function setLastname($lastname)
+
+    public function setLastname($lastname): self
     {
         $this->lastname = $lastname;
 
         return $this;
     }
 
-    /**
-     * Get the value of firstname
-     */ 
-    public function getFirstname()
+
+    public function getFirstname(): string
     {
         return $this->firstname;
     }
 
-    /**
-     * Set the value of firstname
-     *
-     * @return  self
-     */ 
-    public function setFirstname($firstname)
+
+    public function setFirstname($firstname): self
     {
         $this->firstname = $firstname;
 
         return $this;
     }
 
-    /**
-     * Get the value of email
-     */ 
-    public function getEmail()
+
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * Set the value of email
-     *
-     * @return  self
-     */ 
-    public function setEmail($email)
+
+    public function setEmail($email): self
     {
         $this->email = $email;
 
         return $this;
     }
 
-    /**
-     * Get the value of content
-     */ 
-    public function getContent()
+
+    public function getContent(): string
     {
         return $this->content;
     }
 
-    /**
-     * Set the value of content
-     *
-     * @return  self
-     */ 
-    public function setContent($content)
+
+    public function setContent($content): self
     {
         $this->content = $content;
 
         return $this;
     }
 
-    /**
-     * Get the value of created_at
-     */ 
-    public function getCreated_at()
+
+    public function getCreated_at(): DateTime
     {
         return $this->created_at;
     }
 
-    /**
-     * Set the value of created_at
-     *
-     * @return  self
-     */ 
-    public function setCreated_at($created_at)
+
+    public function setCreated_at($created_at): self
     {
         $this->created_at = $created_at;
 
         return $this;
     }
+
+
 }

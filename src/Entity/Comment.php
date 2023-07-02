@@ -2,6 +2,7 @@
 namespace App\Entity;
 
 use App\Entity\Model;
+use DateTime;
 
 Class Comment extends Model
 {
@@ -26,143 +27,103 @@ Class Comment extends Model
         $this->table = 'comment';
     }
 
-    /**
-     * Get the value of id
-     */ 
-    public function getId()
+
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * Set the value of id
-     *
-     * @return  self
-     */ 
-    public function setId($id)
+
+    public function setId($id): self
     {
         $this->id = $id;
 
         return $this;
     }
 
-    /**
-     * Get the value of content
-     */ 
-    public function getContent()
+
+    public function getContent(): string
     {
         return $this->content;
     }
 
-    /**
-     * Set the value of content
-     *
-     * @return  self
-     */ 
-    public function setContent($content)
+
+    public function setContent($content): self
     {
         $this->content = $content;
 
         return $this;
     }
 
-    /**
-     * Get the value of created_at
-     */ 
-    public function getCreated_at()
+
+    public function getCreated_at(): DateTime
     {
         return $this->created_at;
     }
 
-    /**
-     * Set the value of created_at
-     *
-     * @return  self
-     */ 
-    public function setCreated_at($created_at)
+
+    public function setCreated_at($created_at): self
     {
         $this->created_at = $created_at;
 
         return $this;
     }
 
-    /**
-     * Get the value of update_date
-     */ 
-    public function getUpdate_date()
+
+    public function getUpdate_date(): DateTime
     {
         return $this->update_date;
     }
 
-    /**
-     * Set the value of update_date
-     *
-     * @return  self
-     */ 
-    public function setUpdate_date($update_date)
+
+    public function setUpdate_date($update_date): self
     {
         $this->update_date = $update_date;
 
         return $this;
     }
 
-    /**
-     * Get the value of is_enabled
-     */ 
-    public function getIs_enabled()
+
+    public function getIs_enabled(): int
     {
         return $this->is_enabled;
     }
 
-    /**
-     * Set the value of is_enabled
-     *
-     * @return  self
-     */ 
-    public function setIs_enabled($is_enabled)
+
+    public function setIs_enabled($is_enabled): self
     {
         $this->is_enabled = $is_enabled;
 
         return $this;
     }
 
-    /**
-     * Get the value of id_user
-     */ 
-    public function getId_user()
+
+    public function getId_user(): int
     {
         return $this->id_user;
     }
 
-    /**
-     * Set the value of id_user
-     *
-     * @return  self
-     */ 
-    public function setId_user($id_user)
+
+    public function setId_user($id_user): self
     {
         $this->id_user = $id_user;
 
         return $this;
     }
 
-    /**
-     * Get the value of id_post
-     */ 
-    public function getId_post()
+
+    public function getId_post(): int
     {
         return $this->id_post;
     }
 
-    /**
-     * Set the value of id_post
-     *
-     * @return  self
-     */ 
-    public function setId_post($id_post)
+
+    public function setId_post($id_post): self
     {
         $this->id_post = $id_post;
 
         return $this;
     }
+
+
 }

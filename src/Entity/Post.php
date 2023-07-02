@@ -2,6 +2,7 @@
 namespace App\Entity;
 
 use App\Entity\Model;
+use DateTime;
 
 Class Post extends Model
 {
@@ -26,143 +27,103 @@ Class Post extends Model
         $this->table = 'post';
     }
 
-    /**
-     * Get the value of id
-     */ 
-    public function getId()
+
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * Set the value of id
-     *
-     * @return  self
-     */ 
-    public function setId($id)
+
+    public function setId($id): self
     {
         $this->id = $id;
 
         return $this;
     }
 
-    /**
-     * Get the value of title
-     */ 
-    public function getTitle()
+
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * Set the value of title
-     *
-     * @return  self
-     */ 
-    public function setTitle($title)
+
+    public function setTitle($title): self
     {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get the value of content
-     */ 
-    public function getContent()
+
+    public function getContent(): string
     {
         return $this->content;
     }
 
-    /**
-     * Set the value of content
-     *
-     * @return  self
-     */ 
-    public function setContent($content)
+
+    public function setContent($content): self
     {
         $this->content = $content;
 
         return $this;
     }
 
-    /**
-     * Get the value of created_at
-     */ 
-    public function getCreated_at()
+
+    public function getCreated_at(): DateTime
     {
         return $this->created_at;
     }
 
-    /**
-     * Set the value of created_at
-     *
-     * @return  self
-     */ 
-    public function setCreated_at($created_at)
+
+    public function setCreated_at($created_at): self
     {
         $this->created_at = $created_at;
 
         return $this;
     }
 
-    /**
-     * Get the value of update_date
-     */ 
-    public function getUpdate_date()
+
+    public function getUpdate_date(): DateTime
     {
         return $this->update_date;
     }
 
-    /**
-     * Set the value of update_date
-     *
-     * @return  self
-     */ 
-    public function setUpdate_date($update_date)
+
+    public function setUpdate_date($update_date): self
     {
         $this->update_date = $update_date;
 
         return $this;
     }
 
-    /**
-     * Get the value of id_user
-     */ 
-    public function getId_user()
+
+    public function getId_user(): int
     {
         return $this->id_user;
     }
 
-    /**
-     * Set the value of id_user
-     *
-     * @return  self
-     */ 
-    public function setId_user($id_user)
+
+    public function setId_user($id_user): self
     {
         $this->id_user = $id_user;
 
         return $this;
     }
 
-    /**
-     * Get the value of lead
-     */ 
-    public function getLead()
+
+    public function getLead(): int
     {
         return $this->lead;
     }
 
-    /**
-     * Set the value of lead
-     *
-     * @return  self
-     */ 
-    public function setLead($lead)
+
+    public function setLead($lead): self
     {
         $this->lead = $lead;
 
         return $this;
     }
+
+
 }

@@ -151,7 +151,7 @@ class Model extends Db
 
     public function delete(int $id)
     {
-        return $this->runQuery('DELETE FROM '.$this->getTable().' WHERE id=?', [$id]);
+        return $this->runQuery('DELETE FROM '.$this->table.' WHERE id=?', [$id]);
     }
 
 

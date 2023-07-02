@@ -2,6 +2,7 @@
 namespace App\Entity;
 
 use App\Entity\Model;
+use DateTime;
 
 Class User extends Model
 {
@@ -35,223 +36,158 @@ Class User extends Model
     }
 
 
-    /**
-     * Get the value of id
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * Set the value of id
-     *
-     * @return  self
-     */
-    public function setId($id)
+
+    public function setId($id): self
     {
         $this->id = $id;
 
         return $this;
     }
 
-    /**
-     * Get the value of lastname
-     */
-    public function getLastname()
+
+    public function getLastname(): string
     {
         return $this->lastname;
     }
 
-    /**
-     * Set the value of lastname
-     *
-     * @return  self
-     */
-    public function setLastname($lastname)
+
+    public function setLastname($lastname): self
     {
         $this->lastname = $lastname;
 
         return $this;
     }
 
-    /**
-     * Get the value of firstname
-     */
-    public function getFirstname()
+
+    public function getFirstname(): string
     {
         return $this->firstname;
     }
 
-    /**
-     * Set the value of firstname
-     *
-     * @return  self
-     */
-    public function setFirstname($firstname)
+
+    public function setFirstname($firstname): self
     {
         $this->firstname = $firstname;
 
         return $this;
     }
 
-    /**
-     * Get the value of pseudonym
-     */
-    public function getPseudonym()
+
+    public function getPseudonym(): string
     {
         return $this->pseudonym;
     }
 
-    /**
-     * Set the value of pseudonym
-     *
-     * @return  self
-     */
-    public function setPseudonym($pseudonym)
+
+    public function setPseudonym($pseudonym): self
     {
         $this->pseudonym = $pseudonym;
 
         return $this;
     }
 
-    /**
-     * Get the value of email
-     */
-    public function getEmail()
+
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * Set the value of email
-     *
-     * @return  self
-     */
-    public function setEmail($email)
+
+    public function setEmail($email): self
     {
         $this->email = $email;
 
         return $this;
     }
 
-    /**
-     * Get the value of password
-     */
-    public function getPassword()
+
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    /**
-     * Set the value of password
-     *
-     * @return  self
-     */
-    public function setPassword($password)
+
+    public function setPassword($password): self
     {
         $this->password = $password;
 
         return $this;
     }
 
-    /**
-     * Get the value of role
-     */
-    public function getRole()
+
+    public function getRole(): string
     {
         return $this->role;
     }
 
-    /**
-     * Set the value of role
-     *
-     * @return  self
-     */
-    public function setRole($role)
+
+    public function setRole($role): self
     {
         $this->role = $role;
 
         return $this;
     }
 
-    /**
-     * Get the value of is_verified
-     */
-    public function getIs_verified()
+
+    public function getIs_verified(): int
     {
         return $this->is_verified;
     }
 
-    /**
-     * Set the value of is_verified
-     *
-     * @return  self
-     */
-    public function setIs_verified($is_verified)
+
+    public function setIs_verified($is_verified): self
     {
         $this->is_verified = $is_verified;
 
         return $this;
     }
 
-    /**
-     * Get the value of avatar
-     */
-    public function getAvatar()
+
+    public function getAvatar(): string
     {
         return $this->avatar;
     }
 
-    /**
-     * Set the value of avatar
-     *
-     * @return  self
-     */
-    public function setAvatar($avatar)
+
+    public function setAvatar($avatar): self
     {
         $this->avatar = $avatar;
 
         return $this;
     }
 
-    /**
-     * Get the value of registration_date
-     */
-    public function getRegistration_date()
+
+    public function getRegistration_date(): DateTime
     {
         return $this->registration_date;
     }
 
-    /**
-     * Set the value of registration_date
-     *
-     * @return  self
-     */
-    public function setRegistration_date($registration_date)
+
+    public function setRegistration_date($registration_date): self
     {
         $this->registration_date = $registration_date;
 
         return $this;
     }
 
-    /**
-     * Get the value of token
-     */
-    public function getToken()
+
+    public function getToken(): int
     {
         return $this->token;
     }
 
-    /**
-     * Set the value of token
-     *
-     * @return  self
-     */
-    public function setToken($token)
+
+    public function setToken($token): self
     {
         $this->token = $token;
 
         return $this;
     }
+
+
 }

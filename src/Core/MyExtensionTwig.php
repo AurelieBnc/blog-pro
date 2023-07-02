@@ -18,7 +18,7 @@ class MyExtensionTwig extends AbstractExtension
     public function getFunctions()
     {
         return[
-        new TwigFunction('activeClass', [$this, 'activeClass'], ['needs_context' => true])
+            new TwigFunction('activeClass', [$this, 'activeClass'], ['needs_context' => true])
         ];
     }
 
@@ -26,12 +26,13 @@ class MyExtensionTwig extends AbstractExtension
     /**
      * Gives class 'active' to the current page
      */
-    public function activeClass(array $context, $page)
+    public function activeClass(array $context, $page): ?string
     {
         if (isset($context['current_page']) && $context['current_page'] === $page )
         {
             return ' active ';
         }
+        return null;
     }
 
 
@@ -41,12 +42,12 @@ class MyExtensionTwig extends AbstractExtension
     public function getFilters()
     {
         return[
-        new TwigFilter('truncate', [$this, 'truncate'], ['is_safe' => ['html']])
-    ];
+            new TwigFilter('truncate', [$this, 'truncate'], ['is_safe' => ['html']])
+        ];
     }
 
 
-    public function truncate(string $values, int $nbChar)
+    public function truncate(string $values, int $nbChar): string
     {
         return mb_substr($values, 0, $nbChar,'UTF-8');
     }
