@@ -8,15 +8,15 @@
                 </div>
                 <form method="POST" action="post/createPost" name="CreatePost" id="CreatPostForm" novalidate>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" name="title" placeholder="title" required
-                            data-validation-required-message="Entrer un titre" title="Entrer un titre">
+                        <input type="text" class="form-control" id="floatingInput" name="title" placeholder="title"
+                            required data-validation-required-message="Entrer un titre" title="Entrer un titre">
                         <p class="help-block text-danger"></p>
                         <label for="floatingInput">Titre de l'article</label>
                     </div>
 
                     <div class="form-floating mb-3 controls">
-                        <input type="text" class="form-control" id="floatingInput" name="lead" placeholder="chapô" required
-                            data-validation-required-message="Ecriver un chapô" title="Ecriver un chapô">
+                        <input type="text" class="form-control" id="floatingInput" name="lead" placeholder="chapô"
+                            required data-validation-required-message="Ecriver un chapô" title="Ecriver un chapô">
                         <label for="floatingInput">Chapô</label>
                     </div>
                     <div class="form-group mb-3 controls">
@@ -47,7 +47,8 @@
                     <img src="{{ ROOT }}/images/deco/bookline.jpg" class="separation logo ms-3 p-0" alt="separation "
                         alt="">
                     <li class=" list-inline-item px-4">
-                        <a href="index.php?p=post/retailPost/{{post.id}}" id="title-link" class="text-decoration-none lead ms-3 p-0">{{ post.title }}</a>
+                        <a href="index.php?p=post/retailPost/{{post.id}}" id="title-link"
+                            class="text-decoration-none lead ms-3 p-0">{{ post.title }}</a>
                         <p class="mt-3 mb-0">{{ post.lead }}</p>
                         <p class="m-0  blockquote-footer text-end ">le {{ post.update_date }} </p>
                     </li>

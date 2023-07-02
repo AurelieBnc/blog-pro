@@ -11,7 +11,7 @@ Class MailerController extends AbstractController
     /**
      * function to send an email
      *
-     * @param string  $to, $from, $from_name, $subject, $body
+     * @param string $to, $from, $from_name, $subject, $body
      */
     function smtpmailer($to, $from, $from_name, $subject, $body): void
     {
@@ -55,7 +55,7 @@ Class MailerController extends AbstractController
         $log = intval("$params1");
         $token = $params2;
 
-        if (isset($token) && !empty($log) && !empty($token))
+        if (!empty($log) && !empty($token))
         {
             $model = new User;
             $confirmUser = $model->find($log);

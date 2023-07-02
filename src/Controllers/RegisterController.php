@@ -118,7 +118,7 @@ Class RegisterController extends AbstractController
         /**
          * We determine if the user already exists with this email address
          */
-        if (isset($email) && !empty($email))
+        if (!empty($email))
         {
             $datas = ['email' => $email];
             $users = $user->findBy($datas);
@@ -132,7 +132,7 @@ Class RegisterController extends AbstractController
         /**
          * We determine if the nickname already exists
          */
-        if (isset($pseudonym) && !empty($pseudonym))
+        if (!empty($pseudonym))
         {
             $user = new User;
             $datas = ['pseudonym' => $pseudonym];
@@ -246,4 +246,3 @@ Class RegisterController extends AbstractController
 
 
 }
-

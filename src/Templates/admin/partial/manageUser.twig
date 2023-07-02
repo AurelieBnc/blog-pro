@@ -5,81 +5,83 @@
             <div class="col-lg-9 rounded-3 shadow-lg mt-5 mb-3 me-1 p-3">
                 <div class="text-center my-5">
                     <h2 class="mb-5">Liste des utilisateurs</h2>
-                        {% for user in users %}
-                        <div>
-                            <ul class="list-group my-3">
-                                <li class="list-group-item pe-0 d-flex justify-content-around shadow">
-                                    <div class="card mb-3 col-10" style="max-width: 540px;">
-                                        <div class="row g-0 p-2">
+                    {% for user in users %}
+                    <div>
+                        <ul class="list-group my-3">
+                            <li class="list-group-item pe-0 d-flex justify-content-around shadow">
+                                <div class="card mb-3 col-10" style="max-width: 540px;">
+                                    <div class="row g-0 p-2">
                                         <div class="col-md-4 mx-auto my-auto">
-                                            <img class="img-fluid rounded-start "
-                                            {% if user.avatar is not null %}
-                                                src="{{ ROOT }}images/avatar_upload/{{ user.avatar }}"
-                                            {% else %}
-                                                src="{{ ROOT }}images/avatar/default-avatar.png"
-                                            {% endif %}
-                                            alt="..." />
+                                            <img class="img-fluid rounded-start " {% if user.avatar is not null %}
+                                                src="{{ ROOT }}images/avatar_upload/{{ user.avatar }}" {% else %}
+                                                src="{{ ROOT }}images/avatar/default-avatar.png" {% endif %}
+                                                alt="..." />
                                         </div>
                                         <div class="col-md-8">
                                             <div class="card-body">
-                                                <h5 class="card-title lead mt-1">{{ user.lastname }} {{ user.firstname }}</h5>
+                                                <h5 class="card-title lead mt-1">{{ user.lastname }} {{ user.firstname
+                                                    }}</h5>
                                                 <p class="card-text">{{ user.pseudonym }}</p>
                                                 <p class="card-text">{{ user.email }}</p>
-                                                <p class="card-text"><small class="text-body-secondary">{{ user.registration_date | date("d/m/Y",
-                                                    "Europe/Paris") }}</small></p>
+                                                <p class="card-text"><small class="text-body-secondary">{{
+                                                        user.registration_date | date("d/m/Y",
+                                                        "Europe/Paris") }}</small></p>
                                                 {% if user.is_verified is same as '1' %}
-                                                    <p class="card-text"><small class="text-body-secondary text-info">Utilisateur vérifié</small></p>
+                                                <p class="card-text"><small
+                                                        class="text-body-secondary text-info">Utilisateur
+                                                        vérifié</small></p>
                                                 {% else %}
-                                                    <p class="card-text"><small class="text-body-secondary text-danger">Utilisateur non vérifié</small></p>
+                                                <p class="card-text"><small
+                                                        class="text-body-secondary text-danger">Utilisateur non
+                                                        vérifié</small></p>
                                                 {% endif %}
                                             </div>
                                         </div>
-                                        </div>
                                     </div>
+                                </div>
 
-                                    {# moderation button - todo : add a hover  #}
-                                    {% if session.logUser is same as 'admin' and user.role is not same as 'admin' %}
-                                        <div class="d-flex justify-content-end align-items-end col-2">
-                                            <div class="p-1 ">
-                                                    {% if user.is_verified is same as '1' %}
-                                                        <form method="POST" action="admin/disableUser">
-                                                            <input name="userId" type="hidden" value={{ user.id }}>
-                                                            <input name="is_verified" type="hidden" value="0">
-                                                            <button type="submit" class="btn" title="Désactiver le compte utlisateur">
-                                                                <i class="fas fa-regular fa-square-check alert-danger"></i>
-                                                            </button>
-                                                        </form>
-                                                    {% else %}
-                                                        <form method="POST" action="admin/disableUser">
-                                                            <input name="userId" type="hidden" value={{ user.id }}>
-                                                            <input name="is_verified" type="hidden" value="1">
-                                                            <button type="submit" class="btn" title="Désactiver le compte utlisateur">
-                                                                <i class="fas fa-regular fa-square-check alert-info"></i>
-                                                            </button>
-                                                        </form>
-                                                    {% endif %}
-                                            </div>
-                                            <div class="p-1 ">
-                                                <form method="POST" action="admin/deleteUser">
-                                                    <input name="userId" type="hidden" value={{ user.id }}>
-                                                    <button type="submit" class="btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utlisateur ?')" title="Supprimer l'utlisateur">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    {% else %}
-                                        <div class="d-flex justify-content-end align-items-end col-2"></div>
-                                    {% endif %}
-                                </li>
-                            </ul>
-                        </div>
+                                {# moderation button - todo : add a hover #}
+                                {% if session.logUser is same as 'admin' and user.role is not same as 'admin' %}
+                                <div class="d-flex justify-content-end align-items-end col-2">
+                                    <div class="p-1 ">
+                                        {% if user.is_verified is same as '1' %}
+                                        <form method="POST" action="admin/disableUser">
+                                            <input name="userId" type="hidden" value={{ user.id }}>
+                                            <input name="is_verified" type="hidden" value="0">
+                                            <button type="submit" class="btn" title="Désactiver le compte utlisateur">
+                                                <i class="fas fa-regular fa-square-check alert-danger"></i>
+                                            </button>
+                                        </form>
+                                        {% else %}
+                                        <form method="POST" action="admin/disableUser">
+                                            <input name="userId" type="hidden" value={{ user.id }}>
+                                            <input name="is_verified" type="hidden" value="1">
+                                            <button type="submit" class="btn" title="Désactiver le compte utlisateur">
+                                                <i class="fas fa-regular fa-square-check alert-info"></i>
+                                            </button>
+                                        </form>
+                                        {% endif %}
+                                    </div>
+                                    <div class="p-1 ">
+                                        <form method="POST" action="admin/deleteUser">
+                                            <input name="userId" type="hidden" value={{ user.id }}>
+                                            <button type="submit" class="btn"
+                                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utlisateur ?')"
+                                                title="Supprimer l'utlisateur">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                {% else %}
+                                <div class="d-flex justify-content-end align-items-end col-2"></div>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
                     {% endfor %}
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-
-

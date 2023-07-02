@@ -60,7 +60,7 @@ Class PostController extends AbstractController
         $userId = htmlspecialchars($_SESSION['id']);
         $sessionLogUser = $_SESSION['logUser'];
 
-        if ( $sessionLogUser === 'admin' && isset($title) && isset($lead) && isset($content) && isset($userId)) {
+        if ( $sessionLogUser === 'admin') {
             $model = new Post;
             $post = $model
                 ->setTitle($title)
@@ -101,13 +101,13 @@ Class PostController extends AbstractController
         $model = new Post;
         $editPost = new Post;
 
-        if(isset($title) && !empty($title)){
+        if(!empty($title)){
             $editPost = $model->setTitle($title);
         }
-        if(isset($lead) && !empty($lead)){
+        if(!empty($lead)){
             $editPost = $model->setLead($lead);
         }
-        if(isset($content) && !empty($content)){
+        if(!empty($content)){
             $editPost = $model->setContent($content);
         }
 
@@ -132,7 +132,7 @@ Class PostController extends AbstractController
         $postId = htmlspecialchars($_POST['postId']);
         $logUser = htmlspecialchars($_SESSION['logUser']);
 
-        if(isset($postId) && $logUser === 'admin')
+        if($logUser === 'admin')
         {
             $data = ['id_post'=> $postId];
             $modelComment = new Comment;
