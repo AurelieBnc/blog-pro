@@ -14,6 +14,11 @@ class Model extends Db
     private $last_id = null;
 
 
+    public function getTable(): string {
+        if(isset($this->table)) {
+           return $this->table = htmlspecialchars($this->table);
+        }
+    }
     public function runQuery(string $sql, array $attributs = null)
     {
     $this->db = Db::getInstance();
@@ -21,7 +26,14 @@ class Model extends Db
 
         if ($attributs !== null) {
             $query = $this->db->prepare($sql);
+            // $attributs = ['table' => $this->table];
             $query->execute($attributs);
+            // foreach ($attributs as $champ => $valeur){
+            //     $query->bindParam($champ, $valeur);
+            // }
+            // $query->bindParam(':thisTable', $this->table);
+
+            // $query->execute();
             if($this->db->lastInsertId()) {
                 $this->last_id = $this->db->lastInsertId();
             }
@@ -42,15 +54,24 @@ class Model extends Db
     }
 
 
-    public function find(int $id)
+    public function find(int $idModel)
     {
-        return $this->runQuery('SELECT * FROM '.$this->table.' WHERE id = '.$id)->fetch();
+        $values = [$this->table, $idModel];
+        //return $this->runQuery('SELECT * FROM :thisTable WHERE id = :idModel', $values)->fetch();
+        // $sth = $this->db->prepare('SELECT * FROM :thisTable WHERE id = :idModel');
+        // $sth->bindParam('thisTable', $this->table);
+        // $sth->bindParam('idModel', $idModel, PDO::PARAM_INT);
+        // return $sth->execute();
+
+        return $this->runQuery("SELECT * FROM ? WHERE id = ?", $values)->fetch();
     }
 
 
     public function findAll()
     {
-        $table = $this->table;
+        if(isset($this->table)) {
+            $table = htmlspecialchars($this->table);
+        }
         $query = $this->runQuery('SELECT * FROM '.$table);
         return $query->fetchAll();
     }
@@ -71,7 +92,7 @@ class Model extends Db
         return $this->runQuery('SELECT *FROM '.$this->table.' WHERE '. $list_champs, $valeurs)->fetchAll();
     }
 
-
+//ok
     public function create(Model $model)
     {
         $champs = [];
@@ -93,7 +114,7 @@ class Model extends Db
         return $this->runQuery('INSERT INTO '.$this->table.' ('. $list_champs.') VALUES('.$list_nb_champs.')', $valeurs);
     }
 
-
+//ok
     public function hydrate(array $datas)
     {
         foreach ($datas as $key => $value)
