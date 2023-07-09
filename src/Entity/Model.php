@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Core\Db;
+use PDOStatement;
 
 class Model extends Db
 {
@@ -52,24 +53,13 @@ class Model extends Db
     }
 
 
-    public function find(int $idModel): void
+    public function find(int $idModel): array
     {
-        $this->db = Db::getInstance();
-        $this->db->exec("SET NAMES 'utf8';");
-        $values = [$this->table, strval($idModel)];
-        var_dump($values);
-        //return $this->runQuery('SELECT * FROM :thisTable WHERE id = ?', $values)->fetch();
-        $sth = $this->db->prepare('SELECT * FROM '.$values[0].' WHERE id = :idModel');
-        //$sth->bindParam(':thisTable', $values[0]);
-        $sth->bindParam(':idModel', $idModel);
-        return $sth->execute();
-
-        //return $this->runQuery('SELECT * FROM ? WHERE id = ?', $values)->fetch();
-        //return $this->runQuery('SELECT * FROM '.$this->table.' WHERE id = '.$idModel)->fetch();
+        return $this->runQuery('SELECT * FROM '.$this->table.' WHERE id = '.$idModel)->fetch();
     }
 
 
-    public function findAll(): void
+    public function findAll(): array
     {
         // $value[] = $this->table;
         // var_dump($value);
@@ -78,7 +68,7 @@ class Model extends Db
     }
 
 
-    public function findBy(array $datas): void
+    public function findBy(array $datas): array
     {
         $champs = [];
         $valeurs= [];
@@ -94,7 +84,7 @@ class Model extends Db
     }
 
 //ok
-    public function create(Model $model): void
+    public function create(Model $model): PDOStatement
     {
         $champs = [];
         $nbchamps = [];
@@ -116,7 +106,7 @@ class Model extends Db
     }
 
 //ok
-    public function hydrate(array $datas): void
+    public function hydrate(array $datas): self
     {
         foreach ($datas as $key => $value)
         {
@@ -131,7 +121,7 @@ class Model extends Db
     }
 
 
-    public function update(string $id, Model $model): void
+    public function update(string $id, Model $model): PDOStatement
     {
         $champs = [];
         $valeurs= [];
@@ -151,7 +141,7 @@ class Model extends Db
     }
 
 
-    public function delete(int $id): void
+    public function delete(int $id): PDOStatement
     {
         return $this->runQuery('DELETE FROM '.$this->table.' WHERE id=?', [$id]);
     }

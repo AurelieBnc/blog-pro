@@ -21,7 +21,7 @@ Class HomeController extends AbstractController
     /**
      * display home Page
      */
-    public function index(): self
+    public function index(): ?self
     {
         $model = new User;
         $user = new User;
@@ -36,7 +36,7 @@ Class HomeController extends AbstractController
     /**
      * function to send a form contact
      */
-    public function contact(): self
+    public function contact(): ?self
     {
         $lastname = htmlspecialchars($_POST['lastname']);
         $firstname = htmlspecialchars($_POST['firstname']);

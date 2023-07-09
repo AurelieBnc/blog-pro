@@ -88,7 +88,7 @@ Class UserController extends AbstractController
     /**
      * function to edit user datas
      */
-    public function editUserDatas(): self
+    public function editUserDatas(): ?self
     {
         $model = new User;
         $idUser = htmlspecialchars($_SESSION['id']);
@@ -182,7 +182,7 @@ Class UserController extends AbstractController
     /**
      * function to edit password
      */
-    public function editPassword(): self
+    public function editPassword(): ?self
     {
         $actualPassword = htmlspecialchars($_POST['actualPassword']);
         $newPassword = htmlspecialchars($_POST['newPassword']);
@@ -233,7 +233,7 @@ Class UserController extends AbstractController
     /**
      * function to delete user and anonymization of comments
      */
-    public function deleteUser(): self
+    public function deleteUser(): ?self
     {
         $userId = htmlspecialchars($_SESSION['id']);
         $modelUser = new User;

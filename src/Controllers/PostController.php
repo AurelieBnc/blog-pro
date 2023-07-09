@@ -17,21 +17,21 @@ Class PostController extends AbstractController
     /**
      * Method displaying the list of all posts
      */
-    public function index(): self
+    public function index(): ?self
     {
         // we instantiate the model corresponding to the "posts" table
         $post = new Post;
 
         // we will look for all the posts
         $posts = $post->findAll();
-        $this->twig->display('post/index.twig', ['ROOT' => $this->root,'posts' => $posts,'session' => $_SESSION]);
+        return $this->twig->display('post/index.twig', ['ROOT' => $this->root,'posts' => $posts,'session' => $_SESSION]);
     }
 
 
     /**
      * displays the detail of an item
      */
-    public function retailPost(int $id): self
+    public function retailPost(int $id): ?self
     {
         $post = new Post;
         $post = $post->find($id);
@@ -44,14 +44,14 @@ Class PostController extends AbstractController
         $comment = new Comment;
         $comments = $comment->findBy($commentData);
 
-        $this->twig->display('post/retailPost.twig', ['ROOT' => $this->root, 'post' => $post, 'session' => $_SESSION, 'comments' => $comments, 'users' => $users]);
+        return $this->twig->display('post/retailPost.twig', ['ROOT' => $this->root, 'post' => $post, 'session' => $_SESSION, 'comments' => $comments, 'users' => $users]);
     }
 
 
     /**
      * function to create a post
      */
-    public function createPost(): self
+    public function createPost(): ?self
     {
         $title = htmlspecialchars($_POST['title']);
         $lead = htmlspecialchars($_POST['lead']);
@@ -70,7 +70,7 @@ Class PostController extends AbstractController
             $model->create($post);
             $lastId = $post->lastId();
 
-            $this->retailPost($lastId);
+            return $this->retailPost($lastId);
         }
     }
 

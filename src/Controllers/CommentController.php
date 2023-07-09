@@ -12,7 +12,7 @@ Class CommentController extends AbstractController
     /**
      * function to add a comment to a specific article
      */
-    public function addComment(): self
+    public function addComment(): ?self
     {
         $model = new Comment;
 
@@ -42,7 +42,7 @@ Class CommentController extends AbstractController
         $user = new User;
         $users = $user->findAll();
 
-        $this->twig->display('post/retailPost.twig', [
+        return $this->twig->display('post/retailPost.twig', [
             'ROOT' => $this->root,
             'post' => $post,
             'session' => $_SESSION,
@@ -56,7 +56,7 @@ Class CommentController extends AbstractController
     /**
      * to disable or enable a comment
      */
-    public function disableComment(): self
+    public function disableComment(): ?self
     {
         $commentId = htmlspecialchars($_POST['commentId']);
         $isEnabled = htmlspecialchars($_POST['is_enabled']);
@@ -85,7 +85,7 @@ Class CommentController extends AbstractController
         $user = new User;
         $users = $user->findAll();
 
-        $this->twig->display('post/retailPost.twig', [
+        return $this->twig->display('post/retailPost.twig', [
             'ROOT' => $this->root,
             'post' => $post,
             'session' => $_SESSION,
@@ -99,7 +99,7 @@ Class CommentController extends AbstractController
     /**
      * function to delete comment
      */
-    public function deleteComment(): self
+    public function deleteComment(): ?self
     {
         $commentId = $_POST ? htmlspecialchars($_POST['commentId']) : null;
 
@@ -117,7 +117,7 @@ Class CommentController extends AbstractController
         $user = new User;
         $users = $user->findAll();
 
-        $this->twig->display('post/retailPost.twig', [
+        return $this->twig->display('post/retailPost.twig', [
             'ROOT' => $this->root,
             'post' => $post,
             'session' => $_SESSION,

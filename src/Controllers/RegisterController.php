@@ -29,7 +29,7 @@ Class RegisterController extends AbstractController
     /**
      * function to login user
      */
-    public function logIn(): self
+    public function logIn(): ?self
     {
         $email = htmlspecialchars($_POST['email']);
         $password = htmlspecialchars($_POST['password']);
@@ -88,7 +88,7 @@ Class RegisterController extends AbstractController
     /**
      * function to logout user and destroy all env Session properties
      */
-    public function logOut(): self
+    public function logOut(): ?self
     {
         session_destroy();
         unset($_SESSION['logUser']);
@@ -104,7 +104,7 @@ Class RegisterController extends AbstractController
     /**
      * function to register a new user. A confirm mail sent to his mail to activate account
      */
-    public function registerUser(): self
+    public function registerUser(): ?self
     {
         $user = new User;
         $user_exist = null;

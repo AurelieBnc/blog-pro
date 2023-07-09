@@ -21,7 +21,7 @@ use App\Entity\User;
     /**
      * admin page index
      */
-    public function index(): self
+    public function index(): ?self
     {
         $userId = htmlspecialchars($_SESSION['id']);
         $user = new User;
@@ -37,7 +37,7 @@ use App\Entity\User;
         $userDataComment = ['id_user' => $userId];
         $comments = $comment->findBy($userDataComment);
 
-        $this->twig->display('admin/index.twig', [
+        return $this->twig->display('admin/index.twig', [
             'user' => $user,
             'users' => $usersList,
             'posts' => $posts,
@@ -51,7 +51,7 @@ use App\Entity\User;
     /**
      * function to deactivate a user
      */
-    public function disableUser(): self
+    public function disableUser(): ?self
     {
         $disableUserId = htmlspecialchars($_POST['userId']);
         $model = new User;
@@ -69,14 +69,14 @@ use App\Entity\User;
             echo "données bien mise à jour";
         }
 
-        $this->index($userId);
+        return $this->index($userId);
     }
 
 
     /**
      * function to delete an user and and anonymize their comments
      */
-    public function deleteUser(): self
+    public function deleteUser(): ?self
     {
         $logUser = htmlspecialchars($_SESSION['logUser']);
         $deleteUserId = htmlspecialchars($_POST['userId']);
@@ -100,7 +100,7 @@ use App\Entity\User;
             echo "utilisateur supprimé";
         }
 
-        $this->index($sessionId);
+        return $this->index($sessionId);
     }
 
 
