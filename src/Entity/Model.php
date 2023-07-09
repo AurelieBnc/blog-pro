@@ -15,7 +15,17 @@ class Model extends Db
     private $last_id = null;
 
 
-    public function runQuery(string $sql, array $attributs = null): void
+    function PDObackquote($value)
+    {
+        if (is_array($value)) {
+            return implode(', ', array_map('PDObackquote', $value));
+        }
+
+        return '`'.str_replace(array('`', '.'), array('``', '`.`'), $value).'`';
+    }
+
+
+    public function runQuery(string $sql, array $attributs = null): PDOStatement
     {
     $this->db = Db::getInstance();
     $this->db->exec("SET NAMES 'utf8';");
@@ -55,7 +65,7 @@ class Model extends Db
 
     public function find(int $idModel): array
     {
-        return $this->runQuery('SELECT * FROM '.$this->table.' WHERE id = '.$idModel)->fetch();
+        return $this->runQuery('SELECT * FROM '.$this->PDObackquote($this->table).' WHERE id = '.$idModel)->fetch();
     }
 
 
