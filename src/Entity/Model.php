@@ -101,7 +101,7 @@ class Model extends Db
         $valeurs= [];
 
         foreach ($model as $champ => $valeur) {
-            if ($valeur != null && $champ != 'db' && $champ !='table')
+            if ($valeur !== null && $champ !== 'db' && $champ !=='table')
             {
                 $champs[] = $champ;
                 $nbchamps[] = "?";
@@ -137,7 +137,7 @@ class Model extends Db
         $valeurs= [];
 
         foreach ($model as $champ => $valeur){
-            if ($valeur != null && $champ != 'db' && $champ !='table')
+            if ($valeur !== null && $champ !== 'db' && $champ !=='table')
             {
                 $champs[] = "$champ = ?";
                 $valeurs[] = $valeur;
