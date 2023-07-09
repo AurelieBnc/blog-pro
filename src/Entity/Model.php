@@ -54,16 +54,18 @@ class Model extends Db
 
     public function find(int $idModel)
     {
-        // $values = [$this->table, strval($idModel)];
-        // var_dump($values);
-        //return $this->runQuery('SELECT * FROM :thisTable WHERE id = :idModel', $values)->fetch();
-        // $sth = $this->db->prepare('SELECT * FROM :thisTable WHERE id = :idModel');
-        // $sth->bindParam('thisTable', $this->table);
-        // $sth->bindParam('idModel', $idModel, PDO::PARAM_INT);
-        // return $sth->execute();
+        $this->db = Db::getInstance();
+        $this->db->exec("SET NAMES 'utf8';");
+        $values = [$this->table, strval($idModel)];
+        var_dump($values);
+        //return $this->runQuery('SELECT * FROM :thisTable WHERE id = ?', $values)->fetch();
+        $sth = $this->db->prepare('SELECT * FROM '.$values[0].' WHERE id = :idModel');
+        //$sth->bindParam(':thisTable', $values[0]);
+        $sth->bindParam(':idModel', $idModel);
+        return $sth->execute();
 
         //return $this->runQuery('SELECT * FROM ? WHERE id = ?', $values)->fetch();
-        return $this->runQuery('SELECT * FROM '.$this->table.' WHERE id = '.$idModel)->fetch();
+        //return $this->runQuery('SELECT * FROM '.$this->table.' WHERE id = '.$idModel)->fetch();
     }
 
 
