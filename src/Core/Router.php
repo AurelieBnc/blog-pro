@@ -21,7 +21,7 @@ Class Router
             $uri = htmlspecialchars($_SERVER['REQUEST_URI']);
 
             // we remove the possible "trailing slash" from the url
-            if (!empty($uri) && $uri != '/' && $uri[-1] === "/") {
+            if (!empty($uri) && $uri !== '/' && $uri[-1] === "/") {
                 $uri = substr($uri, 0, -1);
 
                 // we send a permanent redirect code
