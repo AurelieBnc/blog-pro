@@ -1,7 +1,7 @@
 {% extends "base.twig" %}
 
 {% block title %} Accueil {% endblock %}
-{# todo : change appearance as userPage #}
+
 {% block content %}
 {# post #}
 <section class="py-5">
@@ -14,16 +14,19 @@
                 <p class="blockquote-footer d-flex justify-content-end pt-5">Mise à jour le {{ post.update_date |
                     date("d/m/Y",
                     "Europe/Paris") }}</p>
-                    {# moderation button - add hover #}
+                {# moderation button - add hover #}
                 {% if session.logUser is same as 'admin' %}
                 <div class="d-flex justify-content-end me-2">
                     <div class="p-1 ">
-                        <a class=" btn btn-darkblue " href="{{ ROOT }}index.php?p=post/editPostPage/{{post.id}}" title="Modifier l'article"><i class="fas fa-edit"></i></a>
+                        <a class=" btn btn-darkblue " href="{{ ROOT }}index.php?p=post/editPostPage/{{post.id}}"
+                            title="Modifier l'article"><i class="fas fa-edit"></i></a>
                     </div>
                     <div class="p-1 ">
                         <form method="POST" action="post/deletePost">
                             <input name="postId" type="hidden" value={{ post.id }}>
-                            <button type="submit" class="btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article, ainsi que ses commentaires ?')" title="Supprimer l'article">
+                            <button type="submit" class="btn"
+                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article, ainsi que ses commentaires ?')"
+                                title="Supprimer l'article">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
@@ -55,22 +58,19 @@
                 <div class="pt-5 px-5 justify-content-around shadow">
                     <div class="d-flex justify-content-between">
                         <div class="pe-3">
-                        {% for user in users %}
+                            {% for user in users %}
                             {% if comment.id_user is same as user.id %}
-                            <img class="img-fluid rounded-circle mb-4 avatar"
-                            {% if user.avatar is not null %}
-                                src="{{ ROOT }}images/avatar_upload/{{ user.avatar }}"
-                            {% else %}
-                                src="{{ ROOT }}images/avatar/default-avatar.png"
-                            {% endif %}
-                            alt="..." />
+                            <img class="img-fluid rounded-circle mb-4 avatar" {% if user.avatar is not null %}
+                                src="{{ ROOT }}images/avatar_upload/{{ user.avatar }}" {% else %}
+                                src="{{ ROOT }}images/avatar/default-avatar.png" {% endif %} alt="..." />
                             <p class="fs-5 text-center">{{ user.pseudonym }}</p>
                             {% endif %}
-                        {% endfor %}
+                            {% endfor %}
                         </div>
                         <div class="ps-3 pt-5">
                             <p class="small text-center ">{{ comment.content }}</p>
-                            <p class="blockquote-footer d-flex justify-content-end mt-2">Le {{ comment.update_date | date("d/m/Y",
+                            <p class="blockquote-footer d-flex justify-content-end mt-2">Le {{ comment.update_date |
+                                date("d/m/Y",
                                 "Europe/Paris") }}</p>
                         </div>
                     </div>
@@ -105,7 +105,8 @@
                             <form method="POST" action="comment/deleteComment">
                                 <input name="commentId" type="hidden" value={{ comment.id }}>
                                 <input name="postId" type="hidden" value={{ comment.id_post }}>
-                                <button type="submit" class="btn" title="Supprimer le commentaire" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?')">
+                                <button type="submit" class="btn" title="Supprimer le commentaire"
+                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?')">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>
@@ -132,8 +133,8 @@
                     <input name="userId" type="hidden" value={{ session.id }}>
                     <input name="postId" type="hidden" value={{ post.id }}>
                     <div class="form-group mb-3 controls">
-                        <textarea rows="7" class="form-control" id="content" name="content" placeholder="Laisser votre commentaire"
-                            id="floatingTextarea2" required
+                        <textarea rows="7" class="form-control" id="content" name="content"
+                            placeholder="Laisser votre commentaire" id="floatingTextarea2" required
                             data-validation-required-message="Please enter ypur comment."
                             title="Laisser votre commentaire"></textarea>
                         <p class="help-block text-danger"></p>

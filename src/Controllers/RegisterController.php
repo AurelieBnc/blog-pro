@@ -185,7 +185,6 @@ Class RegisterController extends AbstractController
                     $file = $uniqueName.".".$extension;
                     move_uploaded_file($tmpName, './images/avatar_upload/'.$file);
                 } else {
-                    // todo : detailed errors
                     echo "Mauvaise extension, taille trop grande ou une erreur est survenue";
                 }
             }

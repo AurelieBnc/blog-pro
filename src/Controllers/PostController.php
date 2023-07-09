@@ -23,7 +23,6 @@ Class PostController extends AbstractController
         $post = new Post;
 
         // we will look for all the posts
-        // todo : optionally add the ability to disable a post by adding an "active" property and findBy(['active' => 1])
         $posts = $post->findAll();
         $this->twig->display('post/index.twig', ['ROOT' => $this->root,'posts' => $posts,'session' => $_SESSION]);
     }
@@ -132,12 +131,12 @@ Class PostController extends AbstractController
         $postId = htmlspecialchars($_POST['postId']);
         $logUser = htmlspecialchars($_SESSION['logUser']);
 
-        if($logUser === 'admin')
+        if ($logUser === 'admin')
         {
             $data = ['id_post'=> $postId];
             $modelComment = new Comment;
             $listComments = $modelComment->findBy($data);
-            foreach($listComments as $comment)
+            foreach ($listComments as $comment)
             {
                 $commentId = $comment['id'];
                 $model = new Comment;
