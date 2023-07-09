@@ -10,10 +10,8 @@ Class MailerController extends AbstractController
 
     /**
      * function to send an email
-     *
-     * @param string $to, $from, $from_name, $subject, $body
      */
-    function smtpmailer($to, $from, $from_name, $subject, $body): void
+    function smtpmailer(string $to, string $from, string $from_name,string $subject, string $body): void
     {
         $mail = new PHPMailer();
         $mail->IsSMTP();
