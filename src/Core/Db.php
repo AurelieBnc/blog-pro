@@ -28,7 +28,7 @@ class Db extends PDO
             $this->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_EMPTY_STRING);
 
         }catch(PDOException $e){
-            die($e->getMessage());
+            echo 'Exception reçue : ',  $e->getMessage(), "\n";
         }
     }
 
