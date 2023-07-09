@@ -14,7 +14,7 @@ class Model extends Db
     private $last_id = null;
 
 
-    public function runQuery(string $sql, array $attributs = null)
+    public function runQuery(string $sql, array $attributs = null): void
     {
     $this->db = Db::getInstance();
     $this->db->exec("SET NAMES 'utf8';");
@@ -46,13 +46,13 @@ class Model extends Db
     }
 
 
-    public function lastId()
+    public function lastId(): int
     {
         return $this->last_id;
     }
 
 
-    public function find(int $idModel)
+    public function find(int $idModel): void
     {
         $this->db = Db::getInstance();
         $this->db->exec("SET NAMES 'utf8';");
@@ -69,7 +69,7 @@ class Model extends Db
     }
 
 
-    public function findAll()
+    public function findAll(): void
     {
         // $value[] = $this->table;
         // var_dump($value);
@@ -78,7 +78,7 @@ class Model extends Db
     }
 
 
-    public function findBy(array $datas)
+    public function findBy(array $datas): void
     {
         $champs = [];
         $valeurs= [];
@@ -94,7 +94,7 @@ class Model extends Db
     }
 
 //ok
-    public function create(Model $model)
+    public function create(Model $model): void
     {
         $champs = [];
         $nbchamps = [];
@@ -116,7 +116,7 @@ class Model extends Db
     }
 
 //ok
-    public function hydrate(array $datas)
+    public function hydrate(array $datas): void
     {
         foreach ($datas as $key => $value)
         {
@@ -131,7 +131,7 @@ class Model extends Db
     }
 
 
-    public function update(string $id, Model $model)
+    public function update(string $id, Model $model): void
     {
         $champs = [];
         $valeurs= [];
@@ -151,7 +151,7 @@ class Model extends Db
     }
 
 
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         return $this->runQuery('DELETE FROM '.$this->table.' WHERE id=?', [$id]);
     }
