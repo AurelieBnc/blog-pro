@@ -3,33 +3,33 @@
 namespace App\Entity;
 
 use App\Core\Db;
+use Exception;
+use PDO;
+use PDOStatement;
 
 class Model extends Db
 {
-    // Database table
+
     protected $table;
 
-    // DB instance
     private $db;
+
     private $last_id = null;
 
-    public function runQuery(string $sql, array $attributs = null)
+    public function runQuery(string $sql, array $attributs = null): PDOStatement
     {
-    // We get the instance of Db
     $this->db = Db::getInstance();
     $this->db->exec("SET NAMES 'utf8';");
 
-        // We check if we have attributes
-        if ($attributs !== null) {
-            // prepared statement
-            $query = $this->db->prepare($sql);
-            $query->execute($attributs);
-            if($this->db->lastInsertId()) {
-                $this->last_id = $this->db->lastInsertId();
-            }
-            return $query;
+    if ($attributs !== null) {
+        $query = $this->db->prepare($sql);
+        $query->execute($attributs);
+        if($this->db->lastInsertId()) {
+            $this->last_id = $this->db->lastInsertId();
+        }
+        return $query;
+
         } else {
-            // Simple query
             $query = $this->db->query($sql);
             if($this->db->lastInsertId()) {
                 $this->last_id = $this->db->lastInsertId();
@@ -38,98 +38,160 @@ class Model extends Db
         }
     }
 
-    public function lastId()
+
+    public function lastId(): int
     {
         return $this->last_id;
     }
 
-    // READ
-    public function find(int $id)
+
+    public function find(int $idModel): array
     {
-        return $this->runQuery('SELECT * FROM '.$this->table.' WHERE id = '.$id)->fetch();
+        /**@var string $rqtSql */
+        switch ($this->table) {
+            case "user":
+                $rqtSql = 'SELECT * FROM user WHERE id = ';
+                break;
+            case "comment":
+                $rqtSql = 'SELECT * FROM comment WHERE id = ';
+                break;
+            case "contactform":
+                $rqtSql = 'SELECT * FROM contactform WHERE id = ';
+                break;
+            case "post":
+                $rqtSql = 'SELECT * FROM post WHERE id = ';
+                break;
+            default:
+                throw new Exception('Cette table n\'est pas reconnue');
+                break;
+        }
+        return $this->runQuery($rqtSql.$idModel)->fetch();
     }
 
-    public function findAll()
+
+    public function findAll(): array
     {
-        $query = $this->runQuery('SELECT * FROM '.$this->table);
-        return $query->fetchAll();
+        /**@var string $rqtSql */
+        switch ($this->table) {
+            case "user":
+                $rqtSql = 'SELECT * FROM user';
+                break;
+            case "comment":
+                $rqtSql = 'SELECT * FROM comment';
+                break;
+            case "contactform":
+                $rqtSql = 'SELECT * FROM contactform';
+                break;
+            case "post":
+                $rqtSql = 'SELECT * FROM post';
+                break;
+            default:
+                throw new Exception('Cette table n\'est pas reconnue');
+                break;
+        }
+
+        return $this->runQuery($rqtSql)->fetchAll();
     }
 
-    public function findBy(array $datas)
+
+    public function findBy(array $datas): array
     {
         $champs = [];
         $valeurs= [];
 
-        // We loop to explode the array
         foreach($datas as $champ => $valeur){
-            // SELECT * FROM annonces WHERE id = ? AND  test = ?
-            // bindValue(1, valeur)
             $champs[] = "$champ = ?";
             $valeurs[] = $valeur;
         }
 
-        // We transform the array fields into a string of characters
         $list_champs= implode(' AND ', $champs);
 
-        // Execute the request
-        return $this->runQuery('SELECT *FROM '.$this->table.' WHERE '. $list_champs, $valeurs)->fetchAll();
+        /**@var string $rqtSql */
+        switch ($this->table) {
+            case "user":
+                $rqtSql = 'SELECT * FROM user WHERE ';
+                break;
+            case "comment":
+                $rqtSql = 'SELECT * FROM comment WHERE ';
+                break;
+            case "contactform":
+                $rqtSql = 'SELECT * FROM contactform WHERE ';
+                break;
+            case "post":
+                $rqtSql = 'SELECT * FROM post WHERE ';
+                break;
+            default:
+                throw new Exception('Cette table n\'est pas reconnue');
+                break;
+        }
+
+        return $this->runQuery($rqtSql. $list_champs, $valeurs)->fetchAll();
     }
 
-   // CREATE
-    public function create(Model $model)
-    {
 
+    public function create(Model $model): PDOStatement
+    {
         $champs = [];
         $nbchamps = [];
         $valeurs= [];
 
-        // We loop to explode the array
-        foreach ($model as $champ => $valeur){
-            // INSERT INTO post (titre, content, author ect) VALUES (?, ?, ?)
-            if ($valeur != null && $champ != 'db' && $champ !='table')
+        foreach ($model as $champ => $valeur) {
+            if ($valeur !== null && $champ !== 'db' && $champ !=='table')
             {
                 $champs[] = $champ;
                 $nbchamps[] = "?";
                 $valeurs[] = $valeur;
             }
-
         }
 
-        // We transform the array fields into a string of characters
         $list_champs= implode(', ', $champs);
         $list_nb_champs = implode(', ', $nbchamps);
 
-        // Execute the request
-        return $this->runQuery('INSERT INTO '.$this->table.' ('. $list_champs.') VALUES('.$list_nb_champs.')', $valeurs);
+        /**@var string $rqtSql */
+        switch ($this->table) {
+            case "user":
+                $rqtSql = 'INSERT INTO user';
+                break;
+            case "comment":
+                $rqtSql = 'INSERT INTO comment';
+                break;
+            case "contactform":
+                $rqtSql = 'INSERT INTO contactform';
+                break;
+            case "post":
+                $rqtSql = 'INSERT INTO post';
+                break;
+            default:
+                throw new Exception('Cette table n\'est pas reconnue');
+                break;
+        }
+
+        return $this->runQuery($rqtSql.' ('. $list_champs.') VALUES('.$list_nb_champs.')', $valeurs);
     }
 
-    public function hydrate(array $datas)
+
+    public function hydrate(array $datas): self
     {
         foreach ($datas as $key => $value)
         {
-            // We retrieve the setter corresponding to the key (key)
             $setter = 'set'.ucfirst($key);
 
-            // We check if the setter exists
             if (method_exists($this, $setter))
             {
-                // We call the setter
                 $this->$setter($value);
             }
         }
         return $this;
     }
 
-    // UPDATE
-    public function update(string $id, Model $model)
+
+    public function update(string $id, Model $model): PDOStatement
     {
         $champs = [];
         $valeurs= [];
 
-        // We loop to explode the table
         foreach ($model as $champ => $valeur){
-            // UPDATE post SET titre = ?, content = ?, author =? .. WHERE id = ?
-            if ($valeur != null && $champ != 'db' && $champ !='table')
+            if ($valeur !== null && $champ !== 'db' && $champ !=='table')
             {
                 $champs[] = "$champ = ?";
                 $valeurs[] = $valeur;
@@ -137,16 +199,55 @@ class Model extends Db
 
         }
 
-        // We transform the array fields into a string of characters
         $list_champs= implode(', ', $champs);
 
-        // Execute the request
-        return $this->runQuery('UPDATE '.$this->table.' SET '. $list_champs.' WHERE '.$id, $valeurs);
+
+        /**@var string $rqtSql */
+        switch ($this->table) {
+            case "user":
+                $rqtSql = 'UPDATE user';
+                break;
+            case "comment":
+                $rqtSql = 'UPDATE comment';
+                break;
+            case "contactform":
+                $rqtSql = 'UPDATE contactform';
+                break;
+            case "post":
+                $rqtSql = 'UPDATE post';
+                break;
+            default:
+                throw new Exception('Cette table n\'est pas reconnue');
+                break;
+        }
+
+        return $this->runQuery($rqtSql.' SET '. $list_champs.' WHERE '.$id, $valeurs);
     }
 
-    // DELETE
-    public function delete(int $id)
+
+    public function delete(int $id): PDOStatement
     {
-        return $this->runQuery('DELETE FROM '.$this->table.' WHERE id=?', [$id]);
+        /**@var string $rqtSql */
+        switch ($this->table) {
+            case "user":
+                $rqtSql = 'DELETE FROM user';
+                break;
+            case "comment":
+                $rqtSql = 'DELETE FROM comment';
+                break;
+            case "contactform":
+                $rqtSql = 'DELETE FROM contactform';
+                break;
+            case "post":
+                $rqtSql = 'DELETE FROM post';
+                break;
+            default:
+                throw new Exception('Cette table n\'est pas reconnue');
+                break;
+        }
+
+        return $this->runQuery($rqtSql.' WHERE id=?', [$id]);
     }
+
+
 }

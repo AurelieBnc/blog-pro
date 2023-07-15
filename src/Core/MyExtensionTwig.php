@@ -10,26 +10,31 @@ use Twig\TwigFunction;
  */
 class MyExtensionTwig extends AbstractExtension
 {
+
+
     /**
      * Functions List
      */
     public function getFunctions()
     {
         return[
-        new TwigFunction('activeClass', [$this, 'activeClass'], ['needs_context' => true])
+            new TwigFunction('activeClass', [$this, 'activeClass'], ['needs_context' => true])
         ];
     }
+
 
     /**
      * Gives class 'active' to the current page
      */
-    public function activeClass(array $context, $page)
+    public function activeClass(array $context, string $page): ?string
     {
         if (isset($context['current_page']) && $context['current_page'] === $page )
         {
             return ' active ';
         }
+        return null;
     }
+
 
     /**
      * Filters List
@@ -37,13 +42,15 @@ class MyExtensionTwig extends AbstractExtension
     public function getFilters()
     {
         return[
-        new TwigFilter('truncate', [$this, 'truncate'], ['is_safe' => ['html']])
-    ];
+            new TwigFilter('truncate', [$this, 'truncate'], ['is_safe' => ['html']])
+        ];
     }
 
-    public function truncate(string $values, int $nbChar)
+
+    public function truncate(string $values, int $nbChar): string
     {
         return mb_substr($values, 0, $nbChar,'UTF-8');
     }
+
 
 }

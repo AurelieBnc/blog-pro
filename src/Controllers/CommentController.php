@@ -7,21 +7,29 @@ use App\Entity\User;
 
 Class CommentController extends AbstractController
 {
-    public function addComment()
+
+
+    /**
+     * function to add a comment to a specific article
+     */
+    public function addComment(): ?self
     {
         $model = new Comment;
 
-        $content = htmlspecialchars($_POST['content']);
+        $content = $_POST ? htmlspecialchars($_POST['content']) : null;
         $userId = htmlspecialchars($_POST['userId']);
         $postId = htmlspecialchars($_POST['postId']);
 
-        $comment = $model
-            ->setContent($content)
-            ->setIs_enabled('0')
-            ->setId_User($userId)
-            ->setId_Post($postId);
+        if (isset($content) && isset($userId) && isset($postId) ) {
+            $comment = $model
+                ->setContent($content)
+                ->setIs_enabled('0')
+                ->setId_User($userId)
+                ->setId_Post($postId);
 
-        $model->create($comment);
+            $model->create($comment);
+        }
+
 
         $post = new Post;
         $post = $post->find($postId);
@@ -34,7 +42,7 @@ Class CommentController extends AbstractController
         $user = new User;
         $users = $user->findAll();
 
-        $this->twig->display('post/retailPost.twig', [
+        return $this->twig->display('post/retailPost.twig', [
             'ROOT' => $this->root,
             'post' => $post,
             'session' => $_SESSION,
@@ -44,11 +52,15 @@ Class CommentController extends AbstractController
 
     }
 
-    public function disableComment()
+
+    /**
+     * to disable or enable a comment
+     */
+    public function disableComment(): ?self
     {
         $commentId = htmlspecialchars($_POST['commentId']);
         $isEnabled = htmlspecialchars($_POST['is_enabled']);
-        $userId = $_SESSION['id'];
+        $userId = htmlspecialchars($_SESSION['id']);
 
         $model = new Comment;
         $disableComment = new Comment;
@@ -56,8 +68,8 @@ Class CommentController extends AbstractController
         if (isset($userId) && !empty($commentId) && isset($isEnabled))
         {
             $disableComment = $model->setIs_enabled($isEnabled);
-            $id = "id = ".$commentId;
-            $model->update($id, $disableComment);
+            $idUser = "id = ".$commentId;
+            $model->update($idUser, $disableComment);
             echo "données bien mise à jour";
         }
 
@@ -73,7 +85,7 @@ Class CommentController extends AbstractController
         $user = new User;
         $users = $user->findAll();
 
-        $this->twig->display('post/retailPost.twig', [
+        return $this->twig->display('post/retailPost.twig', [
             'ROOT' => $this->root,
             'post' => $post,
             'session' => $_SESSION,
@@ -83,10 +95,13 @@ Class CommentController extends AbstractController
 
     }
 
-    public function deleteComment()
+
+    /**
+     * function to delete comment
+     */
+    public function deleteComment(): ?self
     {
-        $commentId = htmlspecialchars($_POST['commentId']);
-        $userId = $_SESSION['id'];
+        $commentId = $_POST ? htmlspecialchars($_POST['commentId']) : null;
 
         $model = new Comment;
         $model->delete($commentId);
@@ -96,13 +111,13 @@ Class CommentController extends AbstractController
         $post = $model->find($postId);
 
         $comment = new Comment;
-        $postDataComment = ['id_post' => $_POST['postId']];
+        $postDataComment = ['id_post' => htmlspecialchars($_POST['postId'])];
         $comments = $comment->findBy($postDataComment);
 
         $user = new User;
         $users = $user->findAll();
 
-        $this->twig->display('post/retailPost.twig', [
+        return $this->twig->display('post/retailPost.twig', [
             'ROOT' => $this->root,
             'post' => $post,
             'session' => $_SESSION,
@@ -110,4 +125,6 @@ Class CommentController extends AbstractController
             'users' => $users
         ]);
     }
+
+
 }

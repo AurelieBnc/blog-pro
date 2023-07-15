@@ -11,11 +11,17 @@ use App\Entity\User;
  */
 Class HomeController extends AbstractController
 {
+
+
     public function __construct() {
         parent::__construct();
     }
 
-    public function index()
+
+    /**
+     * display home Page
+     */
+    public function index(): ?self
     {
         $model = new User;
         $user = new User;
@@ -26,23 +32,43 @@ Class HomeController extends AbstractController
         return $this->twig->display('home/index.twig', ['user' => $user, 'ROOT' => $this->root,'session' => $_SESSION]);
     }
 
-    public function contact()
+
+    /**
+     * function to send a form contact
+     */
+    public function contact(): ?self
     {
-        if(!empty($_POST))
+        $lastname = htmlspecialchars($_POST['lastname']);
+        $firstname = htmlspecialchars($_POST['firstname']);
+        $content = htmlspecialchars($_POST['content']);
+        $email = htmlspecialchars($_POST['email']);
+        $datas = [];
+
+        if (isset($lastname) && isset($firstname) && isset($content) && isset($email)) {
+            $datas = [
+                'lastname' => $lastname,
+                'firstname' => $firstname,
+                'content' => $content,
+                'email' => $email];
+        }
+
+        if (!empty($datas))
         {
             $model = new ContactForm;
-            $contactForm = $model->hydrate($_POST);
+            $contactForm = $model->hydrate($datas);
             $model->create($contactForm);
 
             return $this->twig->display('home/contact.twig',[
-            'lastname' => $_POST['lastname'],
-            'firstname' => $_POST['firstname'],
-            'contentFormContact' => $_POST['content'],
-            'email' => $_POST['email'],
+            'lastname' => $lastname,
+            'firstname' => $firstname,
+            'contentFormContact' => $content,
+            'email' => $email,
             'ROOT' => $this->root
             ]);
         }
 
         return $this->twig->display('partial/pageFormError.twig');
     }
+
+
 }

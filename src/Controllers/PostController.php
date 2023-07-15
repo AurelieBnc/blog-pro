@@ -7,28 +7,31 @@ use App\Entity\User;
 
 Class PostController extends AbstractController
 {
+
+
     public function __construct() {
         parent::__construct();
     }
 
+
     /**
      * Method displaying the list of all posts
      */
-    public function index()
+    public function index(): ?self
     {
         // we instantiate the model corresponding to the "posts" table
         $post = new Post;
 
         // we will look for all the posts
-        // todo : optionally add the ability to disable a post by adding an "active" property and findBy(['active' => 1])
         $posts = $post->findAll();
-        $this->twig->display('post/index.twig', ['ROOT' => $this->root,'posts' => $posts,'session' => $_SESSION]);
+        return $this->twig->display('post/index.twig', ['ROOT' => $this->root,'posts' => $posts,'session' => $_SESSION]);
     }
 
+
     /**
-     * show a particular post
+     * displays the detail of an item
      */
-    public function retailPost(int $id)
+    public function retailPost(int $id): ?self
     {
         $post = new Post;
         $post = $post->find($id);
@@ -41,17 +44,22 @@ Class PostController extends AbstractController
         $comment = new Comment;
         $comments = $comment->findBy($commentData);
 
-        $this->twig->display('post/retailPost.twig', ['ROOT' => $this->root, 'post' => $post, 'session' => $_SESSION, 'comments' => $comments, 'users' => $users]);
+        return $this->twig->display('post/retailPost.twig', ['ROOT' => $this->root, 'post' => $post, 'session' => $_SESSION, 'comments' => $comments, 'users' => $users]);
     }
 
-    public function createPost()
+
+    /**
+     * function to create a post
+     */
+    public function createPost(): ?self
     {
         $title = htmlspecialchars($_POST['title']);
         $lead = htmlspecialchars($_POST['lead']);
         $content = htmlspecialchars($_POST['content']);
         $userId = htmlspecialchars($_SESSION['id']);
+        $sessionLogUser = $_SESSION['logUser'];
 
-        if ($_SESSION['logUser'] === 'admin') {
+        if ( $sessionLogUser === 'admin') {
             $model = new Post;
             $post = $model
                 ->setTitle($title)
@@ -62,11 +70,15 @@ Class PostController extends AbstractController
             $model->create($post);
             $lastId = $post->lastId();
 
-            $this->retailPost($lastId);
+            return $this->retailPost($lastId);
         }
     }
 
-    public function editPostPage(int $postId)
+
+    /**
+     * function to display edit post page
+     */
+    public function editPostPage(int $postId): self
     {
         $model = new Post;
         $post = $model->find($postId);
@@ -74,7 +86,11 @@ Class PostController extends AbstractController
         return $this->twig->display('post/editPost.twig', ['ROOT' => $this->root, 'post' => $post, 'session' => $_SESSION]);
     }
 
-    public function editPost()
+
+    /**
+     * function that allows you to edit an article
+     */
+    public function editPost(): self
     {
         $postId = htmlspecialchars($_POST['postId']);
         $title = htmlspecialchars($_POST['title']);
@@ -84,13 +100,13 @@ Class PostController extends AbstractController
         $model = new Post;
         $editPost = new Post;
 
-        if(isset($title) && !empty($title)){
+        if(!empty($title)){
             $editPost = $model->setTitle($title);
         }
-        if(isset($lead) && !empty($lead)){
+        if(!empty($lead)){
             $editPost = $model->setLead($lead);
         }
-        if(isset($content) && !empty($content)){
+        if(!empty($content)){
             $editPost = $model->setContent($content);
         }
 
@@ -106,17 +122,21 @@ Class PostController extends AbstractController
         $this->retailPost($editPostId);
     }
 
-    public function deletePost()
+
+    /**
+     * function to delete a post and and all his comments
+     */
+    public function deletePost(): self
     {
         $postId = htmlspecialchars($_POST['postId']);
-        $logUser = $_SESSION['logUser'];
+        $logUser = htmlspecialchars($_SESSION['logUser']);
 
-        if(isset($postId) && $logUser === 'admin')
+        if ($logUser === 'admin')
         {
             $data = ['id_post'=> $postId];
             $modelComment = new Comment;
             $listComments = $modelComment->findBy($data);
-            foreach($listComments as $comment)
+            foreach ($listComments as $comment)
             {
                 $commentId = $comment['id'];
                 $model = new Comment;
@@ -130,4 +150,6 @@ Class PostController extends AbstractController
 
         $this->index();
     }
+
+
 }

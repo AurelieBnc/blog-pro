@@ -11,26 +11,33 @@ use App\Entity\User;
  */
  Class AdminController extends AbstractController
  {
+
+
     public function __construct() {
         parent::__construct();
     }
 
-    public function index()
+
+    /**
+     * admin page index
+     */
+    public function index(): ?self
     {
+        $userId = htmlspecialchars($_SESSION['id']);
         $user = new User;
         $usersList = $user->findAll();
 
         $model = new User;
-        $user = $model->find($_SESSION['id']);
+        $user = $model->find($userId);
 
         $post = new Post;
         $posts = $post->findAll();
 
         $comment = new Comment;
-        $userDataComment = ['id_user' => $_SESSION['id']];
+        $userDataComment = ['id_user' => $userId];
         $comments = $comment->findBy($userDataComment);
 
-        $this->twig->display('admin/index.twig', [
+        return $this->twig->display('admin/index.twig', [
             'user' => $user,
             'users' => $usersList,
             'posts' => $posts,
@@ -40,28 +47,42 @@ use App\Entity\User;
         ]);
     }
 
-    public function disableUser()
+
+    /**
+     * function to deactivate a user
+     */
+    public function disableUser(): ?self
     {
-        $disableUserId = $_POST['userId'];
+        $disableUserId = htmlspecialchars($_POST['userId']);
         $model = new User;
         $disableUser = new User;
+        $userId = htmlspecialchars($_SESSION['id']);
+        $disableUserId = htmlspecialchars($_POST['userId']);
+        $isVerified = htmlspecialchars($_POST['is_verified']);
 
-        if (isset($_POST['userId']) && !empty($_POST['userId']) && isset($_POST['is_verified'])) {
-            $disableUser = $model->setIs_verified($_POST['is_verified']);
-            $id = "id = ".$disableUserId;
-            $model->update($id, $disableUser);
+
+        if (isset($disableUserId) && !empty($disableUserId) && isset($isVerified)) {
+            $disableUser = $model->setIs_verified($isVerified);
+            $idUser = "id = ".$disableUserId;
+            $model->update($idUser, $disableUser);
 
             echo "données bien mise à jour";
         }
 
-        $this->index($_SESSION['id']);
+        return $this->index($userId);
     }
 
-    public function deleteUser()
-    {
-        if ($_SESSION['logUser'] === 'admin' && isset($_POST['userId']) && !empty($_POST['userId'])) {
 
-            $deleteUserId = $_POST['userId'];
+    /**
+     * function to delete an user and and anonymize their comments
+     */
+    public function deleteUser(): ?self
+    {
+        $logUser = htmlspecialchars($_SESSION['logUser']);
+        $deleteUserId = htmlspecialchars($_POST['userId']);
+        $sessionId = htmlspecialchars($_SESSION['id']);
+
+        if ($logUser === 'admin' && isset($userId) && !empty($userId)) {
             $deleteUser = new User;
 
             // anonymization of comments
@@ -70,15 +91,17 @@ use App\Entity\User;
             $listComments = $modelComment->findBy($data);
 
             foreach ( $listComments as $comment ) {
-                $id = "id_user = ".$deleteUserId;
+                $idUser = "id_user = ".$deleteUserId;
                 $comment = $modelComment->setId_user(2);
-                $comment = $modelComment->update($id, $comment );
+                $comment = $modelComment->update($idUser, $comment );
             }
 
             $deleteUser->delete($deleteUserId);
             echo "utilisateur supprimé";
         }
 
-        $this->index($_SESSION['id']);
+        return $this->index($sessionId);
     }
+
+
 }

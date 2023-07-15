@@ -9,28 +9,32 @@ use Exception;
  */
 Class Router
 {
-    public function start()
+
+
+    /**
+     * rooter - explode the uri to find the requested controller, method and parameters
+     */
+    public function start(): void
     {
         try {
             // Get URL
-            $uri = $_SERVER['REQUEST_URI'];
+            $uri = htmlspecialchars($_SERVER['REQUEST_URI']);
 
             // we remove the possible "trailing slash" from the url
-            if (!empty($uri) && $uri != '/' && $uri[-1] === "/") {
+            if (!empty($uri) && $uri !== '/' && $uri[-1] === "/") {
                 $uri = substr($uri, 0, -1);
 
                 // we send a permanent redirect code
                 http_response_code(301);
 
-                // we redirect to the url without /
-                //header('Location: '.$uri); //ko redirige en boucle car il détecte un slash malgré les conditions.
             }
 
             // management of url parameters
             $params = [];
+            $page = $_GET['p'];
 
-            if (isset($_GET['p'])) {
-                $params = explode('/', $_GET['p']);
+            if (isset($page)) {
+                $params = explode('/', $page);
             }
             $controllerName = array_shift($params);
 
@@ -69,4 +73,6 @@ Class Router
             echo 'Erreur : '.$e->getMessage();
         }
     }
+
+
 }
