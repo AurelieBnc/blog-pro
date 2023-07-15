@@ -45,9 +45,6 @@ class Model extends Db
     }
 
 
-    /**
-     * @param string $rqtSql // SQL request
-     */
     public function find(int $idModel): array
     {
         /**@var string $rqtSql */
@@ -72,9 +69,6 @@ class Model extends Db
     }
 
 
-    /**
-     * @param string $rqtSql // SQL request
-     */
     public function findAll(): array
     {
         /**@var string $rqtSql */
