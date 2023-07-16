@@ -32,7 +32,7 @@ cd blog-pro
 composer install
 ```
 
-### Import database with datas : file 'databaseBlogPro.sql'
+### Import database with datas : file 'blog_pro.sql'
 
 ### Configure the environment file using the .env.example file:
 
