@@ -8,7 +8,7 @@
                     {% for user in users %}
                     <div>
                         <ul class="list-group my-3">
-                            <li class="list-group-item pe-0 d-flex justify-content-around shadow">
+                            <li class="list-group-item pe-0 d-flex flex-column justify-content-around shadow">
                                 <div class="card mb-3 col-10" style="max-width: 540px;">
                                     <div class="row g-0 p-2">
                                         <div class="col-md-4 mx-auto my-auto">
@@ -41,35 +41,39 @@
                                 </div>
 
                                 {% if session.logUser is same as 'admin' and user.role is not same as 'admin' %}
-                                <div class="d-flex justify-content-end align-items-end col-2">
-                                    <div class="p-1 ">
-                                        {% if user.is_verified is same as '1' %}
-                                        <form method="POST" action="admin/disableUser">
-                                            <input name="userId" type="hidden" value={{ user.id }}>
-                                            <input name="is_verified" type="hidden" value="0">
-                                            <button type="submit" class="btn" title="Désactiver le compte utlisateur">
-                                                <i class="fas fa-regular fa-square-check alert-danger"></i>
-                                            </button>
-                                        </form>
-                                        {% else %}
-                                        <form method="POST" action="admin/disableUser">
-                                            <input name="userId" type="hidden" value={{ user.id }}>
-                                            <input name="is_verified" type="hidden" value="1">
-                                            <button type="submit" class="btn" title="Désactiver le compte utlisateur">
-                                                <i class="fas fa-regular fa-square-check alert-info"></i>
-                                            </button>
-                                        </form>
-                                        {% endif %}
-                                    </div>
-                                    <div class="p-1 ">
-                                        <form method="POST" action="admin/deleteUser">
-                                            <input name="userId" type="hidden" value={{ user.id }}>
-                                            <button type="submit" class="btn"
-                                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utlisateur ?')"
-                                                title="Supprimer l'utlisateur">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </form>
+                                <div class="d-flex justify-content-end align-items-end">
+                                    <div class="d-flex flex-row ">
+                                        <div class="p-1 ">
+                                            {% if user.is_verified is same as '1' %}
+                                            <form method="POST" action="admin/disableUser">
+                                                <input name="userId" type="hidden" value={{ user.id }}>
+                                                <input name="is_verified" type="hidden" value="0">
+                                                <button type="submit" class="btn"
+                                                    title="Désactiver le compte utlisateur">
+                                                    <i class="fas fa-regular fa-square-check alert-danger"></i>
+                                                </button>
+                                            </form>
+                                            {% else %}
+                                            <form method="POST" action="admin/disableUser">
+                                                <input name="userId" type="hidden" value={{ user.id }}>
+                                                <input name="is_verified" type="hidden" value="1">
+                                                <button type="submit" class="btn"
+                                                    title="Désactiver le compte utlisateur">
+                                                    <i class="fas fa-regular fa-square-check alert-info"></i>
+                                                </button>
+                                            </form>
+                                            {% endif %}
+                                        </div>
+                                        <div class="p-1 ">
+                                            <form method="POST" action="admin/deleteUser">
+                                                <input name="userId" type="hidden" value={{ user.id }}>
+                                                <button type="submit" class="btn"
+                                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utlisateur ?')"
+                                                    title="Supprimer l'utlisateur">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                                 {% else %}
