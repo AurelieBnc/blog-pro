@@ -1,20 +1,29 @@
-# Projet de Formation OCR - Blog Pro
+# Projet de Formation OCR - Création d'un Blog Professionnel
+
+## Built with
+
+- PHP 7.2.19
+- Apache 2.4.35
+- MySQL 5.7.33
+- Bootstrap v5.0.5
+- PHPMailer 6.8.0
+- Composer
 
 ## Installation
 
-### Cloner le projet
+### Clone or download the repository
 
 ```
 git clone https://github.com/AurelieBnc/blog-pro.git
 ```
 
-### Déplacer le terminal dans le dossier cloné
+### Move terminal to cloned folder
 
 ```
 cd blog-pro
 ```
 
-### Taper les commandes suivantes :
+### Install libraries with composer :
 
 (twig)
 (composer require twig/intl-extra)
@@ -23,12 +32,15 @@ cd blog-pro
 composer install
 ```
 
-### Configurer le fichier d'environnement à l'aide du fichier .env.example :
+### Import database with datas : file 'blog_pro.sql'
 
-Créer un fichier .env à la racine du projet
+### Configure the environment file using the .env.example file:
+
+Create an .env file at the root of the project
 
 ```
 touch .env
 ```
 
-Copier les données de .env.example dans le fichier .env que vous venez de créer et changer les paramètres de connexion à la base de données
+- Copy the data from .env.example into the .env file you just created
+- Change the database connection and email address settings
