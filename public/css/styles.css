@@ -138,7 +138,7 @@ a .CV-link:focus,
 
 }
 .tab-container .tabs .tab.active {
-  background-color: var(--lightcolor);
+  background-color: gray !important;
   color: var(--darkcolor);
   cursor: auto;
 }
