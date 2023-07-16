@@ -1,4 +1,6 @@
-# Projet de Formation OCR - Création d'un Blog Professionnel
+# Creation of a Professional Blog PHP
+OCR Training Project - 
+
 
 ## Built with
 
