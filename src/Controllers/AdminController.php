@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Entity\Comment;
 use App\Entity\Post;
 use App\Entity\User;
+use Exception;
 
 /**
  * Admin page controller
@@ -67,6 +68,8 @@ use App\Entity\User;
             $model->update($idUser, $disableUser);
 
             echo "données bien mise à jour";
+        } else {
+            throw new Exception("Une erreur est survenue, l'action n'a pas pu être effectuée.");
         }
 
         return $this->index($userId);
@@ -82,7 +85,7 @@ use App\Entity\User;
         $deleteUserId = htmlspecialchars($_POST['userId']);
         $sessionId = htmlspecialchars($_SESSION['id']);
 
-        if ($logUser === 'admin' && isset($userId) && !empty($userId)) {
+        if ($logUser === 'admin' && isset($deleteUserId) && !empty($deleteUserId)) {
             $deleteUser = new User;
 
             // anonymization of comments
@@ -97,7 +100,11 @@ use App\Entity\User;
             }
 
             $deleteUser->delete($deleteUserId);
+
             echo "utilisateur supprimé";
+
+        } else {
+            throw new Exception("Une erreur est survenue, la suppression n'a pas pu être effectuée.");
         }
 
         return $this->index($sessionId);
