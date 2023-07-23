@@ -45,7 +45,10 @@ class Model extends Db
     }
 
 
-    public function find(int $idModel): array
+    /**
+     * @return array|bool
+     */
+    public function find(int $idModel)
     {
         /**@var string $rqtSql */
         switch ($this->table) {

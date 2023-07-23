@@ -53,8 +53,11 @@
                     </div>
                     <h2 class="fs-3 mt-1">Commentaires</h2>
                 </div>
+
                 {# block comments (loop) #}
                 {% for comment in comments %}
+                {# user & visitor party #}
+                {% if comment.is_enabled is same as '1' and session.logUser is not same as 'admin' %}
                 <div class="pt-5 px-5 justify-content-around shadow">
                     <div class="d-flex justify-content-between">
                         <div class="pe-3">
@@ -74,33 +77,9 @@
                                 "Europe/Paris") }}</p>
                         </div>
                     </div>
-                    {# moderation button - add hover #}
+                    {# moderation button #}
                     <div class="d-flex justify-content-end me-2">
-                        {% if session.logUser is same as 'admin' %}
-                        <div class="p-2 ">
-                            {% if comment.is_enabled is same as '1' %}
-                            <form method="POST" action="comment/disableComment">
-                                <input name="commentId" type="hidden" value={{ comment.id }}>
-                                <input name="is_enabled" type="hidden" value="0">
-                                <input name="postId" type="hidden" value={{ comment.id_post }}>
-                                <button type="submit" class="btn" title="Valider le commentaire">
-                                    <i class="fas fa-regular fa-square-check alert-success"></i>
-                                </button>
-                            </form>
-                            {% else %}
-                            <form method="POST" action="comment/disableComment">
-                                <input name="commentId" type="hidden" value={{ comment.id }}>
-                                <input name="is_enabled" type="hidden" value="1">
-                                <input name="postId" type="hidden" value={{ comment.id_post }}>
-                                <button type="submit" class="btn" title="Désactiver le commentaire">
-                                    <i class="fas fa-regular fa-square-check alert-danger"></i>
-                                </button>
-                            </form>
-                            {% endif %}
-                        </div>
-                        {% endif %}
-
-                        {% if (session.logUser is same as 'admin') or (session.id is same as comment.id_user) %}
+                        {% if session.id is same as comment.id_user %}
                         <div class="p-2 ">
                             <form method="POST" action="comment/deleteComment">
                                 <input name="commentId" type="hidden" value={{ comment.id }}>
@@ -114,6 +93,66 @@
                         {% endif %}
                     </div>
                 </div>
+                {% endif %}
+
+                {# admin party #}
+                {% if session.logUser is same as 'admin' %}
+                <div class="pt-5 px-5 justify-content-around shadow">
+                    <div class="d-flex justify-content-between">
+                        <div class="pe-3">
+                            {% for user in users %}
+                            {% if comment.id_user is same as user.id %}
+                            <img class="img-fluid rounded-circle mb-4 avatar" {% if user.avatar is not null %}
+                                src="{{ ROOT }}images/avatar_upload/{{ user.avatar }}" {% else %}
+                                src="{{ ROOT }}images/avatar/default-avatar.png" {% endif %} alt="..." />
+                            <p class="fs-5 text-center">{{ user.pseudonym }}</p>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="ps-3 pt-5">
+                            <p class="small text-center ">{{ comment.content }}</p>
+                            <p class="blockquote-footer d-flex justify-content-end mt-2">Le {{ comment.update_date |
+                                date("d/m/Y",
+                                "Europe/Paris") }}</p>
+                        </div>
+                    </div>
+                    {# moderation button #}
+                    <div class="d-flex justify-content-end me-2">
+                        <div class="p-2 ">
+                            {% if comment.is_enabled is same as '0' %}
+                            <form method="POST" action="comment/disableComment">
+                                <input name="commentId" type="hidden" value={{ comment.id }}>
+                                <input name="is_enabled" type="hidden" value="1">
+                                <input name="postId" type="hidden" value={{ comment.id_post }}>
+                                <button type="submit" class="btn" title="Valider le commentaire">
+                                    <i class="fas fa-regular fa-square-check alert-success"></i>
+                                </button>
+                            </form>
+                            {% else %}
+                            <form method="POST" action="comment/disableComment">
+                                <input name="commentId" type="hidden" value={{ comment.id }}>
+                                <input name="is_enabled" type="hidden" value="0">
+                                <input name="postId" type="hidden" value={{ comment.id_post }}>
+                                <button type="submit" class="btn" title="Désactiver le commentaire">
+                                    <i class="fas fa-regular fa-square-check alert-danger"></i>
+                                </button>
+                            </form>
+                            {% endif %}
+                        </div>
+
+                        <div class="p-2 ">
+                            <form method="POST" action="comment/deleteComment">
+                                <input name="commentId" type="hidden" value={{ comment.id }}>
+                                <input name="postId" type="hidden" value={{ comment.id_post }}>
+                                <button type="submit" class="btn" title="Supprimer le commentaire"
+                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
                 {% endfor %}
             </div>
         </div>
