@@ -112,13 +112,13 @@ Class Post extends Model
     }
 
 
-    public function getLead(): int
+    public function getLead(): string
     {
         return $this->lead;
     }
 
 
-    public function setLead(int $lead): self
+    public function setLead(string $lead): self
     {
         $this->lead = $lead;
 

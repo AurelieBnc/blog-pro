@@ -32,7 +32,7 @@ Class MailerController extends AbstractController
         $mail->AddAddress($to);
         if(!$mail->Send())
         {
-            $error ="Essyez plus tard, une erreur est survenue...";
+            $error ="Essayez plus tard, une erreur est survenue...";
             echo $error;
         }
         else
