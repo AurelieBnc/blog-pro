@@ -160,7 +160,7 @@
 </section>
 
 {# comments form #}
-{% if session.logVisitor is same as false %}
+{% if session.logVisitor is same as false and session.hasLoggedIn is same as true %}
 <section class="py-5">
     <div class="container mb-2">
         <div class="row justify-content-center">

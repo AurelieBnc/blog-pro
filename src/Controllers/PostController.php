@@ -78,19 +78,19 @@ Class PostController extends AbstractController
     /**
      * function to display edit post page
      */
-    public function editPostPage(int $postId): self
+    public function editPostPage(int $postId): void
     {
         $model = new Post;
         $post = $model->find($postId);
 
-        return $this->twig->display('post/editPost.twig', ['ROOT' => $this->root, 'post' => $post, 'session' => $_SESSION]);
+        $this->twig->display('post/editPost.twig', ['ROOT' => $this->root, 'post' => $post, 'session' => $_SESSION]);
     }
 
 
     /**
      * function that allows you to edit an article
      */
-    public function editPost(): self
+    public function editPost(): void
     {
         $postId = htmlspecialchars($_POST['postId']);
         $title = htmlspecialchars($_POST['title']);
@@ -126,7 +126,7 @@ Class PostController extends AbstractController
     /**
      * function to delete a post and and all his comments
      */
-    public function deletePost(): self
+    public function deletePost(): void
     {
         $postId = htmlspecialchars($_POST['postId']);
         $logUser = htmlspecialchars($_SESSION['logUser']);
