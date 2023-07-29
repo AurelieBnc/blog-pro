@@ -1,0 +1,21 @@
+html, body {
+    height: 100%;
+  }
+  * {
+    margin: 0;
+  }
+  #container-page {
+    position: relative;
+    min-height: 100vh;
+  }
+
+  #container-content {
+    padding-bottom: 200px;    /* Hauteur du pied-de-page */
+  }
+
+  #container-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 200px;            /* Hauteur du pied-de-page */
+  }

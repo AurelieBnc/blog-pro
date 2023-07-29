@@ -14,99 +14,104 @@
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     {% block stylesheets %} {% endblock %}
     <link href="{{ ROOT }}css/styles.css" rel="stylesheet" />
+    <link href="{{ ROOT }}css/mainstyle.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js"
         crossorigin="anonymous"></script>
 </head>
 
 <body>
-    {# Main menu #}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="{{ ROOT }}index.php?p=home" title="Blog Pro"><i
-                    class="fa-solid fa-paw text-white px-3"></i>Blog Pro</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link {{ activeClass('post') }}" aria-current="page"
-                            href="{{ ROOT }}index.php?p=post" title="Posts">Posts</a></li>
-                    {% if session.logVisitor is same as true %}
-                    <li class="nav-item"><a class="nav-link {{ activeClass('register') }}"
-                            href="{{ ROOT }}index.php?p=register" title="Connexion">Connexion</a>
+    <div id="container-page">
+        <div id="container-content">
+            {# Main menu #}
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container">
+                    <a class="navbar-brand" href="{{ ROOT }}index.php?p=home" title="Blog Pro"><i
+                            class="fa-solid fa-paw text-white px-3"></i>Blog Pro</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation"><span
+                            class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item"><a class="nav-link {{ activeClass('post') }}" aria-current="page"
+                                    href="{{ ROOT }}index.php?p=post" title="Posts">Posts</a></li>
+                            {% if session.logVisitor is same as true %}
+                            <li class="nav-item"><a class="nav-link {{ activeClass('register') }}"
+                                    href="{{ ROOT }}index.php?p=register" title="Connexion">Connexion</a>
+                            </li>
+                            {% endif %}
+                            {% if session.logVisitor is same as false %}
+                            <li class="nav-item"><a class="nav-link" href="{{ ROOT }}index.php?p=register/logout"
+                                    title="Déconnexion">Déconnexion</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            {% block body %}
+            {% block content %}
+            {% endblock content %}
+            {% endblock body %}
+        </div>
+        {# footer #}
+        <footer id="container-footer" class="m-0 py-5 bg-dark">
+            <div class="container">
+                {% if session.logUser is same as 'user_verified' %}
+                <p class="nav-item row "><a class="col-4 nav-link " href="{{ ROOT }}index.php?p=admin"
+                        title="Mon compte">Mon compte</a>
+                </p>
+                {% endif %}
+                {% if session.logUser is same as 'admin' %}
+                <p class="nav-item row "><a class="col-4 nav-link " href="{{ ROOT }}index.php?p=admin"
+                        title="Accès administration">Accès administration</a>
+                </p>
+                {% endif %}
+
+                <ul class="p-0 text-center">
+                    <li class="list-inline-item">
+                        <a href="https://twitter.com/Shil_71">
+                            {# {{ site.twitter_username }} #}
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x text-white"></i>
+                                <i class="fab fa-twitter fa-stack-1x fa-inverse text-black"></i>
+                            </span>
+                        </a>
                     </li>
-                    {% endif %}
-                    {% if session.logVisitor is same as false %}
-                    <li class="nav-item"><a class="nav-link" href="{{ ROOT }}index.php?p=register/logout"
-                            title="Déconnexion">Déconnexion</a></li>
-                    {% endif %}
+                    <li class="list-inline-item">
+                        <a href="https://www.linkedin.com/in/aur%C3%A9lie-beninca-501535107/">
+                            {# {{ site.linkedin_username }} #}
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x text-white"></i>
+                                <i class="fab fa-linkedin fa-stack-1x fa-inverse text-black"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://github.com/AurelieBnc">
+                            {# {{ site.github_username }} #}
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x text-white"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse text-black"></i>
+                            </span>
+                        </a>
+                    </li>
                 </ul>
+                <p class="m-0 text-center text-white">Copyright &copy; BlogPro - Beninca Aurélie 2023</p>
             </div>
-        </div>
-    </nav>
-    {% block body %}
-    {% block content %}
-    {% endblock content %}
-    {% endblock body %}
-    {# footer #}
-    <footer class="py-5 bg-dark">
-        <div class="container">
-            {% if session.logUser is same as 'user_verified' %}
-            <p class="nav-item row "><a class="col-4 nav-link " href="{{ ROOT }}index.php?p=admin"
-                    title="Mon compte">Mon compte</a>
-            </p>
-            {% endif %}
-            {% if session.logUser is same as 'admin' %}
-            <p class="nav-item row "><a class="col-4 nav-link " href="{{ ROOT }}index.php?p=admin"
-                    title="Accès administration">Accès administration</a>
-            </p>
-            {% endif %}
+        </footer>
 
-            <ul class="p-0 text-center">
-                <li class="list-inline-item">
-                    <a href="https://twitter.com/Shil_71">
-                        {# {{ site.twitter_username }} #}
-                        <span class="fa-stack fa-lg">
-                            <i class="fas fa-circle fa-stack-2x text-white"></i>
-                            <i class="fab fa-twitter fa-stack-1x fa-inverse text-black"></i>
-                        </span>
-                    </a>
-                </li>
-                <li class="list-inline-item">
-                    <a href="https://www.linkedin.com/in/aur%C3%A9lie-beninca-501535107/">
-                        {# {{ site.linkedin_username }} #}
-                        <span class="fa-stack fa-lg">
-                            <i class="fas fa-circle fa-stack-2x text-white"></i>
-                            <i class="fab fa-linkedin fa-stack-1x fa-inverse text-black"></i>
-                        </span>
-                    </a>
-                </li>
-                <li class="list-inline-item">
-                    <a href="https://github.com/AurelieBnc">
-                        {# {{ site.github_username }} #}
-                        <span class="fa-stack fa-lg">
-                            <i class="fas fa-circle fa-stack-2x text-white"></i>
-                            <i class="fab fa-github fa-stack-1x fa-inverse text-black"></i>
-                        </span>
-                    </a>
-                </li>
-            </ul>
-            <p class="m-0 text-center text-white">Copyright &copy; BlogPro - Beninca Aurélie 2023</p>
-        </div>
-    </footer>
+        {# Bootstrap core JS#}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+        {# Core theme JS#}
+        <script src="{{ ROOT }}js/jquery-3.6.4.min.js"></script>
+        <script src="{{ ROOT }}js/scripts.js"></script>
 
-    {# Bootstrap core JS#}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-        crossorigin="anonymous"></script>
-    {# Core theme JS#}
-    <script src="{{ ROOT }}js/jquery-3.6.4.min.js"></script>
-    <script src="{{ ROOT }}js/scripts.js"></script>
-
-    {% block javascripts %}
-    {# Inclusion JS si besoin #}
-    {% endblock %}
-
+        {% block javascripts %}
+        {# Inclusion JS si besoin #}
+        {% endblock %}
+    </div>
 </body>
 
 </html>
