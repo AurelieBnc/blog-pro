@@ -89,11 +89,11 @@ body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+
 /*page utilisateur*/
 .bg {
   background-color: grey;
   height: auto;
-
 }
 
 .bgb {
@@ -5721,7 +5721,7 @@ a.nav-link.active{
 .modal-body {
   position: relative;
   flex: 1 1 auto;
-  padding: 1rem;
+
 }
 
 .modal-footer {
