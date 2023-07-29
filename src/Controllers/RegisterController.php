@@ -251,7 +251,7 @@ Class RegisterController extends AbstractController
     /*
     * validate password
     */
-    function isValidMdp(string $mdp): int|bool
+    function isValidMdp(string $mdp): int
     {
         return preg_match('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/', $mdp);
     }
