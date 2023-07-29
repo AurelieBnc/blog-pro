@@ -94,10 +94,14 @@
                     </div>
                     <div class="form-floating mb-3 controls">
                         <input type="password" class="form-control" id="floatingInput7" name="password"
-                            placeholder="password" data-validation-required-message="Merci d'entrer votre mot de passe."
+                            placeholder="password" autocomplete="new-password" minlength="8"
+                            data-validation-required-message="Merci d'entrer votre mot de passe."
                             title="Veuillez renseigner un mot de passe" required>
                         <label for="floatingInput7">Mot de passe</label>
                     </div>
+                    <p class="blockquote-footer px-3">Le mot de passe doit respecter une majuscule, une minuscule,
+                        un caractère spécial et une
+                        longueur de 8 minimum</p>
                     <div class="form-control mb-3 controls">
                         <label class="mb-2" for="avatar">Vous pouvez télécharger un avatar</label>
                         <input type="file" class="form-control mb-2" id="avatar" name="avatar" placeholder="avatar"
