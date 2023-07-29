@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Entity\User;
 use App\Controllers\MailerController;
+use Exception;
 
 /**
  * Connection system controller
@@ -200,6 +201,10 @@ Class RegisterController extends AbstractController
             $password = htmlspecialchars($_POST['password']);
             $email = htmlspecialchars($_POST['email']);
 
+            if (!$this->isValidMdp($password)) {
+                throw new Exception('Le mot de passe ne correspond pas au norme de sécurité. Il doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.');
+            }
+
             $user = $model
                 ->setLastname($lastname)
                 ->setFirstname($firstname)
@@ -243,5 +248,12 @@ Class RegisterController extends AbstractController
         return $this->twig->display('partial/pageFormError.twig', ['ROOT' => $this->root,'session' => $_SESSION]);
     }
 
+    /*
+    * validate password
+    */
+    function isValidMdp(string $mdp): int|bool
+    {
+        return preg_match('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/', $mdp);
+    }
 
 }
